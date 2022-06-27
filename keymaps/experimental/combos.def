@@ -2,7 +2,7 @@
 // Left
 COMB(escape_l, KC_ESC, KC_W, KC_E, KC_R)
 // Right
-COMB(launcher, A(KC_F2), KC_O, KC_P)
+COMB(launcher, A(KC_F2), KC_U, KC_I, KC_O)
 
 // HOME ROW
 // Left
