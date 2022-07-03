@@ -2,41 +2,33 @@
 
 A crossover between Pteron36 and Balbuzard with 36 keys (kailh choc v1).
 
-  - 2 optional encoders (EVQWGD001) or keys
-  - 3 thumbs keys
-  - 5x3 keys layout
-  - Outer columns for top pinky (reduce hand torsion)
-  - Small splay to adjust to natural hand shape
-  - Choc switches with MX spacing
-  - 157.2 x 116.3mm
-
-**Drawings made with love by pandhara.**
-
-![Ptechinos v0.5](https://raw.githubusercontent.com/JeremyBois/Ptechinos/main/preview/output/v0.5/top.svg)
-
-* Keyboard Maintainer: [Jérémy Bois](https://github.com/JeremyBois/Ptechinos)
-* Hardware Supported: Ptechinos PCB, ProMicro
-* Hardware Availability: [PCB & Case Data](https://github.com/JeremyBois/Ptechinos/tree/main/preview/)
+* Keyboard Maintainer: [JeremyBois](https://github.com/JeremyBois/Ptechinos)
+* Silkscreen drawings : [pandhara](https://www.artstation.com/pandhara)
 
 
-## How to use
+Left           |  Right
+:-------------------------:|:-------------------------:
+![Left](https://github.com/JeremyBois/Ptechinos/blob/main/data/production/v0.5/top.svg?sanitize=true)  |  ![Right](https://github.com/JeremyBois/Ptechinos/blob/main/data/production/v0.5/bottom.svg?sanitize=true)
 
-Currently this keyboard is not added to the QMK repository.
 
-  1. You should unpack or clone this repository to your `keyboard` folder inside your QMK installation
-  2. Run `qmk flash -kb ptechinos -km experimental` to flash your keyboard
+
+## Getting started
+Currently this keyboard layout is not part of the QMK repository so some manual steps are required :
+
+  1. Unpack or clone this repository to your `keyboard` folder inside your QMK installation
+  2. Flash the keyboard using `qmk flash -kb ptechinos -km experimental`
   3. Enjoy !
 
-# Notes
 
 ## Todo
 
   - Choc spacing at least vertically
     - easier vertical combos
     - less finger extension
-
-
-## Ideas
-
-  - Reduce space between thumbs and other keys
-    - less extension
+  - Try [chicago stenographer](https://www.asymplex.xyz/product/cs-chicago-stenographer-profile) keycaps
+    - R2  == row3 (schema) == bottom row
+    - R3  == row2 (schema) == home row
+    - R4  == row1 (schema) == top row
+    - Thumbs
+      - 1 x [R3X Convex 1U](https://www.asymplex.xyz/product/chicagosteno-convex-caps)
+      - 2 x [T15 Thumb](https://www.asymplex.xyz/product/chicagosteno-convex-caps)
