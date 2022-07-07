@@ -12,10 +12,6 @@ for more options.
 #define MASTER_LEFT
 // #define MASTER_RIGHT
 
-// Encoder resolution on both sides
-// https://github.com/qmk/qmk_firmware/blob/master/docs/feature_encoders.md
-
-
 // How many taps before triggering the toggle
 #define TAPPING_TOGGLE 2
 // Delay between register / unregister for a keycode

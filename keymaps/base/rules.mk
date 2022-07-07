@@ -9,7 +9,6 @@ SPLIT_KEYBOARD = yes			# Split keyboard
 LTO_ENABLE = yes				# Save space by link time optimization
 DEBOUNCE_TYPE = sym_defer_pr    # Debouncing algorithm
 
-
 # Options
 ENCODER_ENABLE = yes		    # Rotary encoders (+1112)
 EXTRAKEY_ENABLE = yes			# Audio control and System control (+450)
