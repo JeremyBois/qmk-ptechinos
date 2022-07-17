@@ -49,7 +49,9 @@ for more options.
 #    define COMBO_MUST_TAP_PER_COMBO
 // #    define COMBO_MUST_HOLD_PER_COMBO
 #    define COMBO_TERM_PER_COMBO
-// All combos are specified from the base layer, saves space
+// All combos are specified from the base layer
+//  - saves space
+//  - allow position specific combo and not key specific
 #    define COMBO_ONLY_FROM_LAYER 0
 #endif
 
