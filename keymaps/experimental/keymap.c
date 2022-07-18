@@ -389,6 +389,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return false;
             }
             break;
+        case LSFT_T(KC_CIRC):
+            // Required to avoid to input 6 when combined with mod-tap
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_CIRC); // Send C(KC_CIRC) on tap
+                return false;
+            }
+            break;
         case (C_C):
             if (record->event.pressed) {
                 tap_code16(C(KC_C)); // Send C(KC_C) on tap
