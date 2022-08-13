@@ -138,7 +138,7 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
      * |  °   |  `…  |  à   |  è   |  é   |   ç   |                    |   |   |   ;  |   :  |   !  |  ^…  |   €  |
      * |      | Shift|      |      |      |       |-------.    ,-------|       |      |      |      | Shift|      |
      * `------+------+------+------+------+-------|  MUTE |    | PSCR  |-------+------+------+------+------+------'
-     *        |   ~  |  -   |  =   |  '   |   "…  |-------|    |-------|  '…   |   "  |  +   |  _   |   \  |
+     *        |   ~  |  _   |  =   |  '   |   "…  |-------|    |-------|  '…   |   "  |  -   |  +   |   \  |
      *        |      |      |      |      |       |       |    |       |       |      |      |      |      |
      *        `-------------------------------- --/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -149,8 +149,8 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
     [_SYM] = LAYOUT(
                         KC_AT, KC_HASH, KC_DLR, C_GRV,         KC_PERC, KC_AMPR, KC_ASTR, KC_QUES,
 C_DEG, LSFT_T(KC_GRV), C_A_GRV, C_E_GRV, C_E_ACU, C_C_CED,     KC_PIPE, KC_SCLN, KC_COLN, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
-       C_TILD, KC_MINS, KC_EQL, C_QUOT, KC_DQUO, _______,
-                                                  _______, KC_GRV, C_DQUOT, KC_PLUS, KC_UNDS, KC_BSLS,
+       C_TILD, KC_UNDS, KC_EQL, C_QUOT, KC_DQUO, _______,
+                                                  _______, KC_GRV, C_DQUOT, KC_MINS, KC_PLUS, KC_BSLS,
                        _______, _______, _______,                   _______, _______, _______
 
     ),
