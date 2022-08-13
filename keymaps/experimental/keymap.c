@@ -35,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, LSFT_T(KC_P), KC_RCTL,
       LGUI_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, KC_MUTE,
                                       KC_PSCR, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
-             MHL_NAV, LCTL_T(KC_SPC), OSL_NUM,          OSL_SYM, LCTL_T(KC_ENT), TO(_DEFAULT)
+             MHL_NAV, LCTL_T(KC_SPC), MHL_NUM,          OSL_SYM, LCTL_T(KC_ENT), TO(_DEFAULT)
     ),
 
     /*
@@ -267,9 +267,10 @@ bool sw_ctab_active = false;
 bool sw_atab_active = false;
 
 // Custom layer switchers
-oneshot_state osl_symbol_state = os_up_unqueued;
-oneshot_state osl_numpad_state = os_up_unqueued;
-oneshot_state mhl_nav_state    = os_up_unqueued;
+oneshot_state osl_sym_state = os_up_unqueued;
+oneshot_state osl_num_state = os_up_unqueued;
+oneshot_state mhl_nav_state = os_up_unqueued;
+oneshot_state mhl_num_state = os_up_unqueued;
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     // Escape and moved layer
@@ -286,6 +287,7 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode) {
     switch (keycode) {
         case TO(_DEFAULT):
         case MHL_NAV:
+        case MHL_NUM:
         case OSL_SYM:
         case OSL_NUM:
         case KC_ESC:
@@ -299,6 +301,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
         case TO(_DEFAULT):
         case MHL_NAV:
+        case MHL_NUM:
         case OSL_SYM:
         case OSL_NUM:
         // Modifiers
@@ -348,9 +351,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     discard_swapper_key |= update_swapper(&sw_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
 
     // Custom layer change (no timer)
-    bool notHandled = update_oneshot_layer(&osl_symbol_state, _SYM, OSL_SYM, keycode, record);
-    notHandled      = update_oneshot_layer(&osl_numpad_state, _NUM, OSL_NUM, keycode, record);
-    notHandled      = update_move_hold_layer(&mhl_nav_state, _NAV, MHL_NAV, keycode, record);
+    bool notHandled = update_oneshot_layer(&osl_sym_state, _SYM, OSL_SYM, keycode, record);
+    // notHandled      = update_oneshot_layer(&osl_num_state, _NUM, OSL_NUM, keycode, record);
+    notHandled = update_move_hold_layer(&mhl_num_state, _NUM, MHL_NUM, keycode, record);
+    notHandled = update_move_hold_layer(&mhl_nav_state, _NAV, MHL_NAV, keycode, record);
 
     if (!notHandled) {
         return false;

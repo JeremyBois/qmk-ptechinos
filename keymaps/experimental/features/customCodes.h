@@ -36,9 +36,11 @@ enum custom_keycodes {
     SW_CTAB,   // Ctrl-tab
     SW_ATAB,   // Alt-tab
     ML_ADJUST, // Combo to move to ADJUST layer
+    // SHIFT_DEFAULT, // LSFT_T(TO(DEFAULT))
     OSL_SYM,   // One shot layer without timer
     OSL_NUM,   //
-    MHL_NAV    // On move/hold layer without timer
+    MHL_NAV,    // On move/hold layer without timer
+    MHL_NUM    //
 };
 
 //
