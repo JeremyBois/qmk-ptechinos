@@ -21,20 +21,19 @@ COMB(del, KC_DEL, KC_K, KC_L)
 // Right
 
 // TWO HANDS
-COMB(caps, KC_CAPS, KC_G, KC_H)
+COMB(caps, KC_CAPS, KC_H, KC_J)
+COMB(caps_bis, KC_CAPS, KC_F, KC_G)
 COMB(adjust, ML_ADJUST, OSL_NUM, OSL_SYM)
 
 // Vertical HOME/TOP
 // Left
-COMB(angle_l, KC_LT, KC_W, KC_S)
-COMB(curly_l, KC_LPRN, KC_E, KC_D)
-COMB(round_l, KC_LCBR, KC_R, KC_F)
-COMB(square_l, KC_LBRC, KC_T, KC_G)
+COMB(square_l, KC_LBRC, KC_W, KC_S)
+COMB(curly_l,  KC_LPRN, KC_E, KC_D)
+COMB(round_l,  KC_LCBR, KC_R, KC_F)
 // Right
-COMB(angle_r, KC_GT, KC_O, KC_L)
-COMB(curly_r, KC_RPRN, KC_I, KC_K)
-COMB(round_r, KC_RCBR, KC_U, KC_J)
-COMB(square_r, KC_RBRC, KC_Y, KC_H)
+COMB(square_r, KC_RBRC, KC_O, KC_L)
+COMB(curly_r,  KC_RPRN, KC_I, KC_K)
+COMB(round_r,  KC_RCBR, KC_U, KC_J)
 
 
 // // Numbers @TODO

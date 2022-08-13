@@ -25,10 +25,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `------+-------+------+------+------+------| MUTE  |    | PSCR  |------+------+------+------+-------+------'
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /   |
      *        |  GUI  |  Alt |      |      |      |       |    |       |      |      |      | Alt  | Ralt  |
-     *        `----------------------------------/       /     \      \-----------------------------------'
-     *                       |   NAV  | Space  | /  NUM  /       \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV  | Ctrl   |/  NUM  /         \ SYM  \|  Ctrl  |        |
-     *                       `-----------------'-------'           '------'-----------------'
+     *        `-----------------------------------/      /      \      \-----------------------------------'
+     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
+     *                       |   NAV  | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                       `-----------------'------'            '------'-----------------'
      */
     [_DEFAULT] = LAYOUT(
                     KC_W, KC_E, KC_R, KC_T,            KC_Y, KC_U, KC_I, KC_O,
@@ -90,19 +90,19 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, L
      *        ,-----------------------------------.                    ,----------------------------------.
      *        |------| WH_L |  MU  | WH_R  | WH_U |                    | PgUp | Home |  Up  | End  |------|
      * ,------+------+------+------+-------+------|                    |------+------+------+------+------+------.
-     * |  MB4 | ATab |  ML  |  MD  |  MR   | WH_D |                    | PgDo | Left | Down | Right| CTab |  MB5 |
+     * | CTab | ATab |  ML  |  MD  |  MR   | WH_D |                    | PgDo | Left | Down | Right| MB4 |  MB5 |
      * |      | Shift|      |      |       |      |-------.    ,-------|      |      |      |      | Shift|      |
      * `------+------+------+------+-------+------|  MUTE |    | PSCR  |------+------+------+------+------+------'
      *        | Undo | Cut  | Copy | Paste |LDesk |-------|    |-------|RDesk | MB1  | MB2  | MB3  | Com  |
      *        | GUI  |  Alt |      |       |      |       |    |       |      |      |      | Alt  | Ralt |
-     *        `-----------------------------------/       /     \      \----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /       \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | Ctrl   |/  NUM  /         \ SYM  \|  Ctrl  |        |
-     *                      `------------------'-------'           '------'-----------------'
+     *        `-----------------------------------/      /      \      \----------------------------------'
+     *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
+     *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                      `------------------'------'            '------'-----------------'
      */
     [_NAV] = LAYOUT(
                           KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U,       KC_PGUP, KC_HOME, KC_UP, KC_END,
-KC_BTN4, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,       KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(SW_CTAB), KC_BTN5,
+SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,       KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN4), KC_BTN5,
          LGUI_T(C_Z), LALT_T(C_X), C_C, C_V, C(A(KC_LEFT)), _______,
                                               _______, C(A(KC_RIGHT)), KC_BTN1, KC_BTN2, LALT_T(KC_BTN3), RALT_T(C_SLSH),
                                  _______, _______, _______,         _______, _______, _______
@@ -118,10 +118,10 @@ KC_BTN4, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,       KC_PGDN, KC_
      * `------+------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+------+------'
      *        | Undo | Cut  | Copy |Paste |       |-------|    |-------|  F11 |  F12 |  ,   |  .   |  /   |
      *        | GUI  |  Alt |      |      |       |       |    |       |      |      |      | Alt  | Ralt |
-     *        `-----------------------------------/       /     \      \----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /       \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | Ctrl   |/  NUM  /         \ SYM  \|  Ctrl  |        |
-     *                      `------------------'-------'           '------'-----------------'
+     *        `-----------------------------------/      /      \      \----------------------------------'
+     *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
+     *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                      `------------------'------'            '------'-----------------'
      */
     [_NUM] = LAYOUT(
                      KC_F6, KC_F7, KC_F8, KC_F9,           KC_F10, KC_F1, KC_F2, KC_F3,
@@ -131,23 +131,24 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
                     _______, _______, _______,         _______, _______, _______
     ),
     /* SYM
+     *
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |------|  @   |  #   |  $   |   `   |                    |  %    |   &  |  *   |   ?  |------|
+     *        |------|  @   |  #   |  $   |   `   |                    |   %   |   &  |  *   |   ?  |------|
      * ,------+------+------+------+------+-------|                    |-------+------+------+------+------+------.
-     * |  °   |   |  |  à   |  è   |  é   |   ;   |                    |  :    |  ç   |   ù  |   !  |   ^  |      |
+     * |  °   |  `…  |  à   |  è   |  é   |   ç   |                    |   |   |   ;  |   :  |   !  |  ^…  |   €  |
      * |      | Shift|      |      |      |       |-------.    ,-------|       |      |      |      | Shift|      |
      * `------+------+------+------+------+-------|  MUTE |    | PSCR  |-------+------+------+------+------+------'
-     *        |   ~  |  -   |  =   |  '   |" dead |-------|    |-------|` dead |  "   |  +   |  _   |   \  |
+     *        |   ~  |  -   |  =   |  '   |   "…  |-------|    |-------|  '…   |   "  |  +   |  _   |   \  |
      *        |      |      |      |      |       |       |    |       |       |      |      |      |      |
-     *        `-------------------------------- --/       /     \      \-----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /       \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | Ctrl   |/  NUM  /         \ SYM  \|  Ctrl  |        |
-     *                      `------------------'-------'           '------'-----------------'
+     *        `-------------------------------- --/      /      \      \-----------------------------------'
+     *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
+     *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                      `------------------'------'            '------'-----------------'
      *
      */
     [_SYM] = LAYOUT(
-                        KC_AT, KC_HASH, KC_DLR, C_GRV,          KC_PERC, KC_AMPR, KC_ASTR, KC_QUES,
-C_DEG, LSFT_T(KC_PIPE), C_A_GRV, C_E_GRV, C_E_ACU, KC_SCLN,     KC_COLN, C_C_CED, C_U_GRV, KC_EXLM, LSFT_T(KC_CIRC), XXXXXXX,
+                        KC_AT, KC_HASH, KC_DLR, C_GRV,         KC_PERC, KC_AMPR, KC_ASTR, KC_QUES,
+C_DEG, LSFT_T(KC_GRV), C_A_GRV, C_E_GRV, C_E_ACU, C_C_CED,     KC_PIPE, KC_SCLN, KC_COLN, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
        C_TILD, KC_MINS, KC_EQL, C_QUOT, KC_DQUO, _______,
                                                   _______, KC_GRV, C_DQUOT, KC_PLUS, KC_UNDS, KC_BSLS,
                        _______, _______, _______,                   _______, _______, _______
@@ -186,14 +187,14 @@ XXXXXXX, XXXXXXX, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,  KC_VOLD, KC_MPRV, KC_MPLY
 /*
  *        ,-----------------------------------.                    ,----------------------------------.
  *        |-------|       ESCAPE       |      |                    |          LAUNCHER         |------|
- * ,------+-----  <  --  {  --  ( --   [ -----|                    |----  ]  --  )  --  }  --  >  ----+------.
- * |      |       |    ENTER    TAB    |  CA- |-------.    ,-------| -PS  |    BACK    DEL     |      |      |
+ * ,------+-----  [  --  {  --  ( -----|------|                    |------|----  )  --  }  --  ]  ----+------.
+ * |      |       |    ENTER    TAB   CAPS    |-------.    ,-------|    CAPS   BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
  *        |       |      |      |      |      |-------|    |-------|      |      |      |      |      |
- *        `-----------------------------------/       /     \      \----------------------------------'
- *                     |        |          | / ADJ-  /       \ -UST \ |        |  DEF   |
- *                     |        |          |/       /         \      \|        |        |
- *                     `-------------------'-------'           '------'-----------------'
+ *        `-----------------------------------/      /      \      \----------------------------------'
+ *                     |        |          | / ADJ- /        \ -UST \ |        |  DEF   |
+ *                     |        |          |/      /          \      \|        |        |
+ *                     `-------------------'------'            '------'-----------------'
  */
 
 uint16_t get_combo_term(uint16_t index, combo_t* combo) {
@@ -205,14 +206,13 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
         case del:
         case launcher:
         case escape_l:
+        case caps:
+        case caps_bis:
             return COMBO_TERM;
         // Two hands combos
-        case caps:
         case adjust:
             return COMBO_TERM + 20;
         // Vertical combos
-        case angle_l:
-        case angle_r:
         case curly_l:
         case curly_r:
         case round_l:
@@ -229,23 +229,23 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
     switch (index) {
         case escape_l:
         case caps:
+        case caps_bis:
         case launcher:
         case back:
         case del:
-        case angle_l:
-        case angle_r:
-        case curly_l:
-        case curly_r:
         case round_l:
         case round_r:
         case square_l:
         case square_r:
+            // Quik roll is allowed
             return false;
-        // Avoid noise en hold
+        case curly_l:
+        case curly_r:
         case tab:
         case enter:
         case adjust:
         default:
+            // Avoid noise on hold (mouse keys / game arrows keys)
             return true;
     }
 }
@@ -312,10 +312,11 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
         // Allow mod-tap on one shot layers
         case LSFT_T(KC_5):
         case LSFT_T(KC_4):
-        case LSFT_T(KC_PIPE):
+        case LSFT_T(KC_GRV):
         case LSFT_T(KC_CIRC):
         case LSFT_T(KC_O):
         case LSFT_T(KC_P):
+        case LSFT_T(KC_BTN4):
 
         case LALT_T(C_X):
         case LALT_T(KC_DOT):
@@ -343,7 +344,7 @@ bool is_oneshot_mod_key(uint16_t keycode) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Swapper on one key (no timer)
-    bool discard_swapper_key = update_swapper(&sw_ctab_active, KC_LCTL, KC_TAB, LSFT_T(SW_CTAB), keycode, record);
+    bool discard_swapper_key = update_swapper(&sw_ctab_active, KC_LCTL, KC_TAB, SW_CTAB, keycode, record);
     discard_swapper_key |= update_swapper(&sw_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
 
     // Custom layer change (no timer)
@@ -382,10 +383,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return false;
             }
             break;
-        case LSFT_T(KC_PIPE):
+        case LSFT_T(KC_GRV):
             // Required to avoid to input \ when combined with mod-tap
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_PIPE); // Send C(KC_PIPE) on tap
+                tap_code16(KC_GRV); // Send C(KC_GRV) on tap
                 return false;
             }
             break;
