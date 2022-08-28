@@ -8,6 +8,7 @@ COMB(launcher, A(KC_F2), KC_U, KC_I, KC_O)
 // Left
 COMB(enter, KC_ENT, KC_S, KC_D)
 COMB(tab, KC_TAB, KC_D, KC_F)
+COMB(caps, KC_CAPS, KC_F, KC_G)
 // Right
 COMB(back, KC_BSPC, KC_J, KC_K)
 COMB(del, KC_DEL, KC_K, KC_L)
@@ -21,8 +22,6 @@ COMB(del, KC_DEL, KC_K, KC_L)
 // Right
 
 // TWO HANDS
-COMB(caps, KC_CAPS, KC_H, KC_J)
-COMB(caps_bis, KC_CAPS, KC_F, KC_G)
 COMB(adjust, ML_ADJUST, OSL_NUM, OSL_SYM)
 
 // Vertical HOME/TOP
