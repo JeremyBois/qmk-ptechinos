@@ -135,10 +135,10 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
      *        ,-----------------------------------.                    ,-----------------------------------.
      *        |------|   :  |  #   |  ;   |   `   |                    |   %   |   &  |   *  |   ?  |------|
      * ,------+------+------+------+------+-------|                    |-------+------+------+------+------+------.
-     * |  °   |  `…  |   à  |  è   |  é   |   |   |                    |   ç   |   _  |   '  |   !  |  ^…  |   €  |
+     * |  °   |  `…  |   à  |  -   |  é   |   /   |                    |   \   |   è  |   '  |   !  |  ^…  |   €  |
      * |      | Shift|      |      |      |       |-------.    ,-------|       |      |      |      | Shift|      |
      * `------+------+------+------+------+-------|  MUTE |    | PSCR  |-------+------+------+------+------+------'
-     *        |   /  |   =  |  -   |  +   |   "…  |-------|    |-------|  '…   |   @  |   "  |   $  |   ~  |
+     *        |  |   |   =  |  _   |  +   |  "…   |-------|    |-------|  '…   |   @  |   "  |   $  |   ç  |
      *        |      |      |      |      |       |       |    |       |       |      |      |      |      |
      *        `-------------------------------- --/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -148,9 +148,9 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
      */
     [_SYM] = LAYOUT(
                        KC_COLN, KC_HASH, KC_SCLN,   C_GRV,     KC_PERC, KC_AMPR, KC_ASTR, KC_QUES,
-C_DEG, LSFT_T(KC_GRV), C_A_GRV, C_E_GRV, C_E_ACU, KC_PIPE,     C_C_CED, KC_UNDS, C_QUOT, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
-       KC_BSLS, KC_EQL, KC_MINS, KC_PLUS, KC_DQUO, _______,
-                                                   _______, KC_GRV, KC_AT, C_DQUOT, KC_DLR, C_TILD,
+C_DEG, LSFT_T(KC_GRV), C_A_GRV, KC_MINS, C_E_ACU, KC_SLSH,     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
+       KC_PIPE, KC_EQL, KC_UNDS, KC_PLUS, KC_DQUO, _______,
+                                                   _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, C_C_CED,
                        _______, _______, _______,                   _______, _______, _______
     ),
 
