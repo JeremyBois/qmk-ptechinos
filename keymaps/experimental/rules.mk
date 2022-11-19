@@ -14,6 +14,8 @@ ENCODER_ENABLE = yes		    # Rotary encoders (+1112)
 EXTRAKEY_ENABLE = yes			# Audio control and System control (+450)
 MOUSEKEY_ENABLE = yes			# Mouse keys (+1482). Not required for trackball usage
 COMBO_ENABLE = yes              # Allow to write combo
+CAPS_WORD_ENABLE = yes          # Make easier to write Caps words
+
 
 # Unused
 RGBLIGHT_ENABLE = no			# RGB lighting (+3826)

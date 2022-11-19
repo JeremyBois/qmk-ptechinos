@@ -187,7 +187,7 @@ XXXXXXX, XXXXXXX, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,  KC_VOLD, KC_MPRV, KC_MPLY
  *        ,-----------------------------------.                    ,----------------------------------.
  *        |-------|       ESCAPE       |      |                    |          LAUNCHER         |------|
  * ,------+-----  [  --  {  --  ( -----|------|                    |------|----  )  --  }  --  ]  ----+------.
- * |      |       |    ENTER    TAB   CAPS    |-------.    ,-------|      |    BACK    DEL    |      |      |
+ * |      |       |    ENTER    TAB   CAPS    |-------.    ,-------|    CAPS   BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
  *        |       |      |      |      |      |-------|    |-------|      |      |      |      |      |
  *        `-----------------------------------/      /      \      \----------------------------------'
@@ -206,6 +206,7 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
         case launcher:
         case escape_l:
         case caps:
+        case caps_bis:
             return COMBO_TERM;
         // Two hands combos
         case adjust:
@@ -227,6 +228,7 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
     switch (index) {
         case escape_l:
         case caps:
+        case caps_bis:
         case launcher:
         case back:
         case del:
@@ -234,7 +236,7 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
         case round_r:
         case square_l:
         case square_r:
-            // Quik roll is allowed
+            // Quick roll is allowed
             return false;
         case curly_l:
         case curly_r:
@@ -503,3 +505,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Return true to let qmk handles it
     return true;
 };
+
+//
+// ***
+// CAPS WORDS
+// ***
+//
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+        case KC_MINS:
+        case LSFT_T(KC_CIRC):
+        case LSFT_T(KC_GRV):
+            return true;
+
+        // Custom one shot layer
+        case OSL_NUM:
+        case OSL_SYM:
+            return true;
+
+        default:
+            return false; // Deactivate Caps Word.
+    }
+}
