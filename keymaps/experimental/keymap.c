@@ -88,9 +88,9 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, L
 
     /* NAV
      *        ,-----------------------------------.                    ,----------------------------------.
-     *        |------| WH_L |  MU  | WH_R  | WH_U |                    | PgUp | Home |  Up  | End  |------|
+     *        |------| WH_L |  MU  | WH_R  | PgUp |                    | WH_U | Home |  Up  | End  |------|
      * ,------+------+------+------+-------+------|                    |------+------+------+------+------+------.
-     * | CTab | ATab |  ML  |  MD  |  MR   | WH_D |                    | PgDo | Left | Down | Right| MB4 |  MB5  |
+     * | CTab | ATab |  ML  |  MD  |  MR   | PgDo |                    | WH_D | Left | Down | Right| MB4 |  MB5  |
      * |      | Shift|      |      |       |      |-------.    ,-------|      |      |      |      | Shift|      |
      * `------+------+------+------+-------+------|  MUTE |    | PSCR  |------+------+------+------+------+------'
      *        | Undo | Cut  | Copy | Paste |LDesk |-------|    |-------|RDesk | MB1  | MB2  | MB3  | Com  |
@@ -101,8 +101,8 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, L
      *                      `------------------'------'            '------'-----------------'
      */
     [_NAV] = LAYOUT(
-                          KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U,       KC_PGUP, KC_HOME, KC_UP, KC_END,
-SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,       KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN4), KC_BTN5,
+                          KC_WH_L, KC_MS_U, KC_WH_R, KC_PGUP,       KC_WH_U, KC_HOME, KC_UP, KC_END,
+SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN4), KC_BTN5,
          LGUI_T(C_Z), LALT_T(C_X), C_C, C_V, C(A(KC_LEFT)), _______,
                                               _______, C(A(KC_RIGHT)), KC_BTN1, KC_BTN2, LALT_T(KC_BTN3), RALT_T(C_SLSH),
                                  _______, _______, _______,         _______, _______, _______
