@@ -35,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, LSFT_T(KC_P), RCTL_T(KC_ENT),
       LGUI_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, KC_MUTE,
                                       KC_PSCR, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
-             MHL_NAV, LCTL_T(KC_SPC), MHL_NUM,          OSL_SYM, LCTL_T(KC_ENT), TO(_DEFAULT)
+             MHL_NAV, LCTL_T(KC_SPC), OSL_NUM,          OSL_SYM, LCTL_T(KC_ENT), TO(_DEFAULT)
     ),
 
     /*
@@ -351,8 +351,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     // Custom layer change (no timer)
     bool notHandled = update_oneshot_layer(&osl_sym_state, _SYM, OSL_SYM, keycode, record);
-    // notHandled      = update_oneshot_layer(&osl_num_state, _NUM, OSL_NUM, keycode, record);
-    notHandled = update_move_hold_layer(&mhl_num_state, _NUM, MHL_NUM, keycode, record);
+    notHandled      = update_oneshot_layer(&osl_num_state, _NUM, OSL_NUM, keycode, record);
+    // notHandled = update_move_hold_layer(&mhl_num_state, _NUM, MHL_NUM, keycode, record);
     notHandled = update_move_hold_layer(&mhl_nav_state, _NAV, MHL_NAV, keycode, record);
 
     if (!notHandled) {
