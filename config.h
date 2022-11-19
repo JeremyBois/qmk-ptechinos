@@ -55,7 +55,7 @@
 
 /* General */
 #define TAPPING_TERM 100
-#define DEBOUNCE 2  // Default is 5 (lower is better)
+#define DEBOUNCE 3  // Default is 5 (lower is better)
 #define TAP_CODE_DELAY 10
 
 /* VIA */
