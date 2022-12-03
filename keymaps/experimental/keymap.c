@@ -20,14 +20,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        ,-----------------------------------.                    ,-----------------------------------.
      *        |-------|   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |-------|
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+------.
-     * |  Q   |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   |RCtrl |
+     * |  Q   |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   | RCtrl|
      * |      |       |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |      |
      * `------+-------+------+------+------+------| MUTE  |    | PSCR  |------+------+------+------+-------+------'
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /   |
      *        |       |      |      |      |      |       |    |       |      |      |      | GUI  | Ralt  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV  | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                       `-----------------'------'            '------'-----------------'
      */
     [_DEFAULT] = LAYOUT(
@@ -51,7 +51,7 @@ KC_Q, KC_A, KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, LSFT_T(KC
      *        |       |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt  |
      *        `------------------------------------/      /      \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV  | Ctrl   |/  NUM  /          \ SYM  \|  Ctrl  |        |
+     *                       |   NAV  | LCtrl  |/  NUM  /          \ SYM  \|  LCtrl |        |
      *                       `-----------------'-------'            '------'-----------------'
      */
     [_COLEMAK] = LAYOUT(
@@ -68,14 +68,14 @@ KC_Q, KC_A, KC_R, KC_S, KC_T, KC_D,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |-------|   O  |   U  |   D  |   W   |                    |   B  |   M  |   F  |   P  |-------|
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |  Q   |   A   |   S  |   R  |   T  |   Y   |                    |   H  |   N  |   E  |   I  |   G   |RCtrl |
+     * |  Q   |   A   |   S  |   R  |   T  |   Y   |                    |   H  |   N  |   E  |   I  |   G   | RCtrl|
      * |      |       |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |      |
      * `------+-------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+-------+------'
      *        |   Z   |   X  |   C  |   V  |   K   |-------|    |-------|   J  |   L  |   ,  |   .  |   /   |
      *        |       |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt  |
      *        `------------------------------------/      /      \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV  | Ctrl   |/  NUM  /          \ SYM  \|  Ctrl  |        |
+     *                       |   NAV  | LCtrl  |/  NUM  /          \ SYM  \|  LCtrl |        |
      *                       `-----------------'-------'            '------'-----------------'
      */
     [_ERGOL] = LAYOUT(
@@ -97,7 +97,7 @@ KC_Q, KC_A, KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC
      *        |      |      |      |       |      |       |    |       |      |      |      | GUI  | Ralt |
      *        `-----------------------------------/      /      \      \----------------------------------'
      *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                      |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                      `------------------'------'            '------'-----------------'
      */
     [_NAV] = LAYOUT(
@@ -120,7 +120,7 @@ SW_CTAB, SW_ATAB, KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_LEFT, KC
      *        |      |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt |
      *        `-----------------------------------/      /      \      \----------------------------------'
      *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                      |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                      `------------------'------'            '------'-----------------'
      */
     [_NUM] = LAYOUT(
@@ -142,7 +142,7 @@ KC_F5, KC_5, KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2,  KC_3, L
      *        |      |      |      |      |       |       |    |       |       |      |      |      |      |
      *        `-------------------------------- --/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
+     *                      |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                      `------------------'------'            '------'-----------------'
      *
      */
@@ -279,7 +279,6 @@ bool sw_atab_active = false;
 oneshot_state osl_sym_state = os_up_unqueued;
 oneshot_state osl_num_state = os_up_unqueued;
 oneshot_state mhl_nav_state = os_up_unqueued;
-oneshot_state mhl_num_state = os_up_unqueued;
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     // Escape and moved layer
@@ -296,7 +295,6 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode) {
     switch (keycode) {
         case TO(_DEFAULT):
         case MHL_NAV:
-        case MHL_NUM:
         case OSL_SYM:
         case OSL_NUM:
         case KC_ESC:
@@ -308,11 +306,12 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode) {
 
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
+        // Layers
         case TO(_DEFAULT):
         case MHL_NAV:
-        case MHL_NUM:
         case OSL_SYM:
         case OSL_NUM:
+
         // Modifiers
         case KC_LCTL:
         case KC_RCTL:
@@ -322,9 +321,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
         case KC_LSFT:
 
         // Allow mod-tap on one shot layers
-        case LSFT_T(KC_5):
         case LSFT_T(KC_4):
-        case LSFT_T(KC_GRV):
         case LSFT_T(KC_CIRC):
         case LSFT_T(KC_O):
         case LSFT_T(KC_P):
@@ -358,8 +355,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Custom layer change (no timer)
     bool notHandled = update_oneshot_layer(&osl_sym_state, _SYM, OSL_SYM, keycode, record);
     notHandled      = update_oneshot_layer(&osl_num_state, _NUM, OSL_NUM, keycode, record);
-    // notHandled = update_move_hold_layer(&mhl_num_state, _NUM, MHL_NUM, keycode, record);
-    notHandled = update_move_hold_layer(&mhl_nav_state, _NAV, MHL_NAV, keycode, record);
+    notHandled      = update_move_hold_layer(&mhl_nav_state, _NAV, MHL_NAV, keycode, record);
 
     if (!notHandled) {
         return false;
@@ -377,13 +373,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case RALT_T(C_SLSH):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(C(KC_SLSH)); // Send C(KC_SLSH) on tap
-                return false;
-            }
-            break;
-        case LSFT_T(KC_GRV):
-            // Required to avoid to input \ when combined with mod-tap
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_GRV); // Send C(KC_GRV) on tap
                 return false;
             }
             break;
@@ -519,7 +508,6 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_UNDS:
         case KC_MINS:
         case LSFT_T(KC_CIRC):
-        case LSFT_T(KC_GRV):
             return true;
 
         // Custom one shot layer
