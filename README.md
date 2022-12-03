@@ -37,7 +37,7 @@ This layout is mainly designed with programmer / game developer in mind:
     - No reaching
   - Allow fast access to
     - C-key / S-C-key
-    - Vim like movements (arrows, home, end)
+    - Fast letter/word/sentence movements (arrows, home, end)
     - Common symbols (;, :, -, =, +, _)
     - Small digits (0, 1, 2, 3, 4)
     - Debug keys (F10, F11, F12)
@@ -48,8 +48,8 @@ This layout is mainly designed with programmer / game developer in mind:
     - Left/Right/middle buttons with the right hand
     - Scroll, PageUp, PageDown
   - Debugging / Playing games does not require a special layer
-  - Left half can be used with mouse
-
+    - No home mods making WASD / ZQSD movements a pain
+    - Left half can be used with mouse
 
 ### How ?
 **Modifiers:**
@@ -57,20 +57,22 @@ This layout is mainly designed with programmer / game developer in mind:
     - Ctrl on thumbs
       - Autocompletion (C-space)
       - Common shortcuts thanks to mirrored Ctrl
-    - Shift on pinkies
+    - Shift on right pinky
       - Combinaison with Ctrl is easy
-    - Others on bottom rows to avoid breaking gestures
-      - WASD
+    - Shift/Alt using combos to avoid misfire or mod tap making easy to use
+      - WASD / ZQSD
       - Mouse
       - Arrows
-    - Same position on all layers
+  - Same position on all layers
+    - Small memory overhead
+    - Intuitive
 
 
 **Layers:**
   - Layer switching does not use any timer so breeze and take your time (adaptation of [Callum modifiers](https://github.com/callum-oakley/qmk_firmware/tree/master/users/callum) to layers)
   - **One Shot** or **Hold**
     - One Shot = Fast to write a symbol and move on to next key with the hand activating the layer
-    - Hold = Fast to write multiple symbol like when editing markdown ^^
+    - Hold = Fast to write multiple symbol in a row: `::` (Cpp), `###` (markdown), ...
   - **Move To** or **Hold**
     - Move To = Vim like navigation layer, scrolling is a breeze
     - Hold = Fast small movements (move cursor, select words, ...)
@@ -84,11 +86,12 @@ This layout is mainly designed with programmer / game developer in mind:
   - Does not break gestures / game movements / typing
   - Combos using both hands for maintenance/configuration layer
     - `Adjust` layer cannot be activated by errors
+  - Caps word instead of Caps lock
 
 
 **Hand placements:**
   - Columns splay to respect normal splay of fingers
-  - Aggressive pinky stagger to reduce stress
+  - Aggressive pinky stagger to reduce stress on it
   - One hand activate a layer while the other could type the most used keys
   - One shot layer avoid reaching when key on the same side
   - Mouse emulation on the left to let the right hand rest (the one using the mouse)
