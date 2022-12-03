@@ -20,11 +20,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        ,-----------------------------------.                    ,-----------------------------------.
      *        |-------|   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |-------|
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+------.
-     * |  Q   |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   |Enter |
-     * |      | Shift |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |RCtrl |
+     * |  Q   |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   |RCtrl |
+     * |      |       |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |      |
      * `------+-------+------+------+------+------| MUTE  |    | PSCR  |------+------+------+------+-------+------'
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /   |
-     *        |  GUI  |  Alt |      |      |      |       |    |       |      |      |      | Alt  | Ralt  |
+     *        |       |      |      |      |      |       |    |       |      |      |      | GUI  | Ralt  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV  | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
@@ -32,9 +32,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_DEFAULT] = LAYOUT(
                     KC_W, KC_E, KC_R, KC_T,            KC_Y, KC_U, KC_I, KC_O,
-KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, LSFT_T(KC_P), RCTL_T(KC_ENT),
-      LGUI_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, KC_MUTE,
-                                      KC_PSCR, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
+KC_Q, KC_A, KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, LSFT_T(KC_P), RCTL_T(KC_ENT),
+      KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE,
+                                      KC_PSCR, KC_N, KC_M,  KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
              MHL_NAV, LCTL_T(KC_SPC), OSL_NUM,          OSL_SYM, LCTL_T(KC_ENT), TO(_DEFAULT)
     ),
 
@@ -44,11 +44,11 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, L
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |-------|   W  |   F  |   P  |   G   |                    |   J  |   L  |   U  |   Y  |-------|
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |  Q   |   A   |   R  |   S  |   T  |   D   |                    |   H  |   N  |   E  |   I  |   O   |Enter |
-     * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |RCtrl |
+     * |  Q   |   A   |   R  |   S  |   T  |   D   |                    |   H  |   N  |   E  |   I  |   O   | RCtrl|
+     * |      |       |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |      |
      * `------+-------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+-------+------'
      *        |   Z   |   X  |   C  |   V  |   B   |-------|    |-------|   K  |   M  |   ,  |   .  |   /   |
-     *        |  GUI  |  Alt |      |      |       |       |    |       |      |      |      | Alt  | Ralt  |
+     *        |       |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt  |
      *        `------------------------------------/      /      \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV  | Ctrl   |/  NUM  /          \ SYM  \|  Ctrl  |        |
@@ -56,9 +56,9 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, L
      */
     [_COLEMAK] = LAYOUT(
                     KC_W, KC_F, KC_P, KC_G,            KC_J, KC_L, KC_U, KC_Y,
-KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_O), RCTL_T(KC_ENT),
-      LGUI_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, KC_MUTE,
-                                       KC_PSCR, KC_K, KC_M, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
+KC_Q, KC_A, KC_R, KC_S, KC_T, KC_D,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_O), RCTL_T(KC_ENT),
+      KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE,
+                                       KC_PSCR, KC_K, KC_M, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
                     _______, _______, _______,         _______, _______, _______
     ),
 
@@ -68,11 +68,11 @@ KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,            KC_H, KC_N, KC_E, KC_I, L
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |-------|   O  |   U  |   D  |   W   |                    |   B  |   M  |   F  |   P  |-------|
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |  Q   |   A   |   S  |   R  |   T  |   Y   |                    |   H  |   N  |   E  |   I  |   G   |Enter |
-     * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |RCtrl |
+     * |  Q   |   A   |   S  |   R  |   T  |   Y   |                    |   H  |   N  |   E  |   I  |   G   |RCtrl |
+     * |      |       |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |      |
      * `------+-------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+-------+------'
      *        |   Z   |   X  |   C  |   V  |   K   |-------|    |-------|   J  |   L  |   ,  |   .  |   /   |
-     *        |  GUI  |  Alt |      |      |       |       |    |       |      |      |      | Alt  | Ralt  |
+     *        |       |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt  |
      *        `------------------------------------/      /      \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV  | Ctrl   |/  NUM  /          \ SYM  \|  Ctrl  |        |
@@ -80,9 +80,9 @@ KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,            KC_H, KC_N, KC_E, KC_I, L
      */
     [_ERGOL] = LAYOUT(
                     KC_O, KC_U, KC_D, KC_W,            KC_B, KC_M, KC_F, KC_P,
-KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_G), RCTL_T(KC_ENT),
-      LGUI_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_K, KC_MUTE,
-                                       KC_PSCR, KC_J, KC_L, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
+KC_Q, KC_A, KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_G), RCTL_T(KC_ENT),
+      KC_Z, KC_X, KC_C, KC_V, KC_K, KC_MUTE,
+                                       KC_PSCR, KC_J, KC_L, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
                     _______, _______, _______,         _______, _______, _______
     ),
 
@@ -90,11 +90,11 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, L
      *        ,-----------------------------------.                    ,----------------------------------.
      *        |------| WH_L |  MU  | WH_R  | PgUp |                    | WH_U | Home |  Up  | End  |------|
      * ,------+------+------+------+-------+------|                    |------+------+------+------+------+------.
-     * | CTab | ATab |  ML  |  MD  |  MR   | PgDo |                    | WH_D | Left | Down | Right| MB4 |  MB5  |
-     * |      | Shift|      |      |       |      |-------.    ,-------|      |      |      |      | Shift|      |
+     * | CTab | ATab |  ML  |  MD  |  MR   | PgDo |                    | WH_D | Left | Down | Right| MB4  |  MB5 |
+     * |      |      |      |      |       |      |-------.    ,-------|      |      |      |      | Shift|      |
      * `------+------+------+------+-------+------|  MUTE |    | PSCR  |------+------+------+------+------+------'
      *        | Undo | Cut  | Copy | Paste |LDesk |-------|    |-------|RDesk | MB1  | MB2  | MB3  | Com  |
-     *        | GUI  |  Alt |      |       |      |       |    |       |      |      |      | Alt  | Ralt |
+     *        |      |      |      |       |      |       |    |       |      |      |      | GUI  | Ralt |
      *        `-----------------------------------/      /      \      \----------------------------------'
      *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
@@ -102,9 +102,9 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, L
      */
     [_NAV] = LAYOUT(
                           KC_WH_L, KC_MS_U, KC_WH_R, KC_PGUP,       KC_WH_U, KC_HOME, KC_UP, KC_END,
-SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN4), KC_BTN5,
-         LGUI_T(C_Z), LALT_T(C_X), C_C, C_V, C(A(KC_LEFT)), _______,
-                                              _______, C(A(KC_RIGHT)), KC_BTN1, KC_BTN2, LALT_T(KC_BTN3), RALT_T(C_SLSH),
+SW_CTAB, SW_ATAB, KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN4), KC_BTN5,
+         C_Z,             C_X, C_C, C_V, C(A(KC_LEFT)), _______,
+                                              _______, C(A(KC_RIGHT)), KC_BTN1, KC_BTN2, LGUI_T(KC_BTN3), RALT_T(C_SLSH),
                                  _______, _______, _______,         _______, _______, _______
 
     ),
@@ -114,10 +114,10 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_
      *        |------|  F6  |  F7  |  F8  |  F9   |                    |  F10 |  F1  |  F2  |  F3  |------|
      * ,------+------+------+------+------+-------|                    |------+------+------+------+------+------.
      * |  F5  |  5   |   6  |   7  |   8  |   9   |                    |  0   |   1  |   2  |   3  |   4  |  F4  |
-     * |      | Shift|      |      |      |       |-------.    ,-------|      |      |      |      | Shift|      |
+     * |      |      |      |      |      |       |-------.    ,-------|      |      |      |      | Shift|      |
      * `------+------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+------+------'
      *        | Undo | Cut  | Copy |Paste |       |-------|    |-------|  F11 |  F12 |  ,   |  .   |  /   |
-     *        | GUI  |  Alt |      |      |       |       |    |       |      |      |      | Alt  | Ralt |
+     *        |      |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt |
      *        `-----------------------------------/      /      \      \----------------------------------'
      *                      |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                      |   NAV   | Ctrl   |/  NUM /          \ SYM  \|  Ctrl  |        |
@@ -125,9 +125,9 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_
      */
     [_NUM] = LAYOUT(
                      KC_F6, KC_F7, KC_F8, KC_F9,           KC_F10, KC_F1, KC_F2, KC_F3,
-KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2,  KC_3, LSFT_T(KC_4), KC_F4,
-        LGUI_T(C_Z), LALT_T(C_X), C_C, C_V, XXXXXXX, _______,
-                                          _______, KC_F11, KC_F12, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
+KC_F5, KC_5, KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2,  KC_3, LSFT_T(KC_4), KC_F4,
+       C_Z,          C_X,  C_C,  C_V,  XXXXXXX, _______,
+                                                _______,   KC_F11, KC_F12, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
                     _______, _______, _______,         _______, _______, _______
     ),
     /* SYM
@@ -136,7 +136,7 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
      *        |------|   :  |  #   |  ;   |   `   |                    |   %   |   &  |   *  |   ?  |------|
      * ,------+------+------+------+------+-------|                    |-------+------+------+------+------+------.
      * |  °   |  `…  |   à  |  -   |  é   |   /   |                    |   \   |   è  |   '  |   !  |  ^…  |   €  |
-     * |      | Shift|      |      |      |       |-------.    ,-------|       |      |      |      | Shift|      |
+     * |      |      |      |      |      |       |-------.    ,-------|       |      |      |      | Shift|      |
      * `------+------+------+------+------+-------|  MUTE |    | PSCR  |-------+------+------+------+------+------'
      *        |  |   |   =  |  _   |  +   |  "…   |-------|    |-------|  '…   |   @  |   "  |   $  |   ç  |
      *        |      |      |      |      |       |       |    |       |       |      |      |      |      |
@@ -148,7 +148,7 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
      */
     [_SYM] = LAYOUT(
                        KC_COLN, KC_HASH, KC_SCLN,   C_GRV,     KC_PERC, KC_AMPR, KC_ASTR, KC_QUES,
-C_DEG, LSFT_T(KC_GRV), C_A_GRV, KC_MINS, C_E_ACU, KC_SLSH,     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
+C_DEG, KC_GRV, C_A_GRV, KC_MINS, C_E_ACU, KC_SLSH,     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
        KC_PIPE, KC_EQL, KC_UNDS, KC_PLUS, KC_DQUO, _______,
                                                    _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, C_C_CED,
                        _______, _______, _______,                   _______, _______, _______
@@ -187,9 +187,9 @@ XXXXXXX, XXXXXXX, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,  KC_VOLD, KC_MPRV, KC_MPLY
  *        ,-----------------------------------.                    ,----------------------------------.
  *        |-------|       ESCAPE       |      |                    |          LAUNCHER         |------|
  * ,------+-----  [  --  {  --  ( -----|------|                    |------|----  )  --  }  --  ]  ----+------.
- * |      |       |    ENTER    TAB   CAPS    |-------.    ,-------|    CAPS   BACK    DEL     |      |      |
+ * |      |       |    ENTER   TAB    CAPS    |-------.    ,-------|    CAPS   BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
- *        |       |      |      |      |      |-------|    |-------|      |      |      |      |      |
+ *        |       |     Alt   Shift    |      |-------|    |-------|      |    Shift    Alt           |
  *        `-----------------------------------/      /      \      \----------------------------------'
  *                     |        |          | / ADJ- /        \ -UST \ |        |  DEF   |
  *                     |        |          |/      /          \      \|        |        |
@@ -208,6 +208,12 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
         case caps:
         case caps_bis:
             return COMBO_TERM;
+        // Modifier combos
+        case alt_l:
+        case alt_r:
+        case shift_l:
+        case shift_r:
+            return COMBO_TERM + 20;
         // Two hands combos
         case adjust:
             return COMBO_TERM + 20;
@@ -236,6 +242,10 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
         case round_r:
         case square_l:
         case square_r:
+        case alt_l:
+        case alt_r:
+        case shift_l:
+        case shift_r:
             // Quick roll is allowed
             return false;
         case curly_l:
@@ -320,12 +330,8 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
         case LSFT_T(KC_P):
         case LSFT_T(KC_BTN4):
 
-        case LALT_T(C_X):
-        case LALT_T(KC_DOT):
-        case LALT_T(KC_BTN3):
-
-        case LGUI_T(KC_Z):
-        case LGUI_T(C_Z):
+        case LGUI_T(KC_BTN3):
+        case LGUI_T(KC_DOT):
 
         case RALT_T(C_SLSH):
         case RALT_T(KC_SLSH):
@@ -347,7 +353,7 @@ bool is_oneshot_mod_key(uint16_t keycode) {
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Swapper on one key (no timer)
     bool discard_swapper_key = update_swapper(&sw_ctab_active, KC_LCTL, KC_TAB, SW_CTAB, keycode, record);
-    discard_swapper_key |= update_swapper(&sw_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
+    discard_swapper_key |= update_swapper(&sw_atab_active, KC_LALT, KC_TAB, SW_ATAB, keycode, record);
 
     // Custom layer change (no timer)
     bool notHandled = update_oneshot_layer(&osl_sym_state, _SYM, OSL_SYM, keycode, record);
@@ -368,18 +374,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         // https://docs.qmk.fm/#/mod_tap?id=intercepting-mod-taps
         // Intercept to send key with modifier on tap
-        case LGUI_T(C_Z):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(C(KC_Z)); // Send C(KC_Z) on tap
-                return false;
-            }
-            break;
-        case LALT_T(C_X):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(C(KC_X)); // Send C(KC_X) on tap
-                return false;
-            }
-            break;
         case RALT_T(C_SLSH):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(C(KC_SLSH)); // Send C(KC_SLSH) on tap
@@ -531,6 +525,10 @@ bool caps_word_press_user(uint16_t keycode) {
         // Custom one shot layer
         case OSL_NUM:
         case OSL_SYM:
+        case MO(_NUM):
+        case OSL(_NUM):
+        case MO(_SYM):
+        case OSL(_SYM):
             return true;
 
         default:

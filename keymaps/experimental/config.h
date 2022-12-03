@@ -47,6 +47,9 @@ for more options.
 #    define COMBO_TERM 55 // Default combo timeout is 200ms.
 #    define EXTRA_SHORT_COMBOS
 #    define COMBO_MUST_TAP_PER_COMBO
+// If a combo triggers a modifier, only trigger when the combo is held
+#define COMBO_MUST_HOLD_MODS
+#define COMBO_HOLD_TERM 150
 // #    define COMBO_MUST_HOLD_PER_COMBO
 #    define COMBO_TERM_PER_COMBO
 // All combos are specified from the base layer
