@@ -6,7 +6,7 @@ COMB(launcher, A(KC_F2), KC_U, KC_I, KC_O)
 
 // HOME ROW
 // Left
-COMB(enter, KC_ENT, KC_S, KC_D)
+COMB(repeat, REPEAT, KC_S, KC_D)
 COMB(tab, KC_TAB, KC_D, KC_F)
 COMB(caps, CAPS_WORD, KC_F, KC_G)
 // Right
