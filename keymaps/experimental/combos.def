@@ -16,11 +16,11 @@ COMB(caps_bis, CAPS_WORD, KC_H, KC_J)
 
 // BOTTOM ROW
 // Left
-COMB(alt_l, KC_LALT, KC_X, KC_C)
-COMB(shift_l, KC_LSHIFT, KC_C, KC_V)
+COMB(shift_l, KC_LSHIFT, KC_X, KC_C)
+COMB(alt_l, KC_LALT, KC_C, KC_V)
 // Right
-COMB(shift_r, KC_LSHIFT, KC_M, KC_COMM)
-COMB(alt_r, KC_LALT, KC_COMM, LGUI_T(KC_DOT))
+COMB(alt_r, KC_LALT, KC_M, KC_COMM)
+COMB(shift_r, KC_LSHIFT, KC_COMM, LGUI_T(KC_DOT))
 
 // Thumbs
 // Left
