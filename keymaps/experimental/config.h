@@ -44,7 +44,7 @@ for more options.
 // Combo settings
 #ifdef COMBO_ENABLE
 #    undef COMBO_TERM
-#    define COMBO_TERM 55 // Default combo timeout is 200ms.
+#    define COMBO_TERM 60 // Default combo timeout is 200ms.
 #    define EXTRA_SHORT_COMBOS
 #    define COMBO_MUST_TAP_PER_COMBO
 // If a combo triggers a modifier, only trigger when the combo is held
