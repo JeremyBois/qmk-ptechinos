@@ -116,3 +116,10 @@ Currently this keyboard layout is not part of the QMK repository so some manual 
 
   - [ ] Bluetooth keys (PCB not yet tested wiht ZMK)
   - [ ] Update layout to match v0.6 PCB version
+
+
+## QMK
+
+  - Data driven configuration (see `info.json`)
+    - [Documentation](https://qmk.github.io/qmk_mkdocs/master/en/reference_info_json)
+    - [JSON schema](https://github.com/qmk/qmk_firmware/blob/master/data/schemas/keyboard.jsonschema)
