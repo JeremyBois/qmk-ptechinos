@@ -8,19 +8,18 @@ COMB(launcher, A(KC_F2), KC_U, KC_I, KC_O)
 // Left
 COMB(repeat, REPEAT, KC_S, KC_D)
 COMB(tab, KC_TAB, KC_D, KC_F)
-COMB(caps, CAPS_WORD, KC_F, KC_G)
 // Right
 COMB(back, KC_BSPC, KC_J, KC_K)
 COMB(del, KC_DEL, KC_K, KC_L)
-COMB(caps_bis, CAPS_WORD, KC_H, KC_J)
 
 // BOTTOM ROW
 // Left
 COMB(alt_l, KC_LALT, KC_X, KC_C)
-COMB(shift_l, KC_LSHIFT, KC_C, KC_V)
+COMB(caps, CAPS_WORD, KC_C, KC_V)
+
 // Right
-COMB(shift_r, KC_LSHIFT, KC_M, KC_COMM)
 COMB(alt_r, KC_LALT, KC_COMM, LGUI_T(KC_DOT))
+COMB(caps_bis, CAPS_WORD, KC_M, KC_COMM)
 
 // Thumbs
 // Left
