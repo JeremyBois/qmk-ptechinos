@@ -1,5 +1,7 @@
 #pragma once
 
+#include QMK_KEYBOARD_H
+
 //
 // ***
 // LAYER SETTINGS
@@ -22,7 +24,7 @@ enum custom_keycodes {
     C_QUOT,
     C_DQUOT,
     C_DEG,
-    C_CHORD,   // LEADER key
+    C_CHORD, // LEADER key
     C_Z,
     C_X,
     C_C,
@@ -36,9 +38,12 @@ enum custom_keycodes {
     SW_CTAB,   // Ctrl-tab
     SW_ATAB,   // Alt-tab
     ML_ADJUST, // Combo to move to ADJUST layer
-    OSL_SYM,   // One shot layer without timer
-    OSL_NUM,   //
-    MHL_NAV    // On move/hold layer without timer
+    // SHIFT_DEFAULT, // LSFT_T(TO(DEFAULT))
+    OSL_SYM, // One shot layer without timer
+    OSL_NUM, //
+    MHL_NAV, // On move/hold layer without timer
+    MHL_NUM, //
+    REPEAT   // Repeat feature
 };
 
 //

@@ -6,7 +6,7 @@ COMB(launcher, A(KC_F2), KC_U, KC_I, KC_O)
 
 // HOME ROW
 // Left
-COMB(enter, KC_ENT, KC_S, KC_D)
+COMB(repeat, REPEAT, KC_S, KC_D)
 COMB(tab, KC_TAB, KC_D, KC_F)
 // Right
 COMB(back, KC_BSPC, KC_J, KC_K)
@@ -14,27 +14,29 @@ COMB(del, KC_DEL, KC_K, KC_L)
 
 // BOTTOM ROW
 // Left
+COMB(alt_l, KC_LALT, KC_X, KC_C)
+COMB(caps, CAPS_WORD, KC_C, KC_V)
+
 // Right
+COMB(alt_r, KC_LALT, KC_COMM, LGUI_T(KC_DOT))
+COMB(caps_bis, CAPS_WORD, KC_M, KC_COMM)
 
 // Thumbs
 // Left
 // Right
 
 // TWO HANDS
-COMB(caps, KC_CAPS, KC_G, KC_H)
 COMB(adjust, ML_ADJUST, OSL_NUM, OSL_SYM)
 
 // Vertical HOME/TOP
 // Left
-COMB(angle_l, KC_LT, KC_W, KC_S)
-COMB(curly_l, KC_LPRN, KC_E, KC_D)
-COMB(round_l, KC_LCBR, KC_R, KC_F)
-COMB(square_l, KC_LBRC, KC_T, KC_G)
+COMB(square_l, KC_LBRC, KC_W, KC_S)
+COMB(curly_l,  KC_LPRN, KC_E, KC_D)
+COMB(round_l,  KC_LCBR, KC_R, KC_F)
 // Right
-COMB(angle_r, KC_GT, KC_O, KC_L)
-COMB(curly_r, KC_RPRN, KC_I, KC_K)
-COMB(round_r, KC_RCBR, KC_U, KC_J)
-COMB(square_r, KC_RBRC, KC_Y, KC_H)
+COMB(square_r, KC_RBRC, KC_O, KC_L)
+COMB(curly_r,  KC_RPRN, KC_I, KC_K)
+COMB(round_r,  KC_RCBR, KC_U, KC_J)
 
 
 // // Numbers @TODO
