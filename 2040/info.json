@@ -1,0 +1,314 @@
+{
+    "keyboard_name": "Ptechinos",
+    "url": "https://github.com/JeremyBois/Ptechinos",
+    "maintainer": "JeremyBois",
+    "manufacturer": "JeremyBois",
+    "usb": {
+        "vid": "0x7466", // JB
+        "pid": "0x5053", // PS
+        "device_version": "0.6.0"
+    },
+    "build": {
+        // LTO must be disabled on RP2040
+        "lto": false,
+        "debounce_type": "sym_defer_pr"
+    },
+    "processor": "RP2040",
+    "bootloader": "rp2040",
+    "bootloader_instructions": "Press twice the physical RESET button on the bottom of the board.",
+    "development_board": "kb2040",
+    "pin_compatible": "promicro",
+    "debounce": 3, // Default is 5 (lower is better)
+    // Keyboard Matrix Assignments
+    // https://learn.adafruit.com/adafruit-kb2040/pinouts
+    // ROWS: AVR pins used for rows, top to bottom
+    // COLS: AVR pins used for columns, left to right
+    // DIODE_DIRECTION :
+    //  COL2ROW = COL = Anode(+), ROW = Cathode(-, marked on diode)
+    //  ROW2COL = ROW = Anode(+), COL = Cathode(-, marked on diode)
+    "diode_direction": "COL2ROW",
+    "matrix_pins": {
+        "cols": [
+            "GP26",
+            "GP18",
+            "GP20",
+            "GP19",
+            "GP10"
+        ],
+        "rows": [
+            "GP6",
+            "GP7",
+            "GP8",
+            "GP9"
+        ]
+    },
+    "split": {
+        "enabled": true,
+        // The way how "handedness" is decided (which half is which)
+        // see https://docs.qmk.fm/#/feature_split_keyboard?id=setting-handedness
+        // "main": "right",  // BUG : Fixed by PR at https://github.com/qmk/qmk_firmware/pull/18254
+        "transport": {
+            "protocol": "serial_usart"
+        },
+        "soft_serial_pin": "GP1",
+        "soft_serial_speed": 1,
+    },
+    "features": {
+        // Rotary encoders (+1112)
+        "encoder": true,
+        // Mouse keys (+1482). Not required for trackball usage
+        "mousekey": true,
+        // Audio control and System control (+450)
+        "extrakey": true,
+        // Allow to write combo
+        "combo": true,
+        // Make easier to write Caps words
+        "caps_word": true,
+        // 6KRO by default. NKRO works if enabled (+328)
+        "nkro": false,
+        // Save space by not using sounds
+        "audio": false,
+        "music": false,
+        //  Must be disabled if OLEDs are not installed (+3608-4774 with pet)
+        "oled": false,
+        "quantum_painter": false,
+        // Allow to send unicode characters
+        "unicode": false,
+        // Save space by not using space cadet left/right shift (+350)
+        "space_cadet": false,
+        // Allow tap dance combinations
+        "tap_dance": false,
+        // Combinaisons with a leader key
+        "leader": false,
+        // Software way to enter boot mode
+        "bootmagic": false,
+        // Console for debug (+4686)
+        "console": false,
+    },
+    "qmk": {
+        "tap_keycode_delay": 10
+    },
+    "tapping": {
+        // https://github.com/qmk/qmk_firmware/blob/master/docs/tap_hold.md#ignore-mod-tap-interrupt
+        // Remove special case for mod tap keys that strongly prefers the hold
+        "ignore_mod_tap_interrupt": true,
+        // https://github.com/qmk/qmk_firmware/blob/master/docs/tap_hold.md#permissive-hold
+        // Allow a more permissive hold for mod tap (does not work with tap dance).
+        "permissive_hold": false,
+        // https://github.com/qmk/qmk_firmware/blob/master/docs/tap_hold.md#hold-on-other-key-press
+        "hold_on_other_key_press": false,
+        "term": 220,
+        // How many taps before triggering the toggle
+        "toggle": 2
+    },
+    "encoder": {
+        // Encoders reference : EVQWGD001
+        "rotary": [
+            {
+                "pin_a": "GP29",
+                "pin_b": "GP28",
+                "resolution": 4
+            },
+            {
+                "pin_a": "GP4",
+                "pin_b": "GP5",
+                "resolution": 4
+            },
+        ]
+    },
+    "combo": {
+        // Default combo timeout is 200ms.
+        "term": 60
+    },
+    "mouse_key": {
+        // https://www.reddit.com/r/olkb/comments/72u8ou/qmk_mouse_keys_rock/
+        "enabled": true,
+        "delay": 0,
+        "interval": 16,
+        "max_speed": 6,
+        "time_to_max": 60,
+        "wheel_delay": 0
+    },
+    "oneshot": {
+        // Sticky key activation (high to only support it in code)
+        "tap_toggle": 10,
+        // Sticky key duration
+        "timeout": 4000
+    },
+    "caps_word": {
+        "enabled": true
+    },
+    "leader_key": {
+        "timing": false,
+        // Default leader timeout is 200ms
+        "timeout": 400
+    },
+    "layouts": {
+        "LAYOUT_v06": {
+            "layout": [
+                {
+                    "x": 0,
+                    "y": 2
+                },
+                {
+                    "x": 0,
+                    "y": 2
+                },
+                {
+                    "x": 0,
+                    "y": 2
+                },
+                {
+                    "x": 2,
+                    "y": 0.5
+                },
+                {
+                    "x": 3,
+                    "y": 0
+                },
+                {
+                    "x": 4,
+                    "y": 0.5
+                },
+                {
+                    "x": 5,
+                    "y": 0.75
+                },
+                {
+                    "x": 11,
+                    "y": 0.75
+                },
+                {
+                    "x": 12,
+                    "y": 0.5
+                },
+                {
+                    "x": 13,
+                    "y": 0
+                },
+                {
+                    "x": 14,
+                    "y": 0.5
+                },
+                {
+                    "x": 16,
+                    "y": 2
+                },
+                {
+                    "x": 1,
+                    "y": 2
+                },
+                {
+                    "x": 2,
+                    "y": 1.5
+                },
+                {
+                    "x": 3,
+                    "y": 1
+                },
+                {
+                    "x": 4,
+                    "y": 1.5
+                },
+                {
+                    "x": 5,
+                    "y": 1.75
+                },
+                {
+                    "x": 11,
+                    "y": 1.75
+                },
+                {
+                    "x": 12,
+                    "y": 1.5
+                },
+                {
+                    "x": 13,
+                    "y": 1
+                },
+                {
+                    "x": 14,
+                    "y": 1.5
+                },
+                {
+                    "x": 15,
+                    "y": 2
+                },
+                {
+                    "x": 1,
+                    "y": 3
+                },
+                {
+                    "x": 2,
+                    "y": 2.5
+                },
+                {
+                    "x": 3,
+                    "y": 2
+                },
+                {
+                    "x": 4,
+                    "y": 2.5
+                },
+                {
+                    "x": 5,
+                    "y": 2.75
+                },
+                {
+                    "label": "enc1",
+                    "x": 6.5,
+                    "y": 2.75
+                },
+                {
+                    "label": "enc2",
+                    "x": 9.5,
+                    "y": 2.75
+                },
+                {
+                    "x": 11,
+                    "y": 2.75
+                },
+                {
+                    "x": 12,
+                    "y": 2.5
+                },
+                {
+                    "x": 13,
+                    "y": 2
+                },
+                {
+                    "x": 14,
+                    "y": 2.5
+                },
+                {
+                    "x": 15,
+                    "y": 3
+                },
+                {
+                    "x": 5,
+                    "y": 4
+                },
+                {
+                    "x": 6,
+                    "y": 4
+                },
+                {
+                    "x": 7,
+                    "y": 4
+                },
+                {
+                    "x": 9,
+                    "y": 4
+                },
+                {
+                    "x": 10,
+                    "y": 4
+                },
+                {
+                    "x": 11,
+                    "y": 4
+                }
+            ]
+        }
+    }
+}
