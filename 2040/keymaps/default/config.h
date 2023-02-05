@@ -43,4 +43,8 @@
 #ifdef MOUSEKEY_ENABLE
 #    define MOUSEKEY_WHEEL_MAX_SPEED 8
 #    define MOUSEKEY_WHEEL_TIME_TO_MAX 40
+// Enable quadratic curve :
+//   - accurate small movements
+//   - fast large motion
+#    define MK_KINETIC_SPEED 1
 #endif
