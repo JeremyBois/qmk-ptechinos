@@ -40,3 +40,36 @@
 // Encoders reference : EVQWGD001
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_encoders.md
 #define ENCODER_DEFAULT_POS 0x3
+
+#ifdef POINTING_DEVICE_ENABLE
+// ┌─────────────────────────────────────────────────┐
+// │ Cirque Trackpad                                 │
+// └─────────────────────────────────────────────────┘
+// Driver / Wiring
+// https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#i2c-driver
+// https://github.com/qmk/qmk_firmware/blob/master/docs/i2c_driver.md
+#    define I2C1_SDA_PIN GP2 // Default on Generic Pro Micro RP2040
+#    define I2C1_SCL_PIN GP3 // Default on Generic Pro Micro RP2040
+#    define I2C1_CLOCK_SPEED 100000
+
+// Common settings
+// https://docs.qmk.fm/#/feature_pointing_device?id=common-settings
+#    define CIRQUE_PINNACLE_DIAMETER_MM 35
+#    define CIRQUE_PINNACLE_ATTENUATION EXTREG__TRACK_ADCCONFIG__ADC_ATTENUATE_4X
+#    define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
+// I2C settings
+#    define CIRQUE_PINNACLE_ADDR 0x2A
+#    define CIRQUE_PINNACLE_TIMEOUT 20
+// Limits the frequency that the sensor is polled for motion
+#    define POINTING_DEVICE_TASK_THROTTLE_MS 10
+
+// // ┌─────────────────────────────────────────────────┐
+// // │ PWM3360 Trackball                               │
+// // └─────────────────────────────────────────────────┘
+// #    define SPLIT_POINTING_ENABLE
+// // https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#spi-driver
+// #define SPI_SCK_PIN GP2
+// #define SPI_MISO_PIN GP4
+// #define SPI_MOSI_PIN GP3
+
+#endif

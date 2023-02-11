@@ -48,3 +48,25 @@
 //   - fast large motion
 #    define MK_KINETIC_SPEED 1
 #endif
+
+#ifdef POINTING_DEVICE_ENABLE
+// ┌─────────────────────────────────────────────────┐
+// │ Trackpad                                        │
+// └─────────────────────────────────────────────────┘
+// Common parameters can be founded in ../config.h
+
+// Scroll gesture
+#    define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
+// Single tap support
+#    define CIRQUE_PINNACLE_TAP_ENABLE 1
+
+// // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_split_keyboard.md?id=data-sync-options
+// // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_pointing_device.md#split-keyboard-configuration
+// #    ifdef SPLIT_POINTING_ENABLE
+// #        ifdef MASTER_LEFT
+// #            define POINTING_DEVICE_LEFT
+// #        else
+// #            define POINTING_DEVICE_RIGHT
+// #        endif
+// #    endif
+#endif
