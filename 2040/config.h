@@ -73,3 +73,11 @@
 // #define SPI_MOSI_PIN GP3
 
 #endif
+
+// ┌─────────────────────────────────────────────────┐
+// │ CRC                                             │
+// └─────────────────────────────────────────────────┘
+// https://github.com/qmk/qmk_firmware/pull/12641
+// Data validation in split transport code (trackball on slave side)
+#define CRC8_USE_TABLE
+#define CRC8_OPTIMIZE_SPEED
