@@ -63,15 +63,18 @@
 // Limits the frequency that the sensor is polled for motion
 #    define POINTING_DEVICE_TASK_THROTTLE_MS 10
 
-// // ┌─────────────────────────────────────────────────┐
-// // │ PWM3360 Trackball                               │
-// // └─────────────────────────────────────────────────┘
-// #    define SPLIT_POINTING_ENABLE
-// // https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#spi-driver
-// #define SPI_SCK_PIN GP2
-// #define SPI_MISO_PIN GP4
-// #define SPI_MOSI_PIN GP3
-
+// ┌─────────────────────────────────────────────────┐
+// │ PWM3360 Trackball                               │
+// └─────────────────────────────────────────────────┘
+// https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#spi-driver
+#    define SPI_DRIVER SPID0
+#    define SPI_SCK_PIN GP2
+#    define SPI_MOSI_PIN GP3
+#    define SPI_MISO_PIN GP4
+#    define PMW33XX_CS_PIN GP5 // Default to POINTING_DEVICE_CS_PIN
+#    define PMW33XX_CLOCK_SPEED 2000000
+#    define POINTING_DEVICE_INVERT_X 1
+#    define ROTATIONAL_TRANSFORM_ANGLE -90
 #endif
 
 // ┌─────────────────────────────────────────────────┐
