@@ -1,5 +1,4 @@
 {
-    "$schema": "https://github.com/qmk/qmk_firmware/blob/master/data/schemas/keyboard.jsonschema",
     "keyboard_name": "Ptechinos",
     "url": "https://github.com/JeremyBois/Ptechinos",
     "maintainer": "JeremyBois",
@@ -15,15 +14,16 @@
     },
     "processor": "atmega32u4",
     "bootloader": "caterina",
+    "bootloader_instructions": "Press once the physical RESET button on the top of the board.",
     "development_board": "elite_c",
     "pin_compatible": "promicro",
     "debounce": 3, // Default is 5 (lower is better)
     "split": {
         "enabled": true,
-        // The way how "handedness" is decided (which half is which),
+        // The way how "handedness" is decided (which half is which)
         // see https://docs.qmk.fm/#/feature_split_keyboard?id=setting-handedness
+        // "main": "right",  // BUG : Fixed by PR at https://github.com/qmk/qmk_firmware/pull/18254
         // for more options.
-        "main": "left",
         "transport": {
             "protocol": "serial"
         },
@@ -66,6 +66,9 @@
         "caps_word": true,
         // 6KRO by default. NKRO works if enabled (+328)
         "nkro": false,
+        // Save space by not using sounds
+        "audio": false,
+        "music": false,
         //  Must be disabled if OLEDs are not installed (+3608-4774 with pet)
         "oled": false,
         "quantum_painter": false,
@@ -136,7 +139,7 @@
         "timeout": 400
     },
     "layouts": {
-        "LAYOUT": {
+        "LAYOUT_v05": {
             "layout": [
                 {
                     "x": 0,

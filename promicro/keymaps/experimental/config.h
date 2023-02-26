@@ -5,13 +5,21 @@
 // https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
 //
 
+// ┌─────────────────────────────────────────────────┐
+// │ Handness                                        │
+// └─────────────────────────────────────────────────┘
+// BUG in data driven implementation
+// Fixed by PR at https://github.com/qmk/qmk_firmware/pull/18254
+#define MASTER_LEFT
+// #define MASTER_RIGHT
+
 // Combo settings
 #ifdef COMBO_ENABLE
 #    define EXTRA_SHORT_COMBOS
 #    define COMBO_MUST_TAP_PER_COMBO
 // If a combo triggers a modifier, only trigger when the combo is held
-#define COMBO_MUST_HOLD_MODS
-#define COMBO_HOLD_TERM 150
+#    define COMBO_MUST_HOLD_MODS
+#    define COMBO_HOLD_TERM 150
 #    define COMBO_TERM_PER_COMBO
 // All combos are specified from the base layer
 //  - saves space

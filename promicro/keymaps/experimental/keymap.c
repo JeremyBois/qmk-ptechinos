@@ -1,5 +1,6 @@
 #include "config.h"
 
+
 #include QMK_KEYBOARD_H
 
 #include "features/customCodes.h"
@@ -27,17 +28,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      | Shift |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |        |
      * `------+-------+------+------+------+------| MUTE  |    | PSCR  |------+------+------+------+-------+--------'
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /   |
-     *        |       |      |      |      |      |       |    |       |      |      |      | GUI  | Ralt  |
+     *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                       `--------'--------'------'            '------'--------'--------'
      */
-    [_DEFAULT] = LAYOUT(
+    [_DEFAULT] = LAYOUT_v05(
                     KC_W, KC_E, KC_R, KC_T,            KC_Y, KC_U, KC_I, KC_O,
 KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, LSFT_T(KC_P), REPEAT,
-      KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE,
-                                      KC_PSCR, KC_N, KC_M,  KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
+      KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_B, KC_MUTE,
+                                      KC_PSCR, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
              MHL_NAV, LCTL_T(KC_SPC), OSL_NUM,          OSL_SYM, LCTL_T(KC_ENT), TO(_DEFAULT)
     ),
 
@@ -51,17 +52,17 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,            KC_H, KC_J, KC_K, KC_L, L
      * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |        |
      * `------+-------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+-------+--------'
      *        |   Z   |   X  |   C  |   V  |   B   |-------|    |-------|   K  |   M  |   ,  |   .  |   /   |
-     *        |       |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt  |
+     *        |       | LALT |      |      |       |       |    |       |      |      |      | LALT | RALT  |
      *        `------------------------------------/      /      \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV  | LCtrl  |/  NUM  /          \ SYM  \|  LCtrl |        |
      *                       `--------'--------'-------'            '------'--------'--------'
      */
-    [_COLEMAK] = LAYOUT(
+    [_COLEMAK] = LAYOUT_v05(
                     KC_W, KC_F, KC_P, KC_G,            KC_J, KC_L, KC_U, KC_Y,
 KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_O), REPEAT,
-      KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE,
-                                       KC_PSCR, KC_K, KC_M, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
+      KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_B, KC_MUTE,
+                                       KC_PSCR, KC_K, KC_M, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
                     _______, _______, _______,         _______, _______, _______
     ),
 
@@ -75,17 +76,17 @@ KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,            KC_H, KC_N, KC_E, KC_I, L
      * |       | Shift|      |      |       |      |-------.    ,-------|      |      |      |      | Shift |       |
      * `-------+------+------+------+-------+------|  MUTE |    | PSCR  |------+------+------+------+-------+-------'
      *         |   Z  |   X  |   C  |   V   |   K  |-------|    |-------|   J  |   L  |   ,  |   .  |   /   |
-     *         |      |      |      |       |      |       |    |       |      |      |      | GUI  | Ralt  |
+     *         |      | LALT |      |       |      |       |    |       |      |      |      | LALT  | RALT  |
      *         `-----------------------------------/      /      \      \-----------------------------------'
      *                       |    NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                       |    NAV  | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                       `---------'--------'------'            '------'--------'--------'
      */
-    [_ERGOL] = LAYOUT(
+    [_ERGOL] = LAYOUT_v05(
                     KC_O, KC_U, KC_D, KC_W,            KC_B, KC_M, KC_F, KC_P,
 KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_G), REPEAT,
-      KC_Z, KC_X, KC_C, KC_V, KC_K, KC_MUTE,
-                                       KC_PSCR, KC_J, KC_L, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
+      KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_K, KC_MUTE,
+                                       KC_PSCR, KC_J, KC_L, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
                     _______, _______, _______,         _______, _______, _______
     ),
 
@@ -97,16 +98,16 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,            KC_H, KC_N, KC_E, KC_I, L
      * |       | Shift|      |      |       |      |-------.    ,-------|      |      |      |      | Shift|       |
      * `-------+------+------+------+------ +------|  MUTE |    | PSCR  |------+------+------+------+------+-------'
      *         | Undo | Cut  | Copy | Paste |LDesk |-------|    |-------|RDesk | MB1  | MB2  | MB3  | Com  |
-     *         |      |      |      |       |      |       |    |       |      |      |      | GUI  | Ralt |
+     *         |      | LALT |      |       |      |       |    |       |      |      |      | LALT | Ralt |
      *         `-----------------------------------/      /      \      \----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                       `---------'--------'------'            '------'--------'--------'
      */
-    [_NAV] = LAYOUT(
+    [_NAV] = LAYOUT_v05(
                           KC_WH_L, KC_MS_U, KC_WH_R, KC_PGUP,       KC_WH_U, KC_HOME, KC_UP, KC_END,
 SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN4), KC_BTN5,
-         C_Z,             C_X, C_C, C_V, C(A(KC_LEFT)), _______,
+         C_Z,             LALT_T(C_X), C_C, C_V, C(A(KC_LEFT)), _______,
                                               _______, C(A(KC_RIGHT)), KC_BTN1, KC_BTN2, LGUI_T(KC_BTN3), RALT_T(C_SLSH),
                                  _______, _______, _______,         _______, _______, _______
 
@@ -120,17 +121,17 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,       KC_WH_D, KC_
      * |       | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift| RCTRL |
      * `-------+-------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+------+-------'
      *         |  Undo | Cut  | Copy |Paste |       |-------|    |-------|  F11 |  F12 |  ,   |  .   |  /   |
-     *         |       |      |      |      |       |       |    |       |      |      |      | GUI  | Ralt |
+     *         |       | LALT |      |      |       |       |    |       |      |      |      | LALT | RALT |
      *         `------------------------------------/      /      \      \----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
      *                       `---------'--------'------'            '------'--------'--------'
      */
-    [_NUM] = LAYOUT(
+    [_NUM] = LAYOUT_v05(
                      KC_F6, KC_F7, KC_F8, KC_F9,           KC_F10, KC_F1, KC_F2, KC_F3,
 KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2,  KC_3, LSFT_T(KC_4), RCTL_T(KC_F4),
-       C_Z,          C_X,  C_C,  C_V,  XXXXXXX, _______,
-                                                _______,   KC_F11, KC_F12, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
+       C_Z,          LALT_T(C_X),  C_C,  C_V,  XXXXXXX, _______,
+                                                _______,   KC_F11, KC_F12, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
                     _______, _______, _______,         _______, _______, _______
     ),
     /* SYM
@@ -149,7 +150,7 @@ KC_F5, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,               KC_0,   KC_1,  KC_2, 
      *                       `---------'--------'------'            '------'--------'---------'
      *
      */
-    [_SYM] = LAYOUT(
+    [_SYM] = LAYOUT_v05(
                        KC_COLN, KC_HASH, KC_SCLN,  C_GRV,        KC_PERC, KC_AMPR, KC_ASTR, KC_QUES,
 C_DEG, LSFT_T(KC_GRV), C_A_GRV, KC_MINS, C_E_ACU, KC_SLSH, KC_BSLS,      C_E_GRV, C_QUOT, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
        KC_PIPE, KC_EQL, KC_UNDS, KC_PLUS, KC_DQUO, _______,
@@ -171,7 +172,7 @@ C_DEG, LSFT_T(KC_GRV), C_A_GRV, KC_MINS, C_E_ACU, KC_SLSH, KC_BSLS,      C_E_GRV
      *                       |         |        |/      /          \      \|        |         |
      *                       `---------'--------'------'            '------'--------'---------'
      */
-      [_ADJUST] = LAYOUT(
+      [_ADJUST] = LAYOUT_v05(
          RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,           KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD,
 XXXXXXX, XXXXXXX, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,  KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOTLOADER,
          RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX, DF(_DEFAULT), XXXXXXX,
@@ -192,7 +193,7 @@ XXXXXXX, XXXXXXX, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,  KC_VOLD, KC_MPRV, KC_MPLY
  * ,------+-----  [  --  {  --  ( -----|------|                    |------|----  )  --  }  --  ]  ----+------.
  * |      |       |    REPEAT  TAB            |-------.    ,-------|      |     BACK    DEL    |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
- *        |       |     Alt   CAPS     |      |-------|    |-------|      |    CAPS    Alt            |
+ *        |       |     GUI   COMMENT  |      |-------|    |-------|      |    CAPS    GUI            |
  *        `-----------------------------------/      /      \      \----------------------------------'
  *                     |        |          | / ADJ- /        \ -UST \ |        |        |
  *                     |        |          |/      /          \      \|        |        |
@@ -209,11 +210,11 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
         case launcher:
         case escape_l:
         case caps:
-        case caps_bis:
+        case comment:
             return COMBO_TERM;
         // Modifier combos
-        case alt_l:
-        case alt_r:
+        case gui_l:
+        case gui_r:
             return COMBO_TERM + 20;
         // Two hands combos
         case adjust:
@@ -235,7 +236,7 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
     switch (index) {
         case escape_l:
         case caps:
-        case caps_bis:
+        case comment:
         case launcher:
         case back:
         case del:
@@ -243,8 +244,8 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
         case round_r:
         case square_l:
         case square_r:
-        case alt_l:
-        case alt_r:
+        case gui_l:
+        case gui_r:
             // Quick roll is allowed
             return false;
         case curly_l:
@@ -286,6 +287,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
         case KC_ESC:
             return true;
         default:
+        case LGUI_T(C_X):
             return false;
     }
 }
@@ -333,6 +335,10 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
         case LGUI_T(KC_BTN3):
         case LGUI_T(KC_DOT):
 
+        case LALT_T(KC_BTN3):
+        case LALT_T(C_X):
+        case LALT_T(KC_DOT):
+
         case RALT_T(C_SLSH):
         case RALT_T(KC_SLSH):
             return true;
@@ -376,6 +382,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case RALT_T(C_SLSH):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(C(KC_SLSH)); // Send C(KC_SLSH) on tap
+                return false;
+            }
+            break;
+        case LALT_T(C_X):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(C_X); // Send C_X on tap
                 return false;
             }
             break;

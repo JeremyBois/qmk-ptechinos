@@ -14,12 +14,12 @@ COMB(del, KC_DEL, KC_K, KC_L)
 
 // BOTTOM ROW
 // Left
-COMB(alt_l, KC_LALT, KC_X, KC_C)
-COMB(caps, CAPS_WORD, KC_C, KC_V)
+COMB(gui_l, KC_LGUI, LALT_T(KC_X), KC_C)
+COMB(comment, C(KC_SLSH), KC_C, KC_V)
 
 // Right
-COMB(alt_r, KC_LALT, KC_COMM, LGUI_T(KC_DOT))
-COMB(caps_bis, CAPS_WORD, KC_M, KC_COMM)
+COMB(gui_r, KC_LGUI, KC_COMM, LALT_T(KC_DOT))
+COMB(caps, CAPS_WORD, KC_M, KC_COMM)
 
 // Thumbs
 // Left

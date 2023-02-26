@@ -2,10 +2,6 @@
 
 #include "config_common.h"
 
-/* Key matrix size */
-#define MATRIX_ROWS 8 // Rows are doubled-up
-#define MATRIX_COLS 5
-
 /* Encoder support
  * Same pins / resolution on both sides
  * Encoders reference : EVQWGD001
