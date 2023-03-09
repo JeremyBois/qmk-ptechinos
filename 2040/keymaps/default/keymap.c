@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_DEFAULT] = LAYOUT(
            KC_MUTE, KC_W, KC_E, KC_R, KC_T,      KC_Y, KC_U, KC_I, KC_O, KC_PSCR,
-KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, LSFT_T(KC_P), REPEAT,
+KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), REPEAT,
      KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE,      KC_PSCR, KC_N, KC_M,  KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
           MHL_NAV, LCTL_T(KC_SPC), OSL_NUM,      OSL_SYM, LCTL_T(KC_ENT), TO(_DEFAULT)
     ),
@@ -56,7 +56,7 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, LSFT_T(
      */
     [_COLEMAK] = LAYOUT(
            KC_MUTE, KC_W, KC_F, KC_P, KC_G,      KC_J, KC_L, KC_U, KC_Y, KC_PSCR,
-KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,      KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_O), REPEAT,
+KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,      KC_H, KC_N, KC_E, KC_I, RSFT_T(KC_O), REPEAT,
       KC_Z, KC_X, KC_C, KC_V, KC_B, KC_MUTE,     KC_PSCR, KC_K, KC_M, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
                   _______, _______, _______,     _______, _______, _______
     ),
@@ -79,7 +79,7 @@ KC_Q, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,      KC_H, KC_N, KC_E, KC_I, LSFT_T(
      */
     [_ERGOL] = LAYOUT(
               KC_MUTE, KC_O, KC_U, KC_D, KC_W,      KC_B, KC_M, KC_F, KC_P, KC_PSCR,
-KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,      KC_H, KC_N, KC_E, KC_I, LSFT_T(KC_G), REPEAT,
+KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,      KC_H, KC_N, KC_E, KC_I, RSFT_T(KC_G), REPEAT,
       KC_Z, KC_X, KC_C, KC_V, KC_K, KC_MUTE,     KC_PSCR, KC_J, KC_L, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
                   _______, _______, _______,     _______, _______, _______
     ),
@@ -100,7 +100,7 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_R, KC_T, KC_Y,      KC_H, KC_N, KC_E, KC_I, LSFT_T(
      */
     [_NAV] = LAYOUT(
                  _______, KC_WH_L, KC_MS_U, KC_WH_R, KC_PGUP,      KC_WH_U, KC_HOME, KC_UP, KC_END, _______,
-SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,      KC_WH_D, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN4), KC_BTN5,
+SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,      KC_WH_D, KC_LEFT, KC_DOWN, KC_RGHT, RSFT_T(KC_BTN4), KC_BTN5,
                   C_Z, C_X, C_C, C_V, C(A(KC_LEFT)), _______,      _______, C(A(KC_RIGHT)), KC_BTN1, KC_BTN2, LGUI_T(KC_BTN3), RALT_T(C_SLSH),
                                    _______, _______, _______,      _______, _______, _______
 
@@ -122,7 +122,7 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_MS_L, KC_MS_D, KC_MS_R, KC_PGDN,      KC_WH_D, KC_L
      */
     [_NUM] = LAYOUT(
                     _______, KC_F6, KC_F7, KC_F8, KC_F9,      KC_F10, KC_F1, KC_F2, KC_F3, _______,
-KC_F5,   LSFT_T(KC_5), KC_6,     KC_7,    KC_8,    KC_9,      KC_0,   KC_1,  KC_2,  KC_3, LSFT_T(KC_4), RCTL_T(KC_F4),
+KC_F5,   LSFT_T(KC_5), KC_6,     KC_7,    KC_8,    KC_9,      KC_0,   KC_1,  KC_2,  KC_3, RSFT_T(KC_4), RCTL_T(KC_F4),
        C_Z, C_X,  C_C,  C_V,  XXXXXXX, _______, _______,      KC_F11, KC_F12, KC_COMM, LGUI_T(KC_DOT), RALT_T(KC_SLSH),
                               _______, _______, _______,      _______, _______, _______
     ),
@@ -144,7 +144,7 @@ KC_F5,   LSFT_T(KC_5), KC_6,     KC_7,    KC_8,    KC_9,      KC_0,   KC_1,  KC_
      */
     [_SYM] = LAYOUT(
                        _______, KC_COLN, KC_HASH, KC_SCLN,   C_GRV,      KC_PERC, KC_AMPR, KC_ASTR, KC_QUES, _______,
-C_DEG, LSFT_T(KC_GRV), C_A_GRV, KC_MINS, C_E_ACU, KC_SLSH, KC_BSLS,      C_E_GRV, C_QUOT, KC_EXLM, LSFT_T(KC_CIRC), RALT(KC_5),
+C_DEG, LSFT_T(KC_GRV), C_A_GRV, KC_MINS, C_E_ACU, KC_SLSH, KC_BSLS,      C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_CIRC), RALT(KC_5),
                KC_PIPE, KC_EQL, KC_UNDS, KC_PLUS, KC_DQUO, _______,      _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, C_C_CED,
                                          _______, _______, _______,      _______, _______, _______
     ),
@@ -313,13 +313,16 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
         // Allow mod-tap on one shot layers
         case RCTL_T(KC_F4):
 
-        case LSFT_T(KC_4):
+        case LSFT_T(KC_A):
         case LSFT_T(KC_5):
         case LSFT_T(KC_GRV):
-        case LSFT_T(KC_CIRC):
-        case LSFT_T(KC_O):
-        case LSFT_T(KC_P):
-        case LSFT_T(KC_BTN4):
+        case LSFT_T(SW_ATAB):
+
+        case RSFT_T(KC_4):
+        case RSFT_T(KC_O):
+        case RSFT_T(KC_P):
+        case RSFT_T(KC_BTN4):
+        case RSFT_T(KC_CIRC):
 
         case LGUI_T(KC_BTN3):
         case LGUI_T(KC_DOT):
@@ -370,7 +373,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return false;
             }
             break;
-        case LSFT_T(KC_CIRC):
+        case RSFT_T(KC_CIRC):
             // Required to avoid to input 6 when combined with mod-tap
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KC_CIRC); // Send C(KC_CIRC) on tap
@@ -504,7 +507,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_DEL:
         case KC_UNDS:
         case KC_MINS:
-        case LSFT_T(KC_CIRC):
+        case RSFT_T(KC_CIRC):
             return true;
 
         // Custom one shot layer

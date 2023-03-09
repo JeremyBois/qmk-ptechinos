@@ -136,7 +136,8 @@
         "timeout": 4000
     },
     "caps_word": {
-        "enabled": true
+        "enabled": true,
+        "both_shifts_turns_on": true,
     },
     "leader_key": {
         "timing": false,
