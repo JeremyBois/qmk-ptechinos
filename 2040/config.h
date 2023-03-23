@@ -54,7 +54,6 @@
 // https://docs.qmk.fm/#/feature_pointing_device?id=common-settings
 #    define CIRQUE_PINNACLE_DIAMETER_MM 35
 #    define CIRQUE_PINNACLE_ATTENUATION EXTREG__TRACK_ADCCONFIG__ADC_ATTENUATE_4X
-#    define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
 // I2C settings
 #    define CIRQUE_PINNACLE_ADDR 0x2A
 #    define CIRQUE_PINNACLE_TIMEOUT 20
@@ -69,10 +68,12 @@
 #    define SPI_SCK_PIN GP2
 #    define SPI_MOSI_PIN GP3
 #    define SPI_MISO_PIN GP4
-#    define PMW33XX_CS_PIN GP5 // Default to POINTING_DEVICE_CS_PIN
+#    define POINTING_DEVICE_CS_PIN GP5
+// #    define ADNS9800_CS_PIN POINTING_DEVICE_CS_PIN  // default
+// #    define PMW33XX_CS_PIN POINTING_DEVICE_CS_PIN  // default
 #    define PMW33XX_CLOCK_SPEED 2000000
-#    define POINTING_DEVICE_INVERT_X 1
-#    define ROTATIONAL_TRANSFORM_ANGLE -90
+#    define ROTATIONAL_TRANSFORM_ANGLE -90 // Horizontal
+// #    define ROTATIONAL_TRANSFORM_ANGLE 0   // Vertical
 #endif
 
 // ┌─────────────────────────────────────────────────┐

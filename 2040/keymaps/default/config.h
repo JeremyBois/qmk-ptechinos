@@ -55,18 +55,25 @@
 // └─────────────────────────────────────────────────┘
 // Common parameters can be founded in ../config.h
 
-// Scroll gesture
+// Both relative and absolute does not support all features
+#    define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
+// Circular scroll gesture
 #    define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
 // Single tap support
 #    define CIRQUE_PINNACLE_TAP_ENABLE 1
+// Right tap support (relative only)
+// #    define CIRQUE_PINNACLE_SECONDARY_TAP_ENABLE
 
-// // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_split_keyboard.md?id=data-sync-options
-// // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_pointing_device.md#split-keyboard-configuration
-// #    ifdef SPLIT_POINTING_ENABLE
-// #        ifdef MASTER_LEFT
-// #            define POINTING_DEVICE_LEFT
-// #        else
-// #            define POINTING_DEVICE_RIGHT
-// #        endif
-// #    endif
+// ┌─────────────────────────────────────────────────┐
+// │ Pointing devices                                │
+// └─────────────────────────────────────────────────┘
+// https://github.com/qmk/qmk_firmware/blob/master/docs/feature_split_keyboard.md?id=data-sync-options
+// https://github.com/qmk/qmk_firmware/blob/master/docs/feature_pointing_device.md#split-keyboard-configuration
+// Pointing device on both sides
+#    define SPLIT_POINTING_ENABLE
+#    define POINTING_DEVICE_COMBINED
+// Rotate sensor report (trackpad / left side)
+#    define POINTING_DEVICE_ROTATION_90
+// Invert the X axis (trackball / right side)
+#    define POINTING_DEVICE_INVERT_X_RIGHT 1
 #endif
