@@ -72,8 +72,10 @@
 // #    define ADNS9800_CS_PIN POINTING_DEVICE_CS_PIN  // default
 // #    define PMW33XX_CS_PIN POINTING_DEVICE_CS_PIN  // default
 #    define PMW33XX_CLOCK_SPEED 2000000
-#    define ROTATIONAL_TRANSFORM_ANGLE -90 // Horizontal
-// #    define ROTATIONAL_TRANSFORM_ANGLE 0   // Vertical
+#    define PMW33XX_LIFTOFF_DISTANCE 0x02  // default
+#    define PMW33XX_CPI 800
+// #    define ROTATIONAL_TRANSFORM_ANGLE -90 // Horizontal
+#    define ROTATIONAL_TRANSFORM_ANGLE 0   // Vertical
 #endif
 
 // ┌─────────────────────────────────────────────────┐
