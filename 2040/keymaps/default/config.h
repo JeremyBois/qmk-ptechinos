@@ -7,6 +7,7 @@
 // Fixed by PR at https://github.com/qmk/qmk_firmware/pull/18254
 #define MASTER_LEFT
 // #define MASTER_RIGHT
+// #define EE_HANDS
 
 // ┌─────────────────────────────────────────────────┐
 // │ Combo                                           │
