@@ -1,5 +1,8 @@
 #include "ptechinos.h"
 
+#ifdef CONSOLE_ENABLE
+#    include "print.h"
+#endif // CONSOLE_ENABLE
 
 #ifdef POINTING_DEVICE_ENABLE
 
@@ -81,6 +84,48 @@ typedef union {
 } pointer_config_t;
 
 static pointer_config_t g_ptechinos_pointer_config = {0};
+
+/**
+ * \brief Outputs the Dilemma configuration to console.
+ *
+ * Prints the in-memory configuration structure to console, for debugging.
+ * Includes:
+ *   - raw value
+ *   - drag-scroll: on/off
+ *   - sniping: on/off
+ *   - default CPI: internal table index/actual CPI
+ *   - sniping CPI: internal table index/actual CPI
+ */
+static void ptechinos_print_config_to_console(const char* location, pointer_config_t* config) {
+#    ifdef CONSOLE_ENABLE
+    dprintf("[Ptechinos] %s\n"
+            "CONFIG = {\n"
+            "\traw = 0x%lX,\n"
+            "\t{\n"
+            "\t\tis_dragscroll_left_enabled=%u\n"
+            "\t\tmousing_left_cpi=0x%X (%u)\n"
+            "\t}\n"
+            "\t{\n"
+            "\t\tis_dragscroll_right_enabled=%u\n"
+            "\t\tmousing_right_cpi=0x%X (%u)\n"
+            "\t}\n"
+            "}\n",
+            location, config->raw, config->is_dragscroll_left_enabled, config->mousing_left_cpi, ptechinos_get_pointer_mousing_cpi(PTECHINOS_LEFT), config->is_dragscroll_right_enabled, config->mousing_right_cpi, ptechinos_get_pointer_mousing_cpi(PTECHINOS_RIGHT));
+#    endif // CONSOLE_ENABLE
+}
+
+static void ptechinos_print_mouse_report_to_console(const char* location, pointer_side_t side, report_mouse_t* report) {
+#    ifdef CONSOLE_ENABLE
+    dprintf("[Ptechinos] %s\n"
+            "REPORT (side=%d) ={\n"
+            "\tx=%d\n"
+            "\ty=%d\n"
+            "\tv=%d\n"
+            "\th=%d\n"
+            "}\n",
+            location, side, report->x, report->y, report->v, report->h);
+#    endif // CONSOLE_ENABLE
+}
 
 /**
  * \brief Set the value of `config` from EEPROM.
@@ -295,12 +340,16 @@ static void ptechinos_pointing_device_task_drag_scroll(report_mouse_t* mouse_rep
 // With SPLIT_POINTING_ENABLE  pointing task is only called on the master side (the one with USB connected)
 #        if defined(POINTING_DEVICE_COMBINED)
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
+    ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_LEFT, &left_report);
+    ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_RIGHT, &right_report);
     if (g_ptechinos_pointer_config.is_dragscroll_left_enabled) {
         ptechinos_pointing_device_task_drag_scroll(&left_report);
     }
     if (g_ptechinos_pointer_config.is_dragscroll_right_enabled) {
         ptechinos_pointing_device_task_drag_scroll(&right_report);
     }
+    ptechinos_print_mouse_report_to_console("task_drag_scroll (AFTER)", PTECHINOS_LEFT, &left_report);
+    ptechinos_print_mouse_report_to_console("task_drag_scroll (AFTER)", PTECHINOS_RIGHT, &right_report);
     return pointing_device_task_combined_user(left_report, right_report);
 }
 #        elif defined(POINTING_DEVICE_LEFT)
@@ -391,6 +440,7 @@ void matrix_init_kb(void) {
 
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     if (!process_record_user(keycode, record)) {
+        ptechinos_print_config_to_console("process_record_user", &g_ptechinos_pointer_config);
         return false;
     }
 
@@ -437,6 +487,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
             break;
     }
+    ptechinos_print_config_to_console("process_record_kb", &g_ptechinos_pointer_config);
 
     return true;
 }
