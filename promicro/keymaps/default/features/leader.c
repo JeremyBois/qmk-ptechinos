@@ -19,6 +19,7 @@
 #include "leader.h"
 
 #include <string.h>
+#include "keycodes.h"
 
 #ifndef LEADER_ESC_KEY
 #    define LEADER_ESC_KEY KC_ESC
@@ -108,7 +109,7 @@ bool process_leader(uint16_t keycode, const keyrecord_t *record) {
         }
 
         // let through anything above that's normal keyboard keycode or a mod
-        if (keycode > QK_MODS_MAX || IS_MOD(keycode)) {
+        if (keycode > QK_MODS_MAX || IS_MODIFIER_KEYCODE(keycode)) {
             return true;
         }
         // early exit if the esc key was hit

@@ -15,7 +15,6 @@
     "processor": "atmega32u4",
     "bootloader": "caterina",
     "bootloader_instructions": "Press once the physical RESET button on the top of the board.",
-    "development_board": "elite_c",
     "pin_compatible": "promicro",
     "debounce": 3, // Default is 5 (lower is better)
     "split": {

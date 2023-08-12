@@ -19,7 +19,7 @@ COMB(comment, C(KC_SLSH), KC_C, KC_V)
 
 // Right
 COMB(gui_r, KC_LGUI, KC_COMM, LALT_T(KC_DOT))
-COMB(caps, CAPS_WORD, KC_M, KC_COMM)
+COMB(caps, CW_TOGG, KC_M, KC_COMM)
 
 // Thumbs
 // Left

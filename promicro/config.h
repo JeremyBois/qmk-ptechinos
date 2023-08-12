@@ -1,7 +1,5 @@
 #pragma once
 
-#include "config_common.h"
-
 /* Encoder support
  * Same pins / resolution on both sides
  * Encoders reference : EVQWGD001
