@@ -76,5 +76,8 @@
 // Rotate sensor report (trackpad / left side)
 #    define POINTING_DEVICE_ROTATION_90
 // Invert the X axis (trackball / right side)
-#    define POINTING_DEVICE_INVERT_X_RIGHT 1
+// #    define POINTING_DEVICE_INVERT_X_RIGHT 1
+
+#    define POINTING_DEVICE_INVERT_Y_RIGHT 1
+// #    define POINTING_DEVICE_INVERT_X_RIGHT 1
 #endif
