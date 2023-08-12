@@ -52,7 +52,7 @@
             "protocol": "serial_usart"
         },
         "soft_serial_pin": "GP1",
-        "soft_serial_speed": 1,
+        "soft_serial_speed": 1
     },
     "features": {
         // Rotary encoders (+1112)
@@ -84,7 +84,7 @@
         // Software way to enter boot mode
         "bootmagic": false,
         // Console for debug (+4686)
-        "console": false,
+        "console": false
     },
     "qmk": {
         "tap_keycode_delay": 10
@@ -114,7 +114,7 @@
                 "pin_a": "GP4",
                 "pin_b": "GP5",
                 "resolution": 4
-            },
+            }
         ]
     },
     "combo": {
@@ -138,7 +138,7 @@
     },
     "caps_word": {
         "enabled": true,
-        "both_shifts_turns_on": true,
+        "both_shifts_turns_on": true
     },
     "leader_key": {
         "timing": false,
