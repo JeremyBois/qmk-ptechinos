@@ -1,21 +1,8 @@
 #include "ptechinos.h"
 
+
 #ifdef POINTING_DEVICE_ENABLE
 
-// // // ┌─────────────────────────────────────────────────┐
-// // // │ PWM3360 Trackball                               │
-// // // └─────────────────────────────────────────────────┘
-// // #    ifndef TRACKBALL_DPI_OPTIONS
-// // #        define TRACKBALL_DPI_OPTIONS { 800, 1000, 1200, 1600 }
-// // #        ifndef TRACKBALL_DPI_DEFAULT
-// // #            define TRACKBALL_DPI_DEFAULT 1
-// // #        endif
-// // #    endif
-// // #    ifndef TRACKBALL_DPI_DEFAULT
-// // #        define TRACKBALL_DPI_DEFAULT 0
-// // #    endif
-
-//
 // DOCUMENTATION / INSPIRATION
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/eeconfig.h
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_eeprom.md
@@ -28,55 +15,59 @@
 
 // TODO
 // [x] Draft Mousing + Scrolling (Both, One side, master or not)
-// [x] Complete implementation (compile and seems ok ^^)
-// [ ] Add user keycode to test (without writing to EEPROM)
-// [ ] Test EEPROM read / save
-// [ ] User keymap overrides --> Add auto mouse layer support
-// [ ] Use CPI in place of DPI to be consistent with QMK API
-// [ ] Add a joystick mode (https://www.yorku.ca/mack/FuturePlay1.html) ??
-// [ ] Add a sniping (low DPI) mode ??
+// [x] Complete working implementation
+// [x] Add user keycode to test
+// [x] Test EEPROM read / save
+// [x] Test COMBINED mode
+// [ ] Test master only mode
+// [ ] Test slave left mode
+// [ ] Test slave right mode
+// [x] Use CPI in place of DPI
+// [ ] Add documentation
+// [ ] ?? User keymap overrides --> Add auto mouse layer support ??
+// [ ] ?? Add a joystick mode (https://www.yorku.ca/mack/FuturePlay1.html) ??
+// [ ] ?? Add a sniping (low CPI) mode ??
+// [ ] ?? Add gestures (copy/paste/back/next) ??
+// [ ] Handle modes using an enum instead of booleans
 // TODO
-
-// WHY
-// Cast DPI to uint16_t from uint8_t
-// WHY
 
 // UNSURE
 // ?? Use an array of CPIs instead of a step size ??
+// #    ifndef TRACKBALL_CPI_OPTIONS
+// #        define TRACKBALL_CPI_OPTIONS { 800, 1000, 1200, 1600 }
+// #        ifndef TRACKBALL_CPI_DEFAULT
+// #            define TRACKBALL_CPI_DEFAULT 1
+// #        endif
+// #    endif
+// #    ifndef TRACKBALL_CPI_DEFAULT
+// #        define TRACKBALL_CPI_DEFAULT 0
+// #    endif
 // UNSURE
 
 // Mousing (Avoid values below 100)
-#    define PTECHINOS_MOUSING_DPI_MIN 400
-#    ifndef PTECHINOS_MOUSING_DPI_MIN
-#        define PTECHINOS_MOUSING_DPI_MIN 400
-#    endif // PTECHINOS_MOUSING_DPI_MIN
+#    ifndef PTECHINOS_MOUSING_CPI_MIN
+#        define PTECHINOS_MOUSING_CPI_MIN 400
+#    endif // PTECHINOS_MOUSING_CPI_MIN
 
-#    ifndef PTECHINOS_MOUSING_DPI_CONFIG_STEP
-#        define PTECHINOS_MOUSING_DPI_CONFIG_STEP 200
-#    endif // PTECHINOS_MOUSING_DPI_CONFIG_STEP
+#    ifndef PTECHINOS_MOUSING_CPI_CONFIG_STEP
+#        define PTECHINOS_MOUSING_CPI_CONFIG_STEP 200
+#    endif // PTECHINOS_MOUSING_CPI_CONFIG_STEP
 
 // Scrolling (Avoid values below 100)
-#    ifndef PTECHINOS_DRAGSCROLL_DPI
-#        define PTECHINOS_DRAGSCROLL_DPI 100
-#    endif // PTECHINOS_DRAGSCROLL_DPI
-
-// Revert Y scrolling direction
-#    ifndef PTECHINOS_DRAGSCROLL_INVERT_Y
-#        define PTECHINOS_DRAGSCROLL_INVERT_Y 1
-#    endif // PTECHINOS_DRAGSCROLL_INVERT_Y
-
-// Revert X scrolling direction
-#    ifndef PTECHINOS_DRAGSCROLL_INVERT_X
-#        define PTECHINOS_DRAGSCROLL_INVERT_X 1
-#    endif // PTECHINOS_DRAGSCROLL_INVERT_X
+#    ifndef PTECHINOS_DRAGSCROLL_LEFT
+#        define PTECHINOS_DRAGSCROLL_LEFT 100
+#    endif // PTECHINOS_DRAGSCROLL_LEFT
+#    ifndef PTECHINOS_DRAGSCROLL_RIGHT
+#        define PTECHINOS_DRAGSCROLL_RIGHT 200
+#    endif // PTECHINOS_DRAGSCROLL_RIGHT
 
 // Pointing data
 typedef union {
     uint32_t raw;
     struct {
         // Persistent (stored in EEPROM)
-        uint8_t mousing_left_dpi : 4;  // 4 bits --> 16 steps (0-15)
-        uint8_t mousing_right_dpi : 4; // 4 bits --> 16 steps (0-15)
+        uint8_t mousing_left_cpi : 4;  // 4 bits --> 16 steps (0-15)
+        uint8_t mousing_right_cpi : 4; // 4 bits --> 16 steps (0-15)
         // Not persistent (discard when reading from EEPROM)
         bool is_dragscroll_left_enabled : 1;
         bool is_dragscroll_right_enabled : 1;
@@ -108,7 +99,7 @@ static void ptechinos_write_config_to_eeprom(pointer_config_t* config) {
 }
 
 // Helper to make it easier to set CPI
-static void ptechinos_pointing_device_set_dpi_internal(bool left, uint16_t cpi) {
+static void ptechinos_pointing_device_set_cpi_internal(bool left, uint16_t cpi) {
 #    if defined(SPLIT_POINTING_ENABLE) && defined(POINTING_DEVICE_COMBINED)
     pointing_device_set_cpi_on_side(left, cpi);
 #    else
@@ -123,40 +114,44 @@ static void ptechinos_pointing_device_set_cpi(pointer_config_t* config, pointer_
     switch (side) {
         case PTECHINOS_LEFT:
             if (config->is_dragscroll_left_enabled) {
-                ptechinos_pointing_device_set_dpi_internal(true, PTECHINOS_DRAGSCROLL_DPI);
+                ptechinos_pointing_device_set_cpi_internal(true, PTECHINOS_DRAGSCROLL_LEFT);
             } else {
-                uint16_t dpi = ptechinos_get_pointer_mousing_dpi(side);
-                ptechinos_pointing_device_set_dpi_internal(true, dpi);
+                uint16_t cpi = ptechinos_get_pointer_mousing_cpi(side);
+                ptechinos_pointing_device_set_cpi_internal(true, cpi);
             }
             break;
         case PTECHINOS_RIGHT:
             if (config->is_dragscroll_right_enabled) {
-                ptechinos_pointing_device_set_dpi_internal(false, PTECHINOS_DRAGSCROLL_DPI);
+                ptechinos_pointing_device_set_cpi_internal(false, PTECHINOS_DRAGSCROLL_RIGHT);
             } else {
-                uint16_t dpi = ptechinos_get_pointer_mousing_dpi(side);
-                ptechinos_pointing_device_set_dpi_internal(false, dpi);
+                uint16_t cpi = ptechinos_get_pointer_mousing_cpi(side);
+                ptechinos_pointing_device_set_cpi_internal(false, cpi);
             }
             break;
     }
 }
 
 bool ptechinos_is_pointer_mousing_enabled(pointer_side_t side) {
+    bool isMousing = false;
     switch (side) {
         case PTECHINOS_LEFT:
-            return !g_ptechinos_pointer_config.is_dragscroll_left_enabled;
+            isMousing = !g_ptechinos_pointer_config.is_dragscroll_left_enabled;
+            break;
         case PTECHINOS_RIGHT:
-            return !g_ptechinos_pointer_config.is_dragscroll_right_enabled;
-        default:
-            return false;
+            isMousing = !g_ptechinos_pointer_config.is_dragscroll_right_enabled;
+            break;
     }
+    return isMousing;
 }
 
 void ptechinos_set_pointer_as_mousing(pointer_side_t side) {
     switch (side) {
         case PTECHINOS_LEFT:
             g_ptechinos_pointer_config.is_dragscroll_left_enabled = false;
+            break;
         case PTECHINOS_RIGHT:
             g_ptechinos_pointer_config.is_dragscroll_right_enabled = false;
+            break;
     }
     // Update device
     ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, side);
@@ -164,39 +159,39 @@ void ptechinos_set_pointer_as_mousing(pointer_side_t side) {
     // Non persistent data --> Do nothing
 }
 
-uint16_t ptechinos_get_pointer_mousing_dpi(pointer_side_t side) {
-    uint16_t dpi;
+uint16_t ptechinos_get_pointer_mousing_cpi(pointer_side_t side) {
+    uint16_t cpi;
     switch (side) {
         case PTECHINOS_LEFT:
-            dpi = (uint16_t)g_ptechinos_pointer_config.mousing_left_dpi;
+            cpi = (uint16_t)g_ptechinos_pointer_config.mousing_left_cpi;
             break;
         case PTECHINOS_RIGHT:
-            dpi = (uint16_t)g_ptechinos_pointer_config.mousing_right_dpi;
+            cpi = (uint16_t)g_ptechinos_pointer_config.mousing_right_cpi;
             break;
         default:
-            dpi = (uint16_t)0;
+            cpi = (uint16_t)0;
             break;
     }
 
-    dpi = dpi * PTECHINOS_MOUSING_DPI_CONFIG_STEP + PTECHINOS_MOUSING_DPI_MIN;
-    return dpi;
+    cpi = cpi * PTECHINOS_MOUSING_CPI_CONFIG_STEP + PTECHINOS_MOUSING_CPI_MIN;
+    return cpi;
 }
 
-void ptechinos_set_pointer_mousing_dpi(pointer_side_t side, bool increase) {
+void ptechinos_set_pointer_mousing_cpi(pointer_side_t side, bool increase) {
     // Update config
     switch (side) {
         case PTECHINOS_LEFT:
             if (increase) {
-                g_ptechinos_pointer_config.mousing_left_dpi += 1;
-            } else if (g_ptechinos_pointer_config.mousing_left_dpi > 0u) {
-                g_ptechinos_pointer_config.mousing_left_dpi -= 1;
+                g_ptechinos_pointer_config.mousing_left_cpi += 1;
+            } else if (g_ptechinos_pointer_config.mousing_left_cpi > 0u) {
+                g_ptechinos_pointer_config.mousing_left_cpi -= 1;
             }
             break;
         case PTECHINOS_RIGHT:
             if (increase) {
-                g_ptechinos_pointer_config.mousing_right_dpi += 1;
-            } else if (g_ptechinos_pointer_config.mousing_right_dpi > 0u) {
-                g_ptechinos_pointer_config.mousing_right_dpi -= 1;
+                g_ptechinos_pointer_config.mousing_right_cpi += 1;
+            } else if (g_ptechinos_pointer_config.mousing_right_cpi > 0u) {
+                g_ptechinos_pointer_config.mousing_right_cpi -= 1;
             }
             break;
     }
@@ -208,22 +203,27 @@ void ptechinos_set_pointer_mousing_dpi(pointer_side_t side, bool increase) {
 }
 
 bool ptechinos_is_pointer_dragscroll_enabled(pointer_side_t side) {
+    bool isDragscroll = false;
     switch (side) {
         case PTECHINOS_LEFT:
-            return g_ptechinos_pointer_config.is_dragscroll_left_enabled;
+            isDragscroll = g_ptechinos_pointer_config.is_dragscroll_left_enabled;
+            break;
         case PTECHINOS_RIGHT:
-            return g_ptechinos_pointer_config.is_dragscroll_right_enabled;
-        default:
-            return false;
+            isDragscroll = g_ptechinos_pointer_config.is_dragscroll_right_enabled;
+            break;
     }
+
+    return isDragscroll;
 }
 
 void ptechinos_set_pointer_as_dragscroll(pointer_side_t side) {
     switch (side) {
         case PTECHINOS_LEFT:
             g_ptechinos_pointer_config.is_dragscroll_left_enabled = true;
+            break;
         case PTECHINOS_RIGHT:
             g_ptechinos_pointer_config.is_dragscroll_right_enabled = true;
+            break;
     }
     // Update device
     ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, side);
@@ -261,14 +261,9 @@ static void ptechinos_pointing_device_task_drag_scroll(report_mouse_t* mouse_rep
 }
 
 #    if defined(SPLIT_POINTING_ENABLE)
+// With SPLIT_POINTING_ENABLE  pointing task is only called on the master side (the one with USB connected)
 #        if defined(POINTING_DEVICE_COMBINED)
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
-    // Don't poll the target side pointing device
-    // Redundant with pointing_device_task in QMK base code
-    // if (!is_keyboard_master()) {
-    //   return pointing_device_combine_reports(left_report, right_report);
-    // };
-
     if (g_ptechinos_pointer_config.is_dragscroll_left_enabled) {
         ptechinos_pointing_device_task_drag_scroll(&left_report);
     }
@@ -277,13 +272,26 @@ report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, repo
     }
     return pointing_device_task_combined_user(left_report, right_report);
 }
-#        elif defined(POINTING_DEVICE_LEFT) || defined(POINTING_DEVICE_RIGHT)
+#        elif defined(POINTING_DEVICE_LEFT)
 report_mouse_t pointing_device_task_kb(report_mouse_t report) {
-    // Don't poll the target side pointing device
-    // Redundant with pointing_device_task in QMK base code
-    // if (!is_keyboard_master()) {
-    //   return report;
-    // };
+    if (g_ptechinos_pointer_config.is_dragscroll_left_enabled) {
+        ptechinos_pointing_device_task_drag_scroll(&report);
+    }
+    return pointing_device_task_user(report);
+}
+#        elif defined(POINTING_DEVICE_RIGHT)
+report_mouse_t pointing_device_task_kb(report_mouse_t report) {
+    if (g_ptechinos_pointer_config.is_dragscroll_right_enabled) {
+        ptechinos_pointing_device_task_drag_scroll(&report);
+    }
+    return pointing_device_task_user(report);
+}
+#        else
+#            error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
+#        endif
+#    else
+report_mouse_t pointing_device_task_kb(report_mouse_t report) {
+    if (!is_keyboard_master()) return report;
 
     if (is_keyboard_left()) {
         if (g_ptechinos_pointer_config.is_dragscroll_left_enabled) {
@@ -293,34 +301,34 @@ report_mouse_t pointing_device_task_kb(report_mouse_t report) {
         if (g_ptechinos_pointer_config.is_dragscroll_right_enabled) {
             ptechinos_pointing_device_task_drag_scroll(&report);
         }
-
-        return pointing_device_task_user(report);
     }
+    report = pointing_device_task_user(report);
     return report;
-#        else
-#            error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
-#        endif
+}
 #    endif
 
 void pointing_device_init_kb(void) {
-    // Called before keyboard_post_init_kb in keyboard_init (keyboard.c)
+    // Called before keyboard_post_init_kb in keyboard_init (see QMK keyboard.c)
 #    if defined(SPLIT_POINTING_ENABLE)
 #        if defined(POINTING_DEVICE_COMBINED)
     ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_LEFT);
     ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_RIGHT);
 #        elif defined(POINTING_DEVICE_LEFT)
-        ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_LEFT);
+    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_LEFT);
 #        elif defined(POINTING_DEVICE_RIGHT)
     ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_RIGHT);
 #        else
 #            error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
 #        endif
 #    else
+    if (!is_keyboard_master()) return;
+
     pointer_side_t side = is_keyboard_left() ? PTECHINOS_LEFT : PTECHINOS_RIGHT;
     ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, side);
 #    endif
 
-    pointing_device_init_user();
+    // Already called by pointing_device_init (see QMK pointing_device.c)
+    // pointing_device_init_user();
 }
 
 //
@@ -328,10 +336,10 @@ void pointing_device_init_kb(void) {
 //
 void eeconfig_init_kb(void) {
     // EEPROM is getting reset!
-    // To force an EEPROM reset, use the EE_CLR keycode or Bootmagic Lite functionallity
+    // To force an EEPROM reset, use the EE_CLR keycode or Bootmagic Lite functionality
     g_ptechinos_pointer_config.raw               = 0;
-    g_ptechinos_pointer_config.mousing_left_dpi  = 2;
-    g_ptechinos_pointer_config.mousing_right_dpi = 2;
+    g_ptechinos_pointer_config.mousing_left_cpi  = 2;
+    g_ptechinos_pointer_config.mousing_right_cpi = 2;
     ptechinos_write_config_to_eeprom(&g_ptechinos_pointer_config);
 
     // Reset all devices even if user only use one
@@ -343,7 +351,7 @@ void eeconfig_init_kb(void) {
 }
 
 void matrix_init_kb(void) {
-    // Safe to read DPI setting from configuration since
+    // Safe to read CPI setting from configuration since
     // matrix init comes before pointing device init
     ptechinos_read_config_from_eeprom(&g_ptechinos_pointer_config);
 
@@ -357,42 +365,44 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
 
     // Pointer specific code
     switch (keycode) {
-        case POINTER_LEFT_MOUSING_DPI_UP:
+        case PL_CPI_UP:
             if (record->event.pressed) {
                 if (ptechinos_is_pointer_mousing_enabled(PTECHINOS_LEFT)) {
-                    // Only update DPI when user can actually see a change
-                    ptechinos_set_pointer_mousing_dpi(PTECHINOS_LEFT, true);
+                    // Only update CPI when user can actually see a change
+                    ptechinos_set_pointer_mousing_cpi(PTECHINOS_LEFT, true);
                 }
             }
             break;
-        case POINTER_LEFT_MOUSING_DPI_DOWN:
+        case PL_CPI_DOWN:
             if (record->event.pressed) {
                 if (ptechinos_is_pointer_mousing_enabled(PTECHINOS_LEFT)) {
-                    // Only update DPI when user can actually see a change
-                    ptechinos_set_pointer_mousing_dpi(PTECHINOS_LEFT, true);
+                    // Only update CPI when user can actually see a change
+                    ptechinos_set_pointer_mousing_cpi(PTECHINOS_LEFT, false);
                 }
             }
             break;
-        case POINTER_LEFT_MODE_TOOGLE:
+        case PL_DS_TOOGLE:
+            // Simulate dragscroll on hold (pressed / released)
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_LEFT);
             break;
-        case POINTER_RIGHT_MOUSING_DPI_UP:
+        case PR_CPI_UP:
             if (record->event.pressed) {
                 if (ptechinos_is_pointer_mousing_enabled(PTECHINOS_RIGHT)) {
-                    // Only update DPI when user can actually see a change
-                    ptechinos_set_pointer_mousing_dpi(PTECHINOS_RIGHT, true);
+                    // Only update CPI when user can actually see a change
+                    ptechinos_set_pointer_mousing_cpi(PTECHINOS_RIGHT, true);
                 }
             }
             break;
-        case POINTER_RIGHT_MOUSING_DPI_DOWN:
+        case PR_CPI_DOWN:
             if (record->event.pressed) {
                 if (ptechinos_is_pointer_mousing_enabled(PTECHINOS_RIGHT)) {
-                    // Only update DPI when user can actually see a change
-                    ptechinos_set_pointer_mousing_dpi(PTECHINOS_RIGHT, true);
+                    // Only update CPI when user can actually see a change
+                    ptechinos_set_pointer_mousing_cpi(PTECHINOS_RIGHT, false);
                 }
             }
             break;
-        case POINTER_RIGHT_MODE_TOOGLE:
+        case PR_DS_TOOGLE:
+            // Simulate dragscroll on hold (pressed / released)
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
             break;
     }
