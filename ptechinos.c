@@ -60,6 +60,12 @@
 #    ifndef PTECHINOS_DRAGSCROLL_RIGHT
 #        define PTECHINOS_DRAGSCROLL_RIGHT 200
 #    endif // PTECHINOS_DRAGSCROLL_RIGHT
+#    ifndef PTECHINOS_SCROLL_DIVISOR_H
+#        define PTECHINOS_SCROLL_DIVISOR_H 5.0
+#    endif // PTECHINOS_SCROLL_DIVISOR_H
+#    ifndef PTECHINOS_SCROLL_DIVISOR_V
+#        define PTECHINOS_SCROLL_DIVISOR_V 5.0
+#    endif // PTECHINOS_SCROLL_DIVISOR_V
 
 // Pointing data
 typedef union {
@@ -241,21 +247,46 @@ void ptechinos_toogle_pointer_between_mousing_dragscroll(pointer_side_t side) {
     }
 }
 
+/**
+ * @brief      Augment the pointing device behavior with advance drag scroll feature.
+ *             Scrolling speed can be controlled using
+ *               - PTECHINOS_SCROLL_DIVISOR_H (1.0 to disable raw result scaling)
+ *               - PTECHINOS_SCROLL_DIVISOR_V (1.0 to disable raw result scaling)
+ *             Borrowed from QMK Oddball keyboard
+ *
+ * @param      mouse_report  Left or Right mouse report
+ */
 static void ptechinos_pointing_device_task_drag_scroll(report_mouse_t* mouse_report) {
-#    ifdef PTECHINOS_DRAGSCROLL_INVERT_X
-    // Invert horizontal scroll direction
-    mouse_report->h = -mouse_report->x;
-#    else
-    mouse_report->h     = mouse_report->x;
-#    endif // PTECHINOS_DRAGSCROLL_INVERT_X
-#    ifdef PTECHINOS_DRAGSCROLL_INVERT_Y
-    // Invert vertical scroll direction
-    mouse_report->v = -mouse_report->y;
-#    else
-    mouse_report->v     = mouse_report->y;
-#    endif // PTECHINOS_DRAGSCROLL_INVERT_Y
+    // @WARNING Accumulators are shared between both sides
+    static int16_t acc_h = 0;
+    static int16_t acc_v = 0;
+    // @WARNING Accumulators are shared between both sides
 
-    // Disable movement
+    // Update accumulators
+    acc_h += mouse_report->x;
+    acc_v += mouse_report->y;
+    int8_t scaled_scroll_h = acc_h / PTECHINOS_SCROLL_DIVISOR_H;
+    int8_t scaled_scroll_v = acc_v / PTECHINOS_SCROLL_DIVISOR_V;
+
+    // Clear accumulators on assignment
+    if (scaled_scroll_h != 0) {
+#    ifdef PTECHINOS_DRAGSCROLL_INVERT_X
+        mouse_report->h = -scaled_scroll_h;
+#    else
+        mouse_report->h = scaled_scroll_h;
+#    endif // PTECHINOS_DRAGSCROLL_INVERT_X
+        acc_h = 0;
+    }
+    if (scaled_scroll_v != 0) {
+#    ifdef PTECHINOS_DRAGSCROLL_INVERT_Y
+        mouse_report->v = -scaled_scroll_v;
+#    else
+        mouse_report->v = scaled_scroll_v;
+#    endif // PTECHINOS_DRAGSCROLL_INVERT_Y
+        acc_v = 0;
+    }
+
+    // Disable mousing
     mouse_report->x = 0;
     mouse_report->y = 0;
 }
