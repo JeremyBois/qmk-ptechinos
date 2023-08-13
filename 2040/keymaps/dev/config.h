@@ -1,7 +1,7 @@
 #pragma once
 
 // ┌─────────────────────────────────────────────────┐
-// │ Handness                                            │
+// │ Handness                                        │
 // └─────────────────────────────────────────────────┘
 // BUG in data driven implementation
 // Fixed by PR at https://github.com/qmk/qmk_firmware/pull/18254
@@ -10,7 +10,7 @@
 // Using EE_HANDS (see info.json)
 
 // ┌─────────────────────────────────────────────────┐
-// │ Combo                                               │
+// │ Combo                                           │
 // └─────────────────────────────────────────────────┘
 #ifdef COMBO_ENABLE
 #    define EXTRA_SHORT_COMBOS
@@ -26,19 +26,19 @@
 #endif
 
 // ┌─────────────────────────────────────────────────┐
-// │ NKRO                                                │
+// │ NKRO                                            │
 // └─────────────────────────────────────────────────┘
 #ifdef NKRO_ENABLE
 #    define FORCE_NKRO // Force NKRO if enabled.
 #endif
 
 // ┌─────────────────────────────────────────────────┐
-// │ Optimization                                        │
+// │ Optimization                                    │
 // └─────────────────────────────────────────────────┘
 #define LAYER_STATE_8BIT
 
 // ┌─────────────────────────────────────────────────┐
-// │ Mouse emulation                                     │
+// │ Mouse emulation                                 │
 // └─────────────────────────────────────────────────┘
 // https://www.reddit.com/r/olkb/comments/72u8ou/qmk_mouse_keys_rock/
 #ifdef MOUSEKEY_ENABLE
@@ -53,7 +53,7 @@
 #ifdef POINTING_DEVICE_ENABLE
 
 // ┌─────────────────────────────────────────────────┐
-// │ Pointing devices                                    │
+// │ Pointing devices                                │
 // └─────────────────────────────────────────────────┘
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_split_keyboard.md?id=data-sync-options
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_pointing_device.md#split-keyboard-configuration
@@ -62,14 +62,11 @@
 #    define POINTING_DEVICE_COMBINED
 // Rotate sensor report (trackpad / left side)
 #    define POINTING_DEVICE_ROTATION_90
-// Invert the X axis (trackball / right side)
-// #    define POINTING_DEVICE_INVERT_X_RIGHT 1
-
+// Invert the Y axis (trackball / right side)
 #    define POINTING_DEVICE_INVERT_Y_RIGHT 1
-// #    define POINTING_DEVICE_INVERT_X_RIGHT 1
 
 // ┌─────────────────────────────────────────────────┐
-// │ Trackpad                                            │
+// │ Trackpad                                        │
 // └─────────────────────────────────────────────────┘
 // Common parameters can be founded in ../config.h
 
