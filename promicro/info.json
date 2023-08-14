@@ -16,7 +16,7 @@
     "bootloader": "caterina",
     "bootloader_instructions": "Press once the physical RESET button on the top of the board.",
     "pin_compatible": "promicro",
-    "debounce": 3, // Default is 5 (lower is better)
+    "debounce": 4, // Default is 5 (lower is better)
     "split": {
         "enabled": true,
         // The way how "handedness" is decided (which half is which)
