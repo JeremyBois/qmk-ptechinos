@@ -88,14 +88,6 @@
         "tap_keycode_delay": 10
     },
     "tapping": {
-        // https://github.com/qmk/qmk_firmware/blob/master/docs/tap_hold.md#ignore-mod-tap-interrupt
-        // Remove special case for mod tap keys that strongly prefers the hold
-        "ignore_mod_tap_interrupt": true,
-        // https://github.com/qmk/qmk_firmware/blob/master/docs/tap_hold.md#permissive-hold
-        // Allow a more permissive hold for mod tap (does not work with tap dance).
-        "permissive_hold": false,
-        // https://github.com/qmk/qmk_firmware/blob/master/docs/tap_hold.md#hold-on-other-key-press
-        "hold_on_other_key_press": false,
         "term": 220,
         // How many taps before triggering the toggle
         "toggle": 2
