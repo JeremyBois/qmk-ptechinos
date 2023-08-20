@@ -1,7 +1,33 @@
 #include "switcher.h"
 #include "action_util.h"
 
-void update_oneshot(oneshot_state *state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t *record) {
+__attribute__((weak)) bool is_oneshot_mod_key(uint16_t keycode) {
+    return false;
+}
+
+__attribute__((weak)) bool is_oneshot_cancel_key(uint16_t keycode) {
+    return false;
+}
+
+__attribute__((weak)) bool is_oneshot_layer_cancel_key(uint16_t keycode) {
+    return false;
+}
+
+__attribute__((weak)) bool is_oneshot_ignored_key(uint16_t keycode) {
+    return false;
+}
+
+__attribute__((weak)) bool is_oneshot_layer_ignored_press(uint16_t keycode) {
+    switch (keycode) {
+        // Modifiers
+        case QK_MODS ... QK_MODS_MAX:
+        // Mod taps
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+            return true;
+        default:
+            return false;
+    }
+}
 
 void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
     if (keycode == trigger) {
@@ -84,10 +110,12 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                 // Cancel oneshot layer on designated cancel keydown.
                 *state = os_up_unqueued;
                 layer_off(layer);
+                // dprintf("cancel (off), layer: %d, ? -> os_up_unqueued\n", layer);
                 return false;
             }
-            if (is_oneshot_ignored_key(keycode) && *state != os_up_unqueued) {
-                return false;
+            if (is_oneshot_layer_ignored_press(keycode) && *state != os_up_unqueued) {
+                // dprintf("key down, layer: %d, Ignored key DOWN\n", layer);
+                return true;
             }
             uint8_t key_layer = read_source_layers_cache(record->event.key);
             if (key_layer == layer) {
@@ -95,6 +123,7 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                 switch (*state) {
                     case os_down_unused:
                         *state = os_down_used;
+                        // dprintf("key down, layer: %d, os_down_unused -> os_down_used\n", layer);
                         return true;
                     case os_up_queued:
                         if (is_oneshot_mod_key(keycode)) {
@@ -102,7 +131,9 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                             layer_off(layer);
                             return false;
                         } else {
+                            // layer_off is delayed to let QMK handle the key
                             *state = os_up_queued_used;
+                            // dprintf("key down, layer: %d, os_up_queued -> os_up_queued_used\n", layer);
                             return true;
                         }
                     case os_up_queued_used:
@@ -120,13 +151,10 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                 // On non-ignored keyup, consider the oneshot used.
                 switch (*state) {
                     case os_up_queued:
-                        *state = os_up_unqueued;
-                        layer_off(layer);
-                        return true;
                     case os_up_queued_used:
                         *state = os_up_unqueued;
                         layer_off(layer);
-                        return true;
+                        break;
                     default:
                         break;
                 }
@@ -184,13 +212,10 @@ bool update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
                 // Reset state to make it work if we use another key to change layer
                 switch (*state) {
                     case os_up_queued:
-                        // Force reset of layer state
-                        *state = os_up_unqueued;
-                        return true;
                     case os_up_queued_used:
                         // Force reset of layer state
                         *state = os_up_unqueued;
-                        return true;
+                        break;
                     default:
                         break;
                 }
@@ -266,7 +291,7 @@ bool update_active_hold_layer(switcher_state* state, uint16_t layer, uint16_t tr
     return true;
 }
 
-bool update_move_mod_layer(tap_mod_state *state, uint16_t layer, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t *record, uint16_t *internal_timer) {
+bool update_move_mod_layer(tap_mod_state* state, uint16_t layer, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t* record, uint16_t* internal_timer) {
     if (keycode == trigger) {
         if (record->event.pressed) {
             // Start timer to select between hold/tap later
@@ -300,7 +325,7 @@ bool update_move_mod_layer(tap_mod_state *state, uint16_t layer, uint16_t mod, u
                 *state = mm_up;
                 unregister_code(mod);
                 return false;
-            } else if (!is_oneshot_ignored_key(keycode)) {
+            } else if (!is_oneshot_layer_ignored_press(keycode)) {
                 switch (*state) {
                     case mm_held_unused:
                         // Register mod and let qmk handle the pressed key + mod
@@ -316,7 +341,7 @@ bool update_move_mod_layer(tap_mod_state *state, uint16_t layer, uint16_t mod, u
     return true;
 }
 
-bool update_tap_hold_layer(tap_mod_state *state, uint16_t layerTap, uint16_t layerHold, uint16_t trigger, uint16_t keycode, keyrecord_t *record, uint16_t *internal_timer) {
+bool update_tap_hold_layer(tap_mod_state* state, uint16_t layerTap, uint16_t layerHold, uint16_t trigger, uint16_t keycode, keyrecord_t* record, uint16_t* internal_timer) {
     if (keycode == trigger) {
         if (record->event.pressed) {
             // Start timer to select between hold/tap later
@@ -352,7 +377,7 @@ bool update_tap_hold_layer(tap_mod_state *state, uint16_t layerTap, uint16_t lay
                 *state = mm_up;
                 layer_off(layerHold);
                 return false;
-            } else if (!is_oneshot_ignored_key(keycode)) {
+            } else if (!is_oneshot_layer_ignored_press(keycode)) {
                 switch (*state) {
                     case mm_held_unused:
                         // Register layerHold and let qmk handle the pressed key in that layer
