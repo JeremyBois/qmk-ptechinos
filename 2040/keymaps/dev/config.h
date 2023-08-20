@@ -94,7 +94,11 @@
 // └─────────────────────────────────────────────────┘
 // Revert Y scrolling direction
 #    define PTECHINOS_DRAGSCROLL_INVERT_Y 1
-// Revert X scrolling direction
-// #    define PTECHINOS_DRAGSCROLL_INVERT_X 1
+#endif
 
+// ┌─────────────────────────────────────────────────┐
+// │ VIA                                             │
+// └─────────────────────────────────────────────────┘
+#ifdef VIA_ENABLE
+#    define DYNAMIC_KEYMAP_LAYER_COUNT 8
 #endif
