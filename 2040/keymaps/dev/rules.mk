@@ -6,7 +6,6 @@ SRC += features/encoder.c
 SRC += features/utility.c
 SRC += features/swapper.c
 SRC += features/switcher.c
-SRC += features/leader.c
 SRC += features/repeat.c
 
 # Allow user to control which pointing device to use

@@ -11,20 +11,28 @@ Compile using **#define** for handness
   - Right --> `make --jobs=1 ptechinos/2040:dev trackball=true`
 
 ## TODO
-  - [ ] Secure option
+  - [x] Secure option
     - https://github.com/qmk/qmk_firmware/blob/master/docs/feature_secure.md
+    - Not really needed
   - [ ] nkro
-  - [ ] Quick tap
-  - [ ] Test case `QK_MODS ... QK_MODS_MAX` and one shot layer bitshifting
+  - [x] Quick tap
+    - https://github.com/vial-kb/vial-qmk/blob/vial/docs/tap_hold.md
+    - 0 <= `QUICK_TAP_TERM` <= `TAPPING_TERM`
+      - tap time <= `QUICK_TAP_TERM` --> trigger auto repeat key feature
+    - Currently `QUICK_TAP_TERM` == `TAPPING_TERM` (default)
+  - [x] Combos
+    - Adjust the hold `COMBO_HOLD_TERM` to be higher than than typical `TAPPING_TERM`
+    - `TAPPING_TERM` == 200 --> `COMBO_HOLD_TERM` == 220
+  - [x] One shot layer
+    - [x] Fix implementation
+    - [x] Add generic way to test modifier and mod tap
+    - [x] Add filter for mod tap key
   - [ ] [Kinetic mouse keys](https://qmk.github.io/qmk_mkdocs/master/en/feature_mouse_keys/#kinetic-mode)
   - [ ] Trackpad + Trackball
     - [x] Scroll
       - [x] Left
       - [x] Right
     - [ ] Sniping
-      - [ ] Left
-      - [ ] Right
-    - [ ] Gesture
       - [ ] Left
       - [ ] Right
     - [x] Mouse
