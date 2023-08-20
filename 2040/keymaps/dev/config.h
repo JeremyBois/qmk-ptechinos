@@ -17,7 +17,8 @@
 #    define COMBO_MUST_TAP_PER_COMBO
 // If a combo triggers a modifier, only trigger when the combo is held
 #    define COMBO_MUST_HOLD_MODS
-#    define COMBO_HOLD_TERM 150
+// Bigger than default tap to avoid any risk of misfire
+#    define COMBO_HOLD_TERM 220
 #    define COMBO_TERM_PER_COMBO
 // All combos are specified from the base layer
 //  - saves space
