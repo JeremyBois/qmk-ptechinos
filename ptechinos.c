@@ -114,18 +114,18 @@ static void ptechinos_print_config_to_console(const char* location, pointer_conf
 #    endif // CONSOLE_ENABLE
 }
 
-static void ptechinos_print_mouse_report_to_console(const char* location, pointer_side_t side, report_mouse_t* report) {
-#    ifdef CONSOLE_ENABLE
-    dprintf("[Ptechinos] %s\n"
-            "REPORT (side=%d) ={\n"
-            "\tx=%d\n"
-            "\ty=%d\n"
-            "\tv=%d\n"
-            "\th=%d\n"
-            "}\n",
-            location, side, report->x, report->y, report->v, report->h);
-#    endif // CONSOLE_ENABLE
-}
+// static void ptechinos_print_mouse_report_to_console(const char* location, pointer_side_t side, report_mouse_t* report) {
+// #    ifdef CONSOLE_ENABLE
+//     dprintf("[Ptechinos] %s\n"
+//             "REPORT (side=%d) ={\n"
+//             "\tx=%d\n"
+//             "\ty=%d\n"
+//             "\tv=%d\n"
+//             "\th=%d\n"
+//             "}\n",
+//             location, side, report->x, report->y, report->v, report->h);
+// #    endif // CONSOLE_ENABLE
+// }
 
 /**
  * \brief Set the value of `config` from EEPROM.
@@ -340,16 +340,16 @@ static void ptechinos_pointing_device_task_drag_scroll(report_mouse_t* mouse_rep
 // With SPLIT_POINTING_ENABLE  pointing task is only called on the master side (the one with USB connected)
 #        if defined(POINTING_DEVICE_COMBINED)
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
-    ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_LEFT, &left_report);
-    ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_RIGHT, &right_report);
+    // ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_LEFT, &left_report);
+    // ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_RIGHT, &right_report);
     if (g_ptechinos_pointer_config.is_dragscroll_left_enabled) {
         ptechinos_pointing_device_task_drag_scroll(&left_report);
     }
     if (g_ptechinos_pointer_config.is_dragscroll_right_enabled) {
         ptechinos_pointing_device_task_drag_scroll(&right_report);
     }
-    ptechinos_print_mouse_report_to_console("task_drag_scroll (AFTER)", PTECHINOS_LEFT, &left_report);
-    ptechinos_print_mouse_report_to_console("task_drag_scroll (AFTER)", PTECHINOS_RIGHT, &right_report);
+    // ptechinos_print_mouse_report_to_console("task_drag_scroll (AFTER)", PTECHINOS_LEFT, &left_report);
+    // ptechinos_print_mouse_report_to_console("task_drag_scroll (AFTER)", PTECHINOS_RIGHT, &right_report);
     return pointing_device_task_combined_user(left_report, right_report);
 }
 #        elif defined(POINTING_DEVICE_LEFT)
@@ -434,13 +434,14 @@ void matrix_init_kb(void) {
     // Safe to read CPI setting from configuration since
     // matrix init comes before pointing device init
     ptechinos_read_config_from_eeprom(&g_ptechinos_pointer_config);
+    ptechinos_print_config_to_console("matrix_init_kb", &g_ptechinos_pointer_config);
 
     matrix_init_user();
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     if (!process_record_user(keycode, record)) {
-        ptechinos_print_config_to_console("process_record_user", &g_ptechinos_pointer_config);
+        // ptechinos_print_config_to_console("process_record_user", &g_ptechinos_pointer_config);
         return false;
     }
 
@@ -487,7 +488,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
             break;
     }
-    ptechinos_print_config_to_console("process_record_kb", &g_ptechinos_pointer_config);
+    // ptechinos_print_config_to_console("process_record_kb", &g_ptechinos_pointer_config);
 
     return true;
 }
