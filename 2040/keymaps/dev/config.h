@@ -67,6 +67,15 @@
 #    define POINTING_DEVICE_INVERT_Y_RIGHT 1
 
 // ┌─────────────────────────────────────────────────┐
+// │ Auto mouse layer                                │
+// └─────────────────────────────────────────────────┘
+#    define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#    if defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+#        define AUTO_MOUSE_TIME 400
+#        define AUTO_MOUSE_DEBOUNCE 25
+#    endif
+
+// ┌─────────────────────────────────────────────────┐
 // │ Trackpad                                        │
 // └─────────────────────────────────────────────────┘
 // Common parameters can be founded in ../config.h

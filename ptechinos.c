@@ -412,6 +412,27 @@ void pointing_device_init_kb(void) {
 }
 
 //
+// AUTO MOUSE (QMK)
+//
+#    if defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+/**
+ * @brief Keyboard level callback for adding keyrecords as mouse keys
+ */
+bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+    switch (keycode) {
+        case PL_CPI_UP:
+        case PL_CPI_DOWN:
+        case PL_DS_TOOGLE:
+        case PR_CPI_UP:
+        case PR_CPI_DOWN:
+        case PR_DS_TOOGLE:
+            return true;
+    }
+    return is_mouse_record_user(keycode, record);
+}
+#    endif
+
+//
 // COMMON (QMK)
 //
 void eeconfig_init_kb(void) {

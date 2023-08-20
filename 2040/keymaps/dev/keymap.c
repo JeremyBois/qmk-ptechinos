@@ -509,6 +509,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             // Force modifiers to cancel (should not be neccessary but just to be safe)
             clear_mods();
             break;
+        case ML_MOUSE:
+            if (record->event.pressed) {
+                // MOUSE layer from combo
+                // Force modifiers to cancel (should not be neccessary but just to be safe)
+                clear_mods();
+                layer_move(L_MOUSE);
+                dprintf("MOUSE");
+                return false;
+            }
+            break;
         case ML_ADJUST:
             if (record->event.pressed) {
                 // ADJUST layer from combo
@@ -563,7 +573,51 @@ bool caps_word_press_user(uint16_t keycode) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ DEBUG                                           │
+// │ AUTO MOUSE                                  │
+// └─────────────────────────────────────────────────┘
+//
+
+// @TODO
+// Avoid triggering the layer even for a tiny movement
+// Solved (in part) by https://github.com/qmk/qmk_firmware/pull/21398
+// The only issue with this implementation is that threshold
+
+#if defined(POINTING_DEVICE_ENABLE) && defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+void pointing_device_init_user(void) {
+    set_auto_mouse_layer(L_MOUSE);
+    set_auto_mouse_enable(true);
+}
+
+/**
+ * @brief Defined keymap/user level callback for adding keyrecords as mouse keys
+ */
+bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
+    // @IMPORTANT
+    // pointing_device_auto_mouse.is_mouse_record has been altered
+    // Avoid hard coded IS_MOUSEKEY(keycode) to trigger the layer
+    // @IMPORTANT
+
+    // Avoid moving to L_MOUSE layer using a mouse key
+    if (IS_LAYER_OFF(L_MOUSE)) {
+        return false;
+    }
+
+    // Add custom keys from the L_MOUSE layer that continue the auto mouse feature
+    switch (keycode) {
+        case C_Z:
+        case LALT_T(C_X):
+        case C_X:
+        case C_C:
+        case C_V:
+        case C_Y:
+            return true;
+    }
+
+    // Finally include all mouse keys as in original QMK is_mouse_record
+    return IS_MOUSEKEY(keycode);
+}
+
+#endif
 
 //
 // ┌─────────────────────────────────────────────────┐
