@@ -8,3 +8,5 @@
 // ----
 
 void process_repeat_key(uint16_t keycode, const keyrecord_t *record, uint16_t repeatKeycode);
+
+uint16_t get_last_pressed_keycode(void);
