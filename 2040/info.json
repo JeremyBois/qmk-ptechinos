@@ -137,6 +137,7 @@
         // Default leader timeout is 200ms
         "timeout": 400
     },
+    "host_language": "us_international",
     "layouts": {
         "LAYOUT_v06": {
             "layout": [
