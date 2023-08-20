@@ -44,7 +44,7 @@
 // https://www.reddit.com/r/olkb/comments/72u8ou/qmk_mouse_keys_rock/
 #ifdef MOUSEKEY_ENABLE
 #    define MOUSEKEY_WHEEL_MAX_SPEED 8
-#    define MOUSEKEY_WHEEL_TIME_TO_MAX 40
+#    define MOUSEKEY_WHEEL_TIME_TO_MAX 80
 // Enable quadratic curve :
 //   - accurate small movements
 //   - fast large motion
