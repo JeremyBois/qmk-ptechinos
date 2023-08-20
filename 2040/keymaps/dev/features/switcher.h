@@ -15,15 +15,15 @@ typedef enum {
     os_up_queued_used,
     os_down_unused,
     os_down_used,
-} oneshot_state;
+} switcher_state;
 
 // Custom oneshot mod implementation that doesn't rely on timers. If a mod is
 // used while it is held it will be unregistered on keyup as normal, otherwise
 // it will be queued and only released after the next non-mod keyup.
-void update_oneshot(oneshot_state *state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
+void update_oneshot(switcher_state *state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
 // Oneshot implementation for layers
-bool update_oneshot_layer(oneshot_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
+bool update_oneshot_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
 // Custom move / hold layer implementation that doesn't rely on timers. If the trigger is held down the layer is tui
 // and another key is pressed then the layer is turn off when the the layer key is released (layer_off).
@@ -33,25 +33,28 @@ bool update_oneshot_layer(oneshot_state *state, uint16_t layer, uint16_t trigger
 // If the trigger is held down then the @layer layer is activated (layer_move).
 //    - If the trigger is released before any other key then @layer activation is persistent
 //    - If the trigger is still held while another key is pressed then @layer remains active until the trigger key is released (layer_off)
-bool update_move_hold_layer(oneshot_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
+bool update_move_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
 // Same as update_move_hold_layer but using layer_on not layer_move
-bool update_active_hold_layer(oneshot_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
+bool update_active_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
-// To be implemented by the consumer. Layers one shot implementation needs to
-// know which keys are used as oneshot mods
+// To be implemented by the consumer.
+// Layers one shot implementation needs to know which keys are used as oneshot mods
+// true  --> Exit layer and update_oneshot_layer function returns false
+// false --> update_oneshot_layer function returns true
 bool is_oneshot_mod_key(uint16_t keycode);
 
-// To be implemented by the consumer. Defines keys to cancel oneshot mods.
+// To be implemented by the consumer.Defines keys to cancel oneshot mods.
 bool is_oneshot_cancel_key(uint16_t keycode);
 
-// To be implemented by the consumer. Defines keys to cancel oneshot layers.
+// To be implemented by the consumer.Defines keys to cancel oneshot layers.
 bool is_oneshot_layer_cancel_key(uint16_t keycode);
 
-// To be implemented by the consumer. Defines keys to ignore when determining
-// whether a oneshot mod has been used. Setting this to modifiers and layer
-// change keys allows stacking multiple oneshot modifiers, and carrying them
-// between layers.
+// To be implemented by the consumer.
+// Defines keys to ignore when determining whether a oneshot mod has been used.
+// Setting this to modifiers and layer change keys allows stacking multiple oneshot modifiers
+// and carrying them between layers.
+// True to ignore, False to handle
 bool is_oneshot_ignored_key(uint16_t keycode);
 
 

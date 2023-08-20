@@ -1,6 +1,9 @@
 #include "switcher.h"
+#include "action_util.h"
 
 void update_oneshot(oneshot_state *state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t *record) {
+
+void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
     if (keycode == trigger) {
         if (record->event.pressed) {
             // Trigger keydown
@@ -50,7 +53,7 @@ void update_oneshot(oneshot_state *state, uint16_t mod, uint16_t trigger, uint16
     }
 }
 
-bool update_oneshot_layer(oneshot_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record) {
+bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
     if (keycode == trigger) {
         if (record->event.pressed) {
             // Trigger keydown
@@ -133,7 +136,7 @@ bool update_oneshot_layer(oneshot_state *state, uint16_t layer, uint16_t trigger
     return true;
 }
 
-bool update_move_hold_layer(oneshot_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record) {
+bool update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
     if (keycode == trigger) {
         if (record->event.pressed) {
             // Trigger keydown
@@ -197,7 +200,7 @@ bool update_move_hold_layer(oneshot_state *state, uint16_t layer, uint16_t trigg
     return true;
 }
 
-bool update_active_hold_layer(oneshot_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record) {
+bool update_active_hold_layer(switcher_state* state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
     if (keycode == trigger) {
         if (record->event.pressed) {
             // Maybe better to use IS_LAYER_ON(layer) to be sure ??
