@@ -1,4 +1,5 @@
 #include "ptechinos.h"
+#include <stdint.h>
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -49,7 +50,7 @@
 
 // Mousing (Avoid values below 100)
 #    ifndef PTECHINOS_MOUSING_CPI_MIN
-#        define PTECHINOS_MOUSING_CPI_MIN 400
+#        define PTECHINOS_MOUSING_CPI_MIN 200
 #    endif // PTECHINOS_MOUSING_CPI_MIN
 
 #    ifndef PTECHINOS_MOUSING_CPI_CONFIG_STEP
@@ -61,7 +62,7 @@
 #        define PTECHINOS_DRAGSCROLL_LEFT 100
 #    endif // PTECHINOS_DRAGSCROLL_LEFT
 #    ifndef PTECHINOS_DRAGSCROLL_RIGHT
-#        define PTECHINOS_DRAGSCROLL_RIGHT 200
+#        define PTECHINOS_DRAGSCROLL_RIGHT 250
 #    endif // PTECHINOS_DRAGSCROLL_RIGHT
 #    ifndef PTECHINOS_SCROLL_DIVISOR_H
 #        define PTECHINOS_SCROLL_DIVISOR_H 5.0
@@ -82,6 +83,10 @@ typedef union {
         bool is_dragscroll_right_enabled : 1;
     } __attribute__((packed));
 } pointer_config_t;
+
+// Used to avoid unsigned int wrapping when CPI is updated
+const uint8_t max_cpi_state = 15u;
+const uint8_t min_cpi_state = 0u;
 
 static pointer_config_t g_ptechinos_pointer_config = {0};
 
@@ -162,6 +167,7 @@ static void ptechinos_pointing_device_set_cpi_internal(bool left, uint16_t cpi) 
  *\brief Set the appropriate CPI on the device based on the input config.
  */
 static void ptechinos_pointing_device_set_cpi(pointer_config_t* config, pointer_side_t side) {
+    ptechinos_print_config_to_console("set_cpi", &g_ptechinos_pointer_config);
     switch (side) {
         case PTECHINOS_LEFT:
             if (config->is_dragscroll_left_enabled) {
@@ -233,15 +239,19 @@ void ptechinos_set_pointer_mousing_cpi(pointer_side_t side, bool increase) {
     switch (side) {
         case PTECHINOS_LEFT:
             if (increase) {
-                g_ptechinos_pointer_config.mousing_left_cpi += 1;
-            } else if (g_ptechinos_pointer_config.mousing_left_cpi > 0u) {
-                g_ptechinos_pointer_config.mousing_left_cpi -= 1;
+                if (g_ptechinos_pointer_config.mousing_left_cpi < max_cpi_state) {
+                    g_ptechinos_pointer_config.mousing_left_cpi += 1u;
+                }
+            } else if (g_ptechinos_pointer_config.mousing_left_cpi > min_cpi_state) {
+                g_ptechinos_pointer_config.mousing_left_cpi -= 1u;
             }
             break;
         case PTECHINOS_RIGHT:
             if (increase) {
-                g_ptechinos_pointer_config.mousing_right_cpi += 1;
-            } else if (g_ptechinos_pointer_config.mousing_right_cpi > 0u) {
+                if (g_ptechinos_pointer_config.mousing_right_cpi < max_cpi_state) {
+                    g_ptechinos_pointer_config.mousing_right_cpi += 1;
+                }
+            } else if (g_ptechinos_pointer_config.mousing_right_cpi > min_cpi_state) {
                 g_ptechinos_pointer_config.mousing_right_cpi -= 1;
             }
             break;

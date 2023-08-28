@@ -2,6 +2,7 @@
 
 // // Only for LSP (must be removed)
 // #ifndef POINTING_DEVICE_ENABLE
+// #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 // #define POINTING_DEVICE_ENABLE
 // #define SPLIT_POINTING_ENABLE
 // #define POINTING_DEVICE_COMBINED
