@@ -13,7 +13,7 @@
         "debounce_type": "sym_defer_pr"
     },
     "processor": "atmega32u4",
-    "bootloader": "caterina",
+    "bootloader": "atmel-dfu",
     "bootloader_instructions": "Press once the physical RESET button on the top of the board.",
     "pin_compatible": "promicro",
     "debounce": 4, // Default is 5 (lower is better)
@@ -23,6 +23,7 @@
         // see https://docs.qmk.fm/#/feature_split_keyboard?id=setting-handedness
         // "main": "right",  // BUG : Fixed by PR at https://github.com/qmk/qmk_firmware/pull/18254
         // for more options.
+        "main": "eeprom",
         "transport": {
             "protocol": "serial"
         },
