@@ -3,49 +3,65 @@
 #include QMK_KEYBOARD_H
 
 //
-// ***
-// LAYER SETTINGS
-// ***
+// ┌─────────────────────────────────────────────────┐
+// │ LAYERS                                              │
+// └─────────────────────────────────────────────────┘
 //
-enum custom_layers { _DEFAULT = 0, _COLEMAK, _ERGOL, _NAV, _NUM, _SYM, _ADJUST };
+enum custom_layers { L_DEFAULT = 0, L_COLEMAK, L_ERGOL, L_NAV, L_MOUSE, L_NUM, L_SYM, L_ADJUST };
 
 //
-// ***
-// CUSTOM KEYCODE HANDLING
-// ***
+// ┌─────────────────────────────────────────────────┐
+// │ CUSTOM KEYCODE                                      │
+// └─────────────────────────────────────────────────┘
 //
 enum custom_keycodes {
+    // Leader
 #ifdef VIA_ENABLE
-    C_GRV = USER00,
+    C_CHORD = USER00,
 #else
-    C_GRV = SAFE_RANGE,
+    C_CHORD = SAFE_RANGE,
 #endif
+    // Repeat
+    REPEAT,
+    // Symbols
+    C_DEG,
     C_TILD,
     C_QUOT,
     C_DQUOT,
-    C_DEG,
-    C_CHORD, // LEADER key
+    C_GRV,
+    // Wrapper for mod tap interception
+    C_Y,
     C_Z,
     C_X,
     C_C,
     C_V,
     C_SLSH,
+    // Diacritics
     C_A_GRV,
     C_E_ACU,
     C_E_GRV,
     C_C_CED,
     C_U_GRV,
-    SW_CTAB,   // Ctrl-tab
-    SW_ATAB,   // Alt-tab
-    ML_ADJUST, // Combo to move to ADJUST layer
-    // SHIFT_DEFAULT, // LSFT_T(TO(DEFAULT))
-    OSL_SYM, // One shot layer without timer
-    OSL_NUM, //
-    MHL_NAV, // On move/hold layer without timer
-    MHL_NUM, //
-    REPEAT   // Repeat feature
+    // Swappers
+    SW_CTAB,
+    SW_ATAB,
+    // Combo layer
+    ML_MOUSE,
+    ML_ADJUST,
+    // Switcher of layer (not timer)
+    SWITCH_SYM,
+    SWITCH_NUM,
+    SWITCH_NAV
 };
 
 //
-// ALIAS
+// ┌─────────────────────────────────────────────────┐
+// │ ALIAS                                               │
+// └─────────────────────────────────────────────────┘
 //
+#define C_UNDO C(KC_Z)
+#define C_REDO C(KC_Y)
+#define C_COPY C(KC_C)
+#define C_CUT C(KC_X)
+#define C_PASTE C(KC_V)
+#define C_COMMENT C(KC_SLSH)

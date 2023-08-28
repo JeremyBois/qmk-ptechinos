@@ -83,13 +83,13 @@
         // Software way to enter boot mode
         "bootmagic": false,
         // Console for debug (+4686)
-        "console": false,
+        "console": false
     },
     "qmk": {
-        "tap_keycode_delay": 10
+        "tap_keycode_delay": 20
     },
     "tapping": {
-        "term": 220,
+        "term": 200,
         // How many taps before triggering the toggle
         "toggle": 2
     },
@@ -123,13 +123,15 @@
         "timeout": 4000
     },
     "caps_word": {
-        "enabled": true
+        "enabled": true,
+        "both_shifts_turns_on": true
     },
     "leader_key": {
         "timing": false,
         // Default leader timeout is 200ms
         "timeout": 400
     },
+    "both_shifts_turns_on": true
     "layouts": {
         "LAYOUT_v05": {
             "layout": [

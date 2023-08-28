@@ -26,7 +26,7 @@ COMB(caps, CW_TOGG, KC_M, KC_COMM)
 // Right
 
 // TWO HANDS
-COMB(adjust, ML_ADJUST, OSL_NUM, OSL_SYM)
+COMB(adjust, ML_ADJUST, SWITCH_SYM, SWITCH_NUM)
 
 // Vertical HOME/TOP
 // Left
