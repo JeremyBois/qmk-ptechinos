@@ -405,8 +405,6 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 
 bool is_oneshot_layer_ignored_press(uint16_t keycode) {
     switch (keycode) {
-        // Modifiers
-        case QK_MODS ... QK_MODS_MAX:
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
             return true;
