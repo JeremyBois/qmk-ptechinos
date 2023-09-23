@@ -48,6 +48,11 @@
 // #    endif
 // UNSURE
 
+// Persistence in EEPROM
+#    ifndef PTECHINOS_EEPROM_READ_WRITE_DISABLED
+#        define PTECHINOS_EEPROM_READ_WRITE
+#    endif // PTECHINOS_EEPROM_READ_WRITE_DISABLED
+
 // Mousing (Avoid values below 100)
 #    ifndef PTECHINOS_MOUSING_CPI_MIN
 #        define PTECHINOS_MOUSING_CPI_MIN 200
@@ -139,7 +144,12 @@ static void ptechinos_print_config_to_console(const char* location, pointer_conf
  * are purposefully ignored since we do not want to persist them to memory.
  */
 static void ptechinos_read_config_from_eeprom(pointer_config_t* config) {
-    config->raw                         = eeconfig_read_kb();
+#    ifdef PTECHINOS_EEPROM_READ_WRITE
+    config->raw = eeconfig_read_kb();
+#    else
+    config.raw = 0;
+#    endif
+
     config->is_dragscroll_left_enabled  = false;
     config->is_dragscroll_right_enabled = false;
 }
@@ -151,7 +161,11 @@ static void ptechinos_read_config_from_eeprom(pointer_config_t* config) {
  * This include `is_dragscroll_[left|right]_enabled` states.
  */
 static void ptechinos_write_config_to_eeprom(pointer_config_t* config) {
+#    ifdef PTECHINOS_EEPROM_READ_WRITE
     eeconfig_update_kb(config->raw);
+#    else
+    config.raw = 0;
+#    endif
 }
 
 // Helper to make it easier to set CPI
