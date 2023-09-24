@@ -384,6 +384,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 // ADJUST layer from combo
                 // Force modifiers to cancel (should not be neccessary but just to be safe)
                 clear_mods();
+#if defined(POINTING_DEVICE_ENABLE) && defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+                // Force end of mouse layer
+                auto_mouse_layer_off();
+#endif
                 layer_move(L_ADJUST);
                 return false;
             }
@@ -523,9 +527,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         case TO(L_DEFAULT):
-        case TO(L_ADJUST):
             // Force modifiers to cancel (should not be neccessary but just to be safe)
             clear_mods();
+#if defined(POINTING_DEVICE_ENABLE) && defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+            // Force end of mouse layer
+            auto_mouse_layer_off();
+#endif
             break;
         case ML_MOUSE:
             if (record->event.pressed) {

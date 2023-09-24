@@ -14,6 +14,16 @@ Compile using **#define** for handness
   - [x] Secure option
     - https://github.com/qmk/qmk_firmware/blob/master/docs/feature_secure.md
     - Not really needed
+  - [x] Keymap
+    - [x] Create MOUSE layer
+     - Mirror left and right side (same experience with both pointers)
+    - [x] Improve NUM layer
+      - All numbers on the same side
+    - [x] Improve NAV layer
+      - Easier scrolling
+      - Tab motion
+      - Desktop motion on left hand (drag and drop with mouse will changing desktop)
+      - Same location for left and right clic as the MOUSE layer (easier to remenber)
   - [ ] nkro
   - [x] Quick tap
     - https://github.com/vial-kb/vial-qmk/blob/vial/docs/tap_hold.md
@@ -28,13 +38,10 @@ Compile using **#define** for handness
     - [x] Add generic way to test modifier and mod tap
     - [x] Add filter for mod tap key
   - [ ] [Kinetic mouse keys](https://qmk.github.io/qmk_mkdocs/master/en/feature_mouse_keys/#kinetic-mode)
-  - [ ] Trackpad + Trackball
+  - [x] Trackpad + Trackball
     - [x] Scroll
       - [x] Left
       - [x] Right
-    - [ ] Sniping
-      - [ ] Left
-      - [ ] Right
     - [x] Mouse
       - [x] Left
       - [x] Right
