@@ -19,8 +19,6 @@ __attribute__((weak)) bool is_oneshot_ignored_key(uint16_t keycode) {
 
 __attribute__((weak)) bool is_oneshot_layer_ignored_press(uint16_t keycode) {
     switch (keycode) {
-        // Modifiers
-        case QK_MODS ... QK_MODS_MAX:
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
             return true;
@@ -94,13 +92,16 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                 case os_down_unused:
                     // If we didn't use the layer while trigger was held, queue it.
                     *state = os_up_queued;
+                    // dprintf("Trigger keyup -> os_down_unused\n");
                     return false;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.
                     *state = os_up_unqueued;
                     layer_off(layer);
+                    // dprintf("Trigger keyup -> os_down_used\n");
                     return false;
                 default:
+                    // dprintf("Trigger keyup -> default\n");
                     break;
             }
         }

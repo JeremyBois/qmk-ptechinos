@@ -95,29 +95,13 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, RSFT_T(
                      _______, _______, _______,    _______, _______, _______
     ),
 
-    /* NAV
+    /*
+     * NAV
      * Right --> Used a lot with NAV on hold + Used with NAV active
      *  - Arrows | End / Begin | Top / Bottom
-     *  - ?? Center view at line (CView) --> Ctrl+K-C ??
-     *  - Left/Right click
      * Left --> Useful with mouse (right hand) + Used with NAV active
-     *   - Moving between workspace (required to be able to use drag and drop)
-     *   - Screen scrolling
-     *   - Remove Ctab swapper
-     * NAV
-     *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       | WH_L |  MU  | WH_R  | PgUp |                    | WH_U | Home |  Up  | End  |       |
-     * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+------.
-     * | CTab | ATab  |  ML  |  MD  |  MR   | PgDo |                    | WH_D | Left | Down | Right|  MB4  | MB5  |
-     * |      | Shift |      |      |       |      |-------.    ,-------|      |      |      |      | Shift |      |
-     * `------+-------+------+------+------ +------|  MUTE |    | PSCR  |------+------+------+------+-------+------'
-     *        |  Undo | Cut  | Copy | Paste |LDesk |-------|    |-------|RDesk | MB1  | MB2  | MB3  |  Com  |
-     *        |       | LALT |      |       |      |       |    |       |      |      |      | LALT |  Ralt |
-     *        `------------------------------------/      /      \      \-----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  LCtrl |        |
-     *                      `---------'--------'-------'            '------'--------'--------'
-     *
+     *   - Moving between workspace with one hand (required to be able to use drag and drop)
+     *   - Screen scrolling with one hand
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |       | WH_L | WH_U | WH_R  | RDesk|                    | PgUp | Home |  Up  | End  |       |
      * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+------.
@@ -138,23 +122,10 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, C(A(KC_LEFT)),      KC_PGDN
                                            _______, _______, _______,    _______, _______, _______
 
     ),
-    /* NUM
+    /*
+     * NUM
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       |  F6  |  F7  |  F8  |  F9   |                    |  F10 |  F1  |  F2  |  F3  |       |
-     * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |  F5  |   5   |   6  |   7  |   8  |   9   |                    |  0   |   1  |   2  |   3  |   4   |  F4  |
-     * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift | RCTRL|
-     * `------+-------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+-------+------'
-     *        |       |      |      |      |       |-------|    |-------|  F11 |  F12 |  ,   |  .   |   /   |
-     *        |       | LALT |      |      |       |       |    |       |      |      |      | LALT |  Ralt |
-     *        `------------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
-     *                       `---------'--------'------'            '------'--------'--------'
-     */
-    /* NUM
-     *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       |  F6  |  F7  |  F8  |  F9   |                    |   6  |   7  |   8  |   9  |       |
+     *        |       |  F6  |  F7  |  F8  |  F9   |                    |   9  |   8  |   7  |   6  |       |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
      * |  F5  |  F4   |  F3  |  F2  |  F1  |  F10  |                    |   0  |   1  |   2  |   3  |   4   |  5   |
      * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |      |
@@ -167,12 +138,13 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, C(A(KC_LEFT)),      KC_PGDN
      *                       `---------'--------'------'            '------'--------'--------'
      */
     [L_NUM] = LAYOUT(
-                          KC_F6, KC_F7, KC_F8, KC_F9,     KC_6, KC_7, KC_8, KC_9,
+                          KC_F6, KC_F7, KC_F8, KC_F9,     KC_9,   KC_8,  KC_7,  KC_6,
    KC_F5, LSFT_T(KC_F4), KC_F3, KC_F2, KC_F1, KC_F10,     KC_0,   KC_1,  KC_2,  KC_3, RSFT_T(KC_4), KC_5,
           C_Z, LALT_T(C_X),  C_C,  C_V,  C_Y, _______,   _______,  KC_F11, KC_F12, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
                             _______, _______, _______,   _______, _______, _______
     ),
-    /* SYM
+    /*
+     * SYM
      *
      *        ,------------------------------------.                    ,------------------------------------.
      *        |       |   :  |  #   |  ;   |   `   |                    |   %   |   &  |   *  |   ?  |       |
@@ -261,7 +233,7 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
         case round_r:
         case square_l:
         case square_r:
-            return COMBO_TERM + 30;
+            return COMBO_TERM + 40;
         default:
             return COMBO_TERM;
     }
@@ -353,8 +325,6 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 
 bool is_oneshot_layer_ignored_press(uint16_t keycode) {
     switch (keycode) {
-        // Modifiers
-        case QK_MODS ... QK_MODS_MAX:
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
             return true;
