@@ -94,31 +94,15 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, RSFT_T(
                      _______, _______, _______,    _______, _______, _______
     ),
 
-    /* NAV
+    /*
+     * NAV
      * Right --> Used a lot with NAV on hold + Used with NAV active
      *  - Arrows | End / Begin | Top / Bottom
-     *  - ?? Center view at line (CView) --> Ctrl+K-C ??
-     *  - Left/Right click
      * Left --> Useful with mouse (right hand) + Used with NAV active
-     *   - Moving between workspace (required to be able to use drag and drop)
-     *   - Screen scrolling
-     *   - Remove Ctab swapper
-     * NAV
+     *   - Moving between workspace with one hand (required to be able to use drag and drop)
+     *   - Screen scrolling with one hand
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |  MUTE | WH_L |  MU  | WH_R  | PgUp |                    | WH_U | Home |  Up  | End  | PSCR  |
-     * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+------.
-     * | CTab | ATab  |  ML  |  MD  |  MR   | PgDo |                    | WH_D | Left | Down | Right|  MB4  | MB5  |
-     * |      | Shift |      |      |       |      |-------.    ,-------|      |      |      |      | Shift |      |
-     * `------+-------+------+------+------ +------|  MUTE |    | PSCR  |------+------+------+------+-------+------'
-     *        |  Undo | Cut  | Copy | Paste |LDesk |-------|    |-------|RDesk | MB1  | MB2  | MB3  |  Com  |
-     *        |       | LALT |      |       |      |       |    |       |      |      |      | LALT |  Ralt |
-     *        `------------------------------------/      /      \      \-----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  LCtrl |        |
-     *                      `---------'--------'-------'            '------'--------'--------'
-     *
-     *        ,------------------------------------.                    ,-----------------------------------.
-     *        |  MUTE | WH_L | WH_U | WH_R  | RDesk|                    | PgUp | Home |  Up  | End  | PSCR  |
+     *        | CTab  | WH_L | WH_U | WH_R  | RDesk|                    | PgUp | Home |  Up  | End  | PSCR  |
      * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+------.
      * | CTab | ATab  | MB2  | WH_D |  MB1  | LDesk|                    | PgDo | Left | Down | Right| ATab  | CTab |
      * |      | Shift |      |      |       |      |-------.    ,-------|      |      |      |      | Shift |      |
@@ -131,43 +115,21 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, RSFT_T(
      *                      `---------'--------'-------'            '------'--------'--------'
      */
     [L_NAV] = LAYOUT(
-                  _______, KC_WH_L, KC_WH_U, KC_WH_R, C(A(KC_RIGHT)),      KC_PGUP, KC_HOME, KC_UP, KC_END, _______,
-SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, C(A(KC_LEFT)),      KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(SW_ATAB), SW_CTAB,
+                SW_CTAB, KC_WH_L, KC_WH_U, KC_WH_R, C(A(KC_RIGHT)),       KC_PGUP, KC_HOME, KC_UP, KC_END, _______,
+SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, C(A(KC_LEFT)),       KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(SW_ATAB), SW_CTAB,
                             C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,    _______, LGUI_T(KC_TAB), KC_BTN4, A(KC_X), KC_BTN5, KC_RIGHT_ALT,
                                            _______, _______, _______,    _______, _______, _______
 
     ),
-    /* MOUSE
-     * Left  --> Used with mouse on right
-     * Right  --> Used with mouse on left
-     * Keys should be duplicated on both sides
-     *   - CPI control
-     *   - MB1 .. MB5 mouse buttons
-     *   - Activate Scrolling with Ctrl if shift is disabled
-     *   - ?? Sniper mode ??
-     * Ctrl + Shift should be easy (used a lot in sublime text)
-     * ?? Auto mouse layer on pointer movement (disable only with a specific key) ??
+    /*
      * MOUSE
      *         ,-----------------------------------.                    ,-----------------------------------.
-     *         |      |      |      |      | RCPI_U|                    | LCPI_U|      |      |      |      |
-     * ,-------|------+------+------+------+-------+                    |-------+------+------+------+------------.
-     * |       |      |  MB2 |  MB3 |  MB1 | RCPI_D|                    | LCPI_D| MB1  |  MB3 |  MB2 |      |     |
-     * |       |      |      |      |      |       |-------.    ,-------|       |      |      |      |      |     |
-     * `-------+------+------+------+------+-------|       |    |       |-------+------+------+------+------------'
-     *         |      |      |      |      |       |-------|    |-------|       |      |      |      |      |
-     *         |      |      |      |      |       |       |    |       |       |      |      |      |      |
-     *         `-----------------------------------/      /      \      \-----------------------------------'
-     *                       |         | RScroll| /      /        \      \ | LScroll|  DEF    |
-     *                       |         |        |/      /          \      \|        |         |
-     *                       `---------'--------'------'            '------'--------'---------'
-     *
-     *         ,-----------------------------------.                    ,-----------------------------------.
-     *         |      |  MB4 | RScro|  MB5  |RCPI_U|                    | LCPI_U|  MB4 | LScro|  MB5 |      |
+     *         | CTab |  MB4 | RScro|  MB5  |RCPI_U|                    | LCPI_U|  MB4 | LScro|  MB5 | PSCR |
      * ,-------|------+------+------+-------+------+                    |-------+------+------+------+------------.
-     * |       |      |  MB2 |  MB3 |  MB1  |RCPI_D|                    | LCPI_D|  MB1 |  MB3 |  MB2 |      |     |
+     * | CTab  | ATab |  MB2 |  MB3 |  MB1  |RCPI_D|                    | LCPI_D|  MB1 |  MB3 |  MB2 | ATab | CTab|
      * |       | Shift|      |      |       |      |-------.    ,-------|       |      |      |      | Shift|     |
      * `-------+------+------+------+-------+------|       |    |       |-------+------+------+------+------------'
-     *         | UNDO | CUT  | COPY | PASTE | REDO |-------|    |-------| REDO  | PASTE| COPY | CUT  | UNDO |
+     *         | Undo | Cut  | Copy | Paste | Redo |-------|    |-------| Redo  | Paste| Copy | Cut  | Undo |
      *         |      | LALT |      |       |      |       |    |       |       |      |      | LALT |      |
      *         `-----------------------------------/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
@@ -176,37 +138,22 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, C(A(KC_LEFT)),      KC_PGDN
      */
     #if defined(POINTING_DEVICE_ENABLE)
       [L_MOUSE] = LAYOUT(
-      _______, KC_BTN4, PR_DS_TOOGLE, KC_BTN5, PR_CPI_UP,       PL_CPI_UP, KC_BTN4, PL_DS_TOOGLE, KC_BTN5, _______,
-XXXXXXX, KC_LSFT, KC_BTN2, KC_BTN3, KC_BTN1, PR_CPI_DOWN,       PL_CPI_DOWN, KC_BTN1, KC_BTN3, KC_BTN2, KC_RSFT, XXXXXXX,
-                 C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,     _______, C_Y, C_V, C_C, LALT_T(C_X), C_Z,
-                                _______, _______, _______,     _______, _______, _______
+              SW_CTAB, KC_BTN4, PR_DS_TOOGLE, KC_BTN5, PR_CPI_UP,       PL_CPI_UP, KC_BTN4, PL_DS_TOOGLE, KC_BTN5, SW_CTAB,
+SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, PR_CPI_DOWN,       PL_CPI_DOWN, KC_BTN1, KC_BTN3, KC_BTN2, LSFT_T(SW_ATAB), SW_CTAB,
+                         C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,     _______, C_Y, C_V, C_C, LALT_T(C_X), C_Z,
+                                        _______, _______, _______,     _______, _______, _______
     ),
       #else
       [L_MOUSE] = LAYOUT(
-         _______, KC_BTN4, XXXXXXX, KC_BTN5, XXXXXXX,       XXXXXXX, KC_BTN4, XXXXXXX, KC_BTN5, _______,
-XXXXXXX, KC_LSFT, KC_BTN1, KC_BTN3, KC_BTN2, XXXXXXX,       XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, KC_RSFT, XXXXXXX,
-             C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,     _______, C_Y, C_V, C_C, LALT_T(C_X), C_Z,
-                            _______, _______, _______,     _______, _______, _______
+                 _______, KC_BTN4, XXXXXXX, KC_BTN5, XXXXXXX,       XXXXXXX, KC_BTN4, XXXXXXX, KC_BTN5, _______,
+SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, XXXXXXX,       XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, LSFT_T(SW_ATAB), SW_CTAB,
+                     C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,     _______, C_Y, C_V, C_C, LALT_T(C_X), C_Z,
+                                    _______, _______, _______,     _______, _______, _______
     ),
       #endif
-
     /* NUM
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       |  F6  |  F7  |  F8  |  F9   |                    |  F10 |  F1  |  F2  |  F3  |       |
-     * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |  F5  |   5   |   6  |   7  |   8  |   9   |                    |  0   |   1  |   2  |   3  |   4   |  F4  |
-     * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift | RCTRL|
-     * `------+-------+------+------+------+-------|  MUTE |    | PSCR  |------+------+------+------+-------+------'
-     *        |       |      |      |      |       |-------|    |-------|  F11 |  F12 |  ,   |  .   |   /   |
-     *        |       | LALT |      |      |       |       |    |       |      |      |      | LALT |  Ralt |
-     *        `------------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |        |
-     *                       `---------'--------'------'            '------'--------'--------'
-     */
-    /* NUM
-     *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       |  F6  |  F7  |  F8  |  F9   |                    |   6  |   7  |   8  |   9  |       |
+     *        |  F5   |  F6  |  F7  |  F8  |  F9   |                    |   9  |   8  |   7  |   6  |   5   |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
      * |  F5  |  F4   |  F3  |  F2  |  F1  |  F10  |                    |   0  |   1  |   2  |   3  |   4   |  5   |
      * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |      |
@@ -672,6 +619,8 @@ bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
         case C_C:
         case C_V:
         case C_Y:
+        case SW_CTAB:
+        case LSFT_T(SW_ATAB):
             return true;
     }
 
