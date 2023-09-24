@@ -153,7 +153,7 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, XXXXXXX,       XXXXXXX, KC_
       #endif
     /* NUM
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |  F5   |  F6  |  F7  |  F8  |  F9   |                    |   9  |   8  |   7  |   6  |   5   |
+     *        |  F5   |  F6  |  F7  |  F8  |  F9   |                    |   9  |   8  |   7  |   6  |       |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
      * |  F5  |  F4   |  F3  |  F2  |  F1  |  F10  |                    |   0  |   1  |   2  |   3  |   4   |  5   |
      * |      | Shift |      |      |      |       |-------.    ,-------|      |      |      |      | Shift |      |
@@ -166,7 +166,7 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, XXXXXXX,       XXXXXXX, KC_
      *                       `---------'--------'------'            '------'--------'--------'
      */
     [L_NUM] = LAYOUT(
-                 _______, KC_F6, KC_F7, KC_F8, KC_F9,     KC_6, KC_7, KC_8, KC_9, _______,
+                   KC_F5, KC_F6, KC_F7, KC_F8, KC_F9,     KC_9, KC_8, KC_7, KC_6, _______,
    KC_F5, LSFT_T(KC_F4), KC_F3, KC_F2, KC_F1, KC_F10,     KC_0,   KC_1,  KC_2,  KC_3, RSFT_T(KC_4), KC_5,
           C_Z, LALT_T(C_X),  C_C,  C_V,  C_Y, _______,   _______,  KC_F11, KC_F12, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
                             _______, _______, _______,   _______, _______, _______
