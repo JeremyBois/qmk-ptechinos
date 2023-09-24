@@ -71,8 +71,9 @@
 // └─────────────────────────────────────────────────┘
 #    define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #    if defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
-#        define AUTO_MOUSE_TIME 400
-#        define AUTO_MOUSE_DEBOUNCE 25
+#        define AUTO_MOUSE_TIME 700            // Activation duration on mouse movement
+#        define AUTO_MOUSE_DELAY TAPPING_TERM  // Lock out after a non mouse key
+#        define AUTO_MOUSE_DEBOUNCE 40         // Time delay from last activation to next update
 #    endif
 
 // ┌─────────────────────────────────────────────────┐
