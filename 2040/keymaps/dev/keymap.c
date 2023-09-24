@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * QWERTY
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        | MUTE  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  | PSCR  |
+     *        |  Q    |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  | PSCR  |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |  Q   |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   |       |
      * |      | Shift |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |       |
@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_DEFAULT] = LAYOUT(
-           KC_MUTE, KC_W, KC_E, KC_R, KC_T,      KC_Y, KC_U, KC_I, KC_O, KC_PSCR,
+              KC_Q, KC_W, KC_E, KC_R, KC_T,      KC_Y, KC_U, KC_I, KC_O, KC_PSCR,
 KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
       KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_B, KC_MUTE,    KC_PSCR, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_SLSH),
            SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), TO(L_DEFAULT)
@@ -52,7 +52,7 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, RSFT_T(
      * COLEMAK
      * https://colemak.com/
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        | MUTE  |   W  |   F  |   P  |   G  |                    |   J  |   L  |   U  |   Y  |  PSCR |
+     *        |  Q    |   W  |   F  |   P  |   G  |                    |   J  |   L  |   U  |   Y  |  PSCR |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |  Q   |   A   |   R  |   S  |   T  |   D  |                    |   H  |   N  |   E  |   I  |   O   |       |
      * |      | Shift |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |       |
@@ -75,7 +75,7 @@ KC_Q, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,      KC_H, KC_J, KC_K, KC_L, RSFT_T(
      * ErgoL (COLEMAK for english / french)
      * https://ergol.org/
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        | MUTE  |   O  |   U  |   D   |   W  |                    |   B  |   M  |   F  |   P  |  PSCR |
+     *        |  Q    |   O  |   U  |   D   |   W  |                    |   B  |   M  |   F  |   P  |  PSCR |
      * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+-------.
      * |  Q   |   A   |   S  |   R  |   T   |   Y  |                    |   H  |   N  |   E  |   I  |   G   |       |
      * |      | Shift |      |      |       |      |-------.    ,-------|      |      |      |      | Shift |       |
