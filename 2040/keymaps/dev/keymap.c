@@ -260,7 +260,7 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
         case round_r:
         case square_l:
         case square_r:
-            return COMBO_TERM + 30;
+            return COMBO_TERM + 40;
         default:
             return COMBO_TERM;
     }
