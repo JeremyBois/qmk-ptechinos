@@ -48,9 +48,36 @@ Compile using **#define** for handness
   - [x] Mouse keys behave weird when auto mouse is enable
     - ?? Maybe a device make a small motion move to another layer ??
     - Mouse key scrolling activate the layer
+  - [x] Auto mouse key timer is not reset when using custom keycodes (like CPI increase)
 
 
 ## Bug
+### Allow a mouse key to reset the timer to stay in the mouse layer
+```c
+void auto_mouse_keyevent(bool pressed) {
+    if (pressed) {
+        auto_mouse_context.status.mouse_key_tracker++;
+    } else {
+        auto_mouse_context.status.mouse_key_tracker--;
+    }
+    auto_mouse_context.timer.delay = 0;
+}
+// Rewrite as
+void auto_mouse_keyevent(bool pressed) {
+    if (pressed) {
+        auto_mouse_context.status.mouse_key_tracker++;
+    } else {
+        auto_mouse_context.status.mouse_key_tracker--;
+    }
+#    ifdef AUTO_MOUSE_MOUSEKEY_ACTIVATION
+    // Timer will also be reset by any mousekey press while mouse layer is on
+    if (layer_state_is((AUTO_MOUSE_TARGET_LAYER))) {
+        auto_mouse_context.timer.active = timer_read();
+    }
+#    endif
+    auto_mouse_context.timer.delay = 0;
+}
+```
 
 ### Avoid triggering auto mouse layer when using MouseKey to scroll
 ```c
