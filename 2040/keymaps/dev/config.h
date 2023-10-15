@@ -85,7 +85,7 @@
 // Both relative and absolute does not support all features
 #    define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
 // Circular scroll gesture
-// #    define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
+#    define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
 // Single tap support
 #    define CIRQUE_PINNACLE_TAP_ENABLE 1
 // Right tap support (relative only)
