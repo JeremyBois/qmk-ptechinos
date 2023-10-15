@@ -124,9 +124,9 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, C(A(KC_LEFT)),       KC_PGD
     /*
      * MOUSE
      *         ,-----------------------------------.                    ,-----------------------------------.
-     *         | CTab |  MB4 | RScro|  MB5  |RCPI_U|                    | LCPI_U|  MB4 | LScro|  MB5 | PSCR |
+     *         | CTab |  MB4 |  MB3 |  MB5  |RCPI_U|                    | LCPI_U|  MB4 |  MB3 |  MB5 | PSCR |
      * ,-------|------+------+------+-------+------+                    |-------+------+------+------+------------.
-     * | CTab  | ATab |  MB2 |  MB3 |  MB1  |RCPI_D|                    | LCPI_D|  MB1 |  MB3 |  MB2 | ATab | CTab|
+     * | CTab  | ATab |  MB2 |RScrol|  MB1  |RCPI_D|                    | LCPI_D|  MB1 | LScro|  MB2 | ATab | CTab|
      * |       | Shift|      |      |       |      |-------.    ,-------|       |      |      |      | Shift|     |
      * `-------+------+------+------+-------+------|       |    |       |-------+------+------+------+------------'
      *         | Undo | Cut  | Copy | Paste | Redo |-------|    |-------| Redo  | Paste| Copy | Cut  | Undo |
@@ -138,15 +138,15 @@ SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, C(A(KC_LEFT)),       KC_PGD
      */
     #if defined(POINTING_DEVICE_ENABLE)
       [L_MOUSE] = LAYOUT(
-              SW_CTAB, KC_BTN4, PR_DS_TOOGLE, KC_BTN5, PR_CPI_UP,       PL_CPI_UP, KC_BTN4, PL_DS_TOOGLE, KC_BTN5, SW_CTAB,
-SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, PR_CPI_DOWN,       PL_CPI_DOWN, KC_BTN1, KC_BTN3, KC_BTN2, LSFT_T(SW_ATAB), SW_CTAB,
-                         C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,     _______, C_Y, C_V, C_C, LALT_T(C_X), C_Z,
-                                        _______, _______, _______,     _______, _______, _______
+                        SW_CTAB, KC_BTN4, KC_BTN3, KC_BTN5, PR_CPI_UP,      PL_CPI_UP, KC_BTN4, KC_BTN3, KC_BTN5, SW_CTAB,
+SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,      PL_CPI_DOWN, KC_BTN1, PL_DS_TOOGLE, KC_BTN2, LSFT_T(SW_ATAB), SW_CTAB,
+                               C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,   _______, C_Y, C_V, C_C, LALT_T(C_X), C_Z,
+                                              _______, _______, _______,   _______, _______, _______
     ),
       #else
       [L_MOUSE] = LAYOUT(
-                 _______, KC_BTN4, XXXXXXX, KC_BTN5, XXXXXXX,       XXXXXXX, KC_BTN4, XXXXXXX, KC_BTN5, _______,
-SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, XXXXXXX,       XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, LSFT_T(SW_ATAB), SW_CTAB,
+                 _______, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,       XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, _______,
+SW_CTAB, LSFT_T(SW_ATAB), KC_BTN2, XXXXXXX, KC_BTN1, XXXXXXX,       XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN2, LSFT_T(SW_ATAB), SW_CTAB,
                      C_Z, LALT_T(C_X), C_C, C_V, C_Y, _______,     _______, C_Y, C_V, C_C, LALT_T(C_X), C_Z,
                                     _______, _______, _______,     _______, _______, _______
     ),
