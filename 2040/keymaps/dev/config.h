@@ -34,9 +34,9 @@
 #endif
 
 // ┌─────────────────────────────────────────────────┐
-// │ Optimization                                    │
+// │ Layers                                         │
 // └─────────────────────────────────────────────────┘
-#define LAYER_STATE_8BIT
+#define LAYER_STATE_16BIT // Max number of layers = 16
 
 // ┌─────────────────────────────────────────────────┐
 // │ Mouse emulation                                 │
@@ -74,7 +74,7 @@
 #        define AUTO_MOUSE_TIME 700            // Activation duration on mouse movement
 #        define AUTO_MOUSE_DELAY TAPPING_TERM  // Lock out after a non mouse key
 #        define AUTO_MOUSE_DEBOUNCE 40         // Time delay from last activation to next update
-#        define AUTO_MOUSE_MOUSEKEY_ACTIVATION //  Timer will also be reset by any mousekey press while mouse layer is on
+#        define AUTO_MOUSE_MOUSEKEY_ACTIVATION // Timer will also be reset by any mousekey press while mouse layer is on
 #    endif
 
 // ┌─────────────────────────────────────────────────┐
@@ -102,5 +102,19 @@
 // │ VIA                                             │
 // └─────────────────────────────────────────────────┘
 #ifdef VIA_ENABLE
-#    define DYNAMIC_KEYMAP_LAYER_COUNT 8
+#    if defined(LAYER_STATE_8BIT)
+#        define DYNAMIC_KEYMAP_LAYER_COUNT 8
+#    elif defined(LAYER_STATE_16BIT)
+#        define DYNAMIC_KEYMAP_LAYER_COUNT 16
+#    elif defined(LAYER_STATE_32BIT)
+#        define DYNAMIC_KEYMAP_LAYER_COUNT 32
+#    else
+#        define DYNAMIC_KEYMAP_LAYER_COUNT 16
+#    endif
 #endif
+
+// ┌─────────────────────────────────────────────────┐
+// │ UNICODE                                         │
+// └─────────────────────────────────────────────────┘
+#define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX, UNICODE_MODE_WINCOMPOSE, UNICODE_MODE_MACOS
+#define UNICODE_CYCLE_PERSIST false

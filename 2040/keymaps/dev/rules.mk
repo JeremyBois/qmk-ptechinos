@@ -26,3 +26,5 @@ ifeq ($(strip $(trackball)), true)
 	OPT_DEFS += -DHAL_USE_SPI=TRUE
 endif
 
+# Unicode maps
+UNICODEMAP_ENABLE = yes

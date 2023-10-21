@@ -73,7 +73,7 @@
         //  Must be disabled if OLEDs are not installed (+3608-4774 with pet)
         "oled": false,
         "quantum_painter": false,
-        // Allow to send unicode characters
+        // Allow to send unicode characters (cannot be used with unicode_map)
         "unicode": false,
         // Save space by not using space cadet left/right shift (+350)
         "space_cadet": false,
