@@ -498,9 +498,7 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
 // └─────────────────────────────────────────────────┘
 //
 // Custom swappers
-bool swapper_ctab_active = false;
 bool swapper_atab_active = false;
-
 // Custom layer switchers
 switcher_state switcher_sym_state = os_up_unqueued;
 switcher_state switcher_num_state = os_up_unqueued;
@@ -568,8 +566,7 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode) {
 //
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Swapper on one key (no timer)
-    bool swapper_handled = update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
-    swapper_handled &= update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, SW_CTAB, keycode, record);
+    update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
 
     // Custom layer change (no timer)
     bool switch_key_not_handled = update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
@@ -581,8 +578,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         return false;
     }
 
-    // Discard key used to end a swapper
-    if (swapper_handled) return false;
 
     // Custom keycodes
     switch (keycode) {
