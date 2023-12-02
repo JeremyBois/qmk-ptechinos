@@ -15,7 +15,6 @@ ifeq ($(strip $(trackpad)), true)
 	# └─────────────────────────────────────────────────┘
 	POINTING_DEVICE_ENABLE = yes
 	POINTING_DEVICE_DRIVER = cirque_pinnacle_i2c
-	OPT_DEFS += -DHAL_USE_I2C=TRUE
 endif
 ifeq ($(strip $(trackball)), true)
 	# ┌─────────────────────────────────────────────────┐
@@ -23,7 +22,6 @@ ifeq ($(strip $(trackball)), true)
 	# └─────────────────────────────────────────────────┘
 	POINTING_DEVICE_ENABLE = yes
 	POINTING_DEVICE_DRIVER = pmw3360
-	OPT_DEFS += -DHAL_USE_SPI=TRUE
 endif
 
 # Unicode maps

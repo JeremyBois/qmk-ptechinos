@@ -39,10 +39,16 @@
 // https://github.com/qmk/qmk_firmware/blob/master/docs/feature_encoders.md
 #define ENCODER_DEFAULT_POS 0x3
 
-#ifdef POINTING_DEVICE_ENABLE
 // ┌─────────────────────────────────────────────────┐
 // │ Cirque Trackpad                                 │
 // └─────────────────────────────────────────────────┘
+#if defined(POINTING_DEVICE_ENABLE) && (POINTING_DEVICE_DRIVER == cirque_pinnacle_i2c)
+#    undef RP_I2C_USE_I2C0
+#    define RP_I2C_USE_I2C0 FALSE
+#    undef RP_I2C_USE_I2C1
+#    define RP_I2C_USE_I2C1 TRUE
+#    define I2C_DRIVER I2CD1
+
 // Driver / Wiring
 // https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#i2c-driver
 // https://github.com/qmk/qmk_firmware/blob/master/docs/i2c_driver.md
@@ -59,21 +65,30 @@
 #    define CIRQUE_PINNACLE_TIMEOUT 20
 // Limits the frequency that the sensor is polled for motion
 #    define POINTING_DEVICE_TASK_THROTTLE_MS 10
-
+#endif
 // ┌─────────────────────────────────────────────────┐
 // │ PWM3360 Trackball                               │
 // └─────────────────────────────────────────────────┘
 // https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#spi-driver
+#if defined(POINTING_DEVICE_ENABLE) && (POINTING_DEVICE_DRIVER == pmw3360)
+#    undef RP_SPI_USE_SPI1
+#    define RP_SPI_USE_SPI1 FALSE
+#    undef RP_SPI_USE_SPI0
+#    define RP_SPI_USE_SPI0 TRUE
 #    define SPI_DRIVER SPID0
+
 #    define SPI_SCK_PIN GP2
 #    define SPI_MOSI_PIN GP3
 #    define SPI_MISO_PIN GP4
 #    define POINTING_DEVICE_CS_PIN GP5
-// #    define PMW33XX_CS_PIN POINTING_DEVICE_CS_PIN  // default
+
+#    ifndef PMW33XX_CS_PIN
+#        define PMW33XX_CS_PIN POINTING_DEVICE_CS_PIN
+#    endif
 #    define PMW33XX_CLOCK_SPEED 2000000
-#    define PMW33XX_LIFTOFF_DISTANCE 0x02  // default
+#    define PMW33XX_LIFTOFF_DISTANCE 0x02 // default
 #    define PMW33XX_CPI 800
-#    define ROTATIONAL_TRANSFORM_ANGLE 0   // Vertical
+#    define ROTATIONAL_TRANSFORM_ANGLE 0 // Vertical
 #endif
 
 // ┌─────────────────────────────────────────────────┐

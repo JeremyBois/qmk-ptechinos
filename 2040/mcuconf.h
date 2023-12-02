@@ -10,13 +10,15 @@
 // RP2040 driver
 
 // ┌─────────────────────────────────────────────────┐
-// │ Trackpad / OLED                                 │
+// │ Trackpad                                        │
 // └─────────────────────────────────────────────────┘
 // https://learn.adafruit.com/adafruit-kb2040/pinouts
 // https://qmk.github.io/qmk_mkdocs/master/en/i2c_driver
 // https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#i2c-driver
-#undef RP_I2C_USE_I2C1
-#define RP_I2C_USE_I2C1 TRUE
+#if defined(POINTING_DEVICE_ENABLE) && (POINTING_DEVICE_DRIVER == cirque_pinnacle_i2c)
+#    undef RP_I2C_USE_I2C1
+#    define RP_I2C_USE_I2C1 TRUE
+#endif
 
 // ┌─────────────────────────────────────────────────┐
 // │ Trackball                                       │
@@ -24,5 +26,7 @@
 // https://learn.adafruit.com/adafruit-kb2040/pinouts
 // https://qmk.github.io/qmk_mkdocs/master/en/spi_driver
 // https://github.com/qmk/qmk_firmware/blob/master/docs/platformdev_rp2040.md#spi-driver
-#undef RP_SPI_USE_SPI0
-#define RP_SPI_USE_SPI0 TRUE
+#if defined(POINTING_DEVICE_ENABLE) && (POINTING_DEVICE_DRIVER == pmw3360)
+#    undef RP_SPI_USE_SPI0
+#    define RP_SPI_USE_SPI0 TRUE
+#endif
