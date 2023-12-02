@@ -79,16 +79,6 @@
 // Invert the Y axis (trackball / right side)
 #    define POINTING_DEVICE_INVERT_Y_RIGHT 1
 
-// ┌─────────────────────────────────────────────────┐
-// │ Auto mouse layer                                │
-// └─────────────────────────────────────────────────┘
-#    define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#    if defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
-#        define AUTO_MOUSE_TIME 700            // Activation duration on mouse movement
-#        define AUTO_MOUSE_DELAY TAPPING_TERM  // Lock out after a non mouse key
-#        define AUTO_MOUSE_DEBOUNCE 40         // Time delay from last activation to next update
-#        define AUTO_MOUSE_MOUSEKEY_ACTIVATION // Timer will also be reset by any mousekey press while mouse layer is on
-#    endif
 
 // ┌─────────────────────────────────────────────────┐
 // │ Trackpad                                        │

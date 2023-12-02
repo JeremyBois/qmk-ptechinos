@@ -14,6 +14,7 @@
 #include "features/utility.h"
 #include "features/swapper.h"
 #include "features/switcher.h"
+#include "features/auto_mouse.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -720,20 +721,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             break;
         // Handle special layers
         case TO(L_QWERTY):
-            // Force modifiers to cancel (should not be neccessary but just to be safe)
-            clear_mods();
-#if defined(POINTING_DEVICE_ENABLE) && defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
             // Force end of mouse layer
-            auto_mouse_layer_off();
+            auto_mouse_set_inactive();
 #endif
             break;
         case ML_ADJUST:
             if (record->event.pressed) {
                 // Force modifiers to cancel (should not be neccessary but just to be safe)
                 clear_mods();
-#if defined(POINTING_DEVICE_ENABLE) && defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
                 // Force end of mouse layer
-                auto_mouse_layer_off();
+                auto_mouse_set_inactive();
 #endif
                 // ADJUST layer from combo
                 layer_move(L_ADJUST);
@@ -741,6 +740,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
     }
+
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
+    // Auto mouse feature processing
+    auto_mouse_on_process_record(keycode, record);
+#endif
 
     // Return false to ignore further processing of key
     // Return true to let qmk handles it
@@ -819,54 +823,68 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
     }
 }
 #endif
-// @TODO
-// Avoid triggering the layer even for a tiny movement
-// Solved (in part) by https://github.com/qmk/qmk_firmware/pull/21398
-// The only issue with this implementation is that threshold
 
-#if defined(POINTING_DEVICE_ENABLE) && defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+//
+// ┌─────────────────────────────────────────────────┐
+// │ AUTO MOUSE (PTECHINOS)                          │
+// └─────────────────────────────────────────────────┘
+//
+
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
 void pointing_device_init_user(void) {
-    set_auto_mouse_layer(L_MOUSE);
-    set_auto_mouse_enable(true);
+    auto_mouse_set_layer(L_MOUSE);
+    auto_mouse_set_enabled(true);
 }
 
-/**
- * @brief Defined keymap/user level callback for adding keyrecords as mouse keys
- */
-bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
-    // @IMPORTANT
-    // pointing_device_auto_mouse.is_mouse_record has been altered
-    // Avoid hard coded IS_MOUSEKEY(keycode) to trigger the layer
-    // @IMPORTANT
-
-    // Avoid moving to L_MOUSE layer using a mouse key
-    if (IS_LAYER_OFF(L_MOUSE)) {
-        return false;
-    }
-
-    // Add custom keys from the L_MOUSE layer that continue the auto mouse feature
+bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
+    bool should_exit = false;
     switch (keycode) {
-        case LALT_T(C_V):
-        case RALT_T(C_X):
-        case C_Y:
-        case C_Z:
-        case C_C:
-        case C_V:
-        case C_X:
-        case SW_CTAB:
-        case LSFT_T(SW_ATAB):
-            return true;
+        // Switching a layer should terminate the auto mouse layer
+        case SWITCH_SYM:
+        case SWITCH_NUM:
+        case SWITCH_NAV:
+            should_exit = true;
+            break;
+        default:
+            break;
     }
 
-    // Finally include all mouse keys as in original QMK is_mouse_record
-    return IS_MOUSEKEY(keycode);
+    return should_exit;
 }
 
+#    if defined(SPLIT_POINTING_ENABLE)
+#        if defined(POINTING_DEVICE_COMBINED)
+report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    report_mouse_t report = pointing_device_combine_reports(left_report, right_report);
+    auto_mouse_on_pointing_device_task(report);
+    return report;
+}
+#        elif defined(POINTING_DEVICE_LEFT)
+report_mouse_t pointing_device_task_user(report_mouse_t report) {
+    auto_mouse_on_pointing_device_task(report);
+    return report;
+}
+#        elif defined(POINTING_DEVICE_RIGHT)
+report_mouse_t pointing_device_task_user(report_mouse_t report) {
+    auto_mouse_on_pointing_device_task(report);
+    return report;
+}
+#        else
+#            error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
+#        endif
+#    else
+report_mouse_t pointing_device_task_user(report_mouse_t report) {
+    if (!is_keyboard_master()) return report;
+
+    auto_mouse_on_pointing_device_task(report);
+    return report;
+}
+#    endif
 #endif
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ DEBUG                                                │
+// │ DEBUG                                               │
 // └─────────────────────────────────────────────────┘
 //
 #if defined(CONSOLE_ENABLE)

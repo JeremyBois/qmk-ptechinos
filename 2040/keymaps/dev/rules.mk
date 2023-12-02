@@ -1,13 +1,6 @@
 # Easy definition of combos
 VPATH +=  keyboards/gboards/
 
-# Sources
-SRC += features/encoder.c
-SRC += features/utility.c
-SRC += features/swapper.c
-SRC += features/switcher.c
-SRC += features/repeat.c
-
 # Allow user to control which pointing device to use
 ifeq ($(strip $(trackpad)), true)
     # ┌─────────────────────────────────────────────────┐
@@ -26,3 +19,11 @@ endif
 
 # Unicode maps
 UNICODEMAP_ENABLE = yes
+
+# Sources
+SRC += features/encoder.c
+SRC += features/utility.c
+SRC += features/swapper.c
+SRC += features/switcher.c
+SRC += features/auto_mouse.c
+
