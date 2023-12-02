@@ -210,12 +210,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * QWERTY
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |  Q    |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  | PSCR  |
+     *        |       |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  | PSCR  |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   |       |
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   Z   |   X  |  C   |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   Q   |
+     *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   Q   |
      *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -233,12 +233,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * COLEMAK
      * https://colemak.com/
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |  Q    |   W  |   F  |   P  |   G  |                    |   J  |   L  |   U  |   Y  |  PSCR |
+     *        |       |   W  |   F  |   P  |   G  |                    |   J  |   L  |   U  |   Y  |  PSCR |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |   A   |   R  |   S  |   T  |   D  |                    |   H  |   N  |   E  |   I  |   O   |       |
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   Z   |   X  |  C © |   V  |   B  |-------|    |-------|   K  |   M  |   ,  |   .  |   Q   |
+     *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   K  |   M  |   ,  |   .  |   Q   |
      *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
@@ -258,12 +258,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *   - Moving between workspace with one hand (required to be able to use drag and drop)
      *   - Screen scrolling with one hand
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       | WH_L | WH_U | WH_R  | PgUp |                    |      | Home |  Up  | End  | PSCR  |
+     *        |       | WH_L | WH_U | WH_R  | PgUp |                    |Clip_H| Home |  Up  | End  | PSCR  |
      * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+-------.
      * |      | ATab  | MB2  | WH_D |  MB1  | PgDo |                    |  MB4 | Left | Down | Right|  MB5  |       |
      * |      | SHIFT |      |      |       |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------ +------|       |    |       |------+------+------+------+-------+-------'
-     *        |       | LDesk|      | RDesk |      |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
+     *        |       | LDesk|Center| RDesk |      |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
      *        |       | LALT |      |       |      |       |    |       |      |      |      | LALT | RALT  |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
@@ -271,9 +271,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                      `---------'--------'-------'            '------'--------'--------'
      */
     [L_NAV] = LAYOUT(
-                 XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, KC_PGUP,        XXXXXXX, KC_HOME, KC_UP, KC_END, _______,
+                 XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, KC_PGUP,        S_CLIP_HISTORY, KC_HOME, KC_UP, KC_END, _______,
 XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN5), XXXXXXX,
-  XXXXXXX, LALT_T(C_LDESK), XXXXXXX, C_RDESK, XXXXXXX, _______,    _______, C_Y, C_Z, C_C, LALT_T(C_V), RALT_T(C_X),
+  XXXXXXX, LALT_T(C_LDESK), S_CENTER, C_RDESK, XXXXXXX, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
                                      _______, _______, _______,    _______, _______, _______
     ),
     /*
@@ -295,25 +295,25 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC
       [L_MOUSE] = LAYOUT(
                         XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, PR_CPI_UP,       PL_CPI_UP, KC_BTN5, KC_BTN3, KC_BTN4, _______,
 XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_CPI_DOWN, KC_BTN1, PL_DS_TOOGLE, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
-                               C_X, LALT_T(C_V), C_C, C_Z, C_Y, _______,   _______, C_Y, C_Z, C_C, LALT_T(C_V), C_X,
+                C(KC_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,   _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
                                               _______, _______, _______,   _______, _______, _______
     ),
       #else
       [L_MOUSE] = LAYOUT(
-                         XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,         XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,
-        XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, XXXXXXX, KC_BTN1, XXXXXXX,         XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
-                              C_X, LALT_T(C_V), C_C, C_Z, C_Y, _______,     _______, C_Y, C_Z, C_C, LALT_T(C_V), RALT_T(C_X),
-                                             _______, _______, _______,     _______, _______, _______
+                  XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,         XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,
+ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, XXXXXXX, KC_BTN1, XXXXXXX,         XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
+        C(KC_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+                                      _______, _______, _______,     _______, _______, _______
     ),
       #endif
     /* NUM
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |   ©   |  F9  |  F8  |  F7  | F11   |                    |  F11 |   7  |   8  |   9  | PSCR  |
+     *        |   ©   |  F9  |  F8  |  F7  |  F11  |                    |  F11 |   7  |   8  |   9  | PSCR  |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |      |  F10  |  F3  |  F2  |  F1  | F10   |                    |   0  |   1  |   2  |  3   |   0   |      |
+     * |      |   ,   |  F3  |  F2  |  F1  |  F10  |                    |   0  |   1  |   2  |  3   |   .   |      |
      * |      | SHIFT |      |      |      |       |-------.    ,-------|      |      |      |      | SHIFT |      |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
-     *        |   £   |  F6  |  F5  |  F4  | F12   |-------|    |-------|  F12 |  4   |  5   |   6  |   €   |
+     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |  4   |  5   |   6  |   €   |
      *        |       | LALT |      |      |       |       |    |       |      |      |      | LALT |  RALT |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -321,10 +321,10 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_
      *                       `---------'--------'------'            '------'--------'--------'
      */
     [L_NUM] = LAYOUT(
-             C_COPYRIGHT,  KC_F9, KC_F8, KC_F7, KC_F11,       KC_F11, KC_7, KC_8, KC_9, _______,
-  XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1, KC_F10,       KC_0,   KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
-  C_POUND, LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
-                               _______, _______, _______,   _______, _______, _______
+               KCU_COPYRIGHT,  KC_F9, KC_F8, KC_F7, KC_F11,       KC_F11, KC_7, KC_8, KC_9, _______,
+    XXXXXXX, LSFT_T(KC_COMMA), KC_F3, KC_F2, KC_F1, KC_F10,       KC_0,   KC_1,  KC_2,  KC_3, RSFT_T(KC_DOT), XXXXXXX,
+    KCU_POUND, LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
+                                   _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
      *
@@ -343,10 +343,10 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_
      *
      */
     [L_SYM] = LAYOUT(
-                     TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN,   C_GRV,      KC_PERC, KC_AMPR, KC_ASTR, KC_QUES, TO(L_MATH),
-XXXXXXX, LSFT_T(KC_GRV), C_A_GRV, KC_UNDS, C_E_ACU, KC_SLSH, KC_BSLS,      C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_CIRC), XXXXXXX,
-                   KC_PIPE, KC_EQL, KC_MINS, KC_PLUS, KC_DQUO, _______,   _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, RALT_T(C_C_CED),
-                                             _______, _______, _______,   _______, _______, _______
+                           TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,      KC_PERC, KC_AMPR, KC_ASTR, KC_QUES, TO(L_MATH),
+XXXXXXX, LSFT_T(KC_GRV), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH, KC_BSLS,      C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_CIRC), XXXXXXX,
+                       KC_PIPE, KC_EQL, KC_MINS, KC_PLUS, KC_DQUO, _______,   _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, RALT_T(C_C_CED),
+                                                 _______, _______, _______,   _______, _______, _______
     ),
      /*
      * MATH
@@ -364,10 +364,10 @@ XXXXXXX, LSFT_T(KC_GRV), C_A_GRV, KC_UNDS, C_E_ACU, KC_SLSH, KC_BSLS,      C_E_G
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_MATH] = LAYOUT(
-                           UM(M_PERP), UM(M_SIM), UM(M_PROP), UM(M_PARTIAL), UM(M_DIFF),       UM(M_LOGIC_AND), UM(M_NOT_IN), UM(M_NOT_EXISTS), UM(M_EMPTY), UM(M_INF),
- XXXXXXX, UM(M_TENSOR_PRODUCT), UM(M_LARROW), UM(M_IMPLIES), UM(M_EQUIVALENT_TO), C_DEG,       UM(M_DOT), UM(M_IN), UM(M_EXISTS), UM(M_LOWER_EQ), UM(M_LARGER_EQ), XXXXXXX,
-           UM(M_PARALLEL), UM(M_SUM), UM(M_PRODUCT), UM(M_FORALL), UM(M_COMPOSE), _______,   _______, UM(M_NATURAL), UM(M_INTEGER), UM(M_RATIONAL), UM(M_REAL), UM(M_COMPLEXE),
-                                                                _______, _______, _______,   _______, _______, _______
+                                UM(M_PERP), UM(M_SIM), UM(M_PROP), UM(M_PARTIAL), UM(M_DIFF),       UM(M_LOGIC_AND), UM(M_NOT_IN), UM(M_NOT_EXISTS), UM(M_EMPTY), UM(M_INF),
+ XXXXXXX, UM(M_TENSOR_PRODUCT), UM(M_LARROW), UM(M_IMPLIES), UM(M_EQUIVALENT_TO), KCU_DEGREE,       UM(M_DOT), UM(M_IN), UM(M_EXISTS), UM(M_LOWER_EQ), UM(M_LARGER_EQ), XXXXXXX,
+                UM(M_PARALLEL), UM(M_SUM), UM(M_PRODUCT), UM(M_FORALL), UM(M_COMPOSE), _______,   _______, UM(M_NATURAL), UM(M_INTEGER), UM(M_RATIONAL), UM(M_REAL), UM(M_COMPLEXE),
+                                                                     _______, _______, _______,   _______, _______, _______
     ),
     /*
      * GREEK (Qwerty based position (letter pronunciation then shape))
@@ -578,179 +578,130 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 
     // Custom keycodes
+    bool let_qmk_handle_it = true;
     switch (keycode) {
-        // Custom shortcuts
-        case (C_Z):
-            if (record->event.pressed) {
-                TAP_UNDO
-                return false;
-            }
-            break;
-        case (C_Y):
-            if (record->event.pressed) {
-                TAP_REDO
-                return false;
-            }
-            break;
-        case (C_C):
-            if (record->event.pressed) {
-                TAP_COPY
-                return false;
-            }
-            break;
-        case (C_X):
-            if (record->event.pressed) {
-                TAP_CUT
-                return false;
-            }
-            break;
-        case (C_V):
-            if (record->event.pressed) {
-                TAP_PASTE
-                return false;
-            }
-            break;
-        case (C_LDESK):
-            if (record->event.pressed) {
-                TAP_LEFT_DESK
-                return false;
-            }
-            break;
-        case (C_RDESK):
-            if (record->event.pressed) {
-                TAP_RIGHT_DESK
-                return false;
-            }
-            break;
-        // Symbols
+        // Handle dead keys sequences
         case C_GRV:
             if (record->event.pressed) {
                 TAP_GRAVE_ACCENT
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case C_TILD:
             if (record->event.pressed) {
                 TAP_TILD
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case C_QUOT:
             if (record->event.pressed) {
                 TAP_SIMPLE_QUOTE
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case C_DQUOT:
             if (record->event.pressed) {
                 TAP_DOUBLE_QUOTE
-                return false;
-            }
-            break;
-        case C_DEG:
-            if (record->event.pressed) {
-                TAP_DEGREE
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case C_A_GRV:
             if (record->event.pressed) {
                 TAP_A_GRAVE
-                return false;
-            }
-            break;
-        case C_E_ACU:
-            if (record->event.pressed) {
-                TAP_E_ACUTE
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case C_E_GRV:
             if (record->event.pressed) {
                 TAP_E_GRAVE
-                return false;
-            }
-            break;
-        case C_C_CED:
-            if (record->event.pressed) {
-                TAP_C_CEDILLA
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case C_U_GRV:
             if (record->event.pressed) {
                 TAP_U_GRAVE
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
-        case C_COPYRIGHT:
+        // Handle normal sequences
+        case S_CENTER:
             if (record->event.pressed) {
-                TAP_COPYRIGHT
-                return false;
+                // Press Ctrl(K, C) to center the window arround the cursor
+                register_code(KC_LCTL);
+                tap_code16(KC_K);
+                tap_code16(KC_C);
+                unregister_code(KC_LCTL);
+                let_qmk_handle_it = false;
             }
             break;
-        case C_POUND:
+        case S_CLIP_HISTORY:
             if (record->event.pressed) {
-                TAP_POUND
-                return false;
+                // Press Ctrl(K, V), Down to show copy history and select first row
+                register_code(KC_LCTL);
+                tap_code16(KC_K);
+                tap_code16(KC_V);
+                unregister_code(KC_LCTL);
+                tap_code16(KC_DOWN);
+                let_qmk_handle_it = false;
             }
             break;
-        case C_EURO:
+        // Disable hold behavior for some keys
+        case C_RDESK:
             if (record->event.pressed) {
-                TAP_EURO
-                return false;
+                tap_code16(KCU_RIGHT_DESK);
+                let_qmk_handle_it = false;
             }
             break;
         // https://docs.qmk.fm/#/mod_tap?id=intercepting-mod-taps
         // Intercept to send key with modifier on tap
         case RALT_T(C_X):
             if (record->tap.count && record->event.pressed) {
-                TAP_CUT
-                return false;
+                tap_code16(C(KC_X));
+                let_qmk_handle_it = false;
             }
             break;
         case RALT_T(C_C_CED):
             if (record->tap.count && record->event.pressed) {
-                TAP_C_CEDILLA
-                return false;
+                tap_code16(KCU_C_CEDILLA);
+                let_qmk_handle_it = false;
             }
             break;
         case RALT_T(C_EURO):
             if (record->tap.count && record->event.pressed) {
-                TAP_EURO
-                return false;
+                tap_code16(KCU_EURO);
+                let_qmk_handle_it = false;
             }
             break;
         case LALT_T(C_V):
             if (record->tap.count && record->event.pressed) {
-                TAP_PASTE;
-                return false;
+                tap_code16(C(KC_V));
+                let_qmk_handle_it = false;
             }
             break;
         case LALT_T(C_LDESK):
             if (record->tap.count && record->event.pressed) {
-                TAP_LEFT_DESK;
-                return false;
+                tap_code16(KCU_LEFT_DESK);
+                let_qmk_handle_it = false;
             }
             break;
         case RSFT_T(C_GP):
             if (record->tap.count && record->event.pressed) {
                 process_unicodemap(UP(GP, S_GP), record);
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case LSFT_T(C_GA):
             if (record->tap.count && record->event.pressed) {
                 process_unicodemap(UP(GA, S_GA), record);
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
         case LSFT_T(KC_CIRC):
         case RSFT_T(KC_CIRC):
             // Required to avoid to input 6 when combined with mod-tap
             if (record->tap.count && record->event.pressed) {
-                TAP_CIRCUMFLEX_ACCENT
-                return false;
+                tap_code16(KC_CIRC);
+                let_qmk_handle_it = false;
             }
             break;
         // Handle special layers
@@ -762,33 +713,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             auto_mouse_layer_off();
 #endif
             break;
-        case ML_MOUSE:
-            if (record->event.pressed) {
-                // MOUSE layer from combo
-                // Force modifiers to cancel (should not be neccessary but just to be safe)
-                clear_mods();
-                layer_move(L_MOUSE);
-                return false;
-            }
-            break;
         case ML_ADJUST:
             if (record->event.pressed) {
-                // ADJUST layer from combo
                 // Force modifiers to cancel (should not be neccessary but just to be safe)
                 clear_mods();
 #if defined(POINTING_DEVICE_ENABLE) && defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
                 // Force end of mouse layer
                 auto_mouse_layer_off();
 #endif
+                // ADJUST layer from combo
                 layer_move(L_ADJUST);
-                return false;
+                let_qmk_handle_it = false;
             }
             break;
     }
 
     // Return false to ignore further processing of key
     // Return true to let qmk handles it
-    return true;
+    return let_qmk_handle_it;
 };
 
 //
