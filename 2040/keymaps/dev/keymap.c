@@ -587,15 +587,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
 
     // Custom layer change (no timer)
-    bool switch_key_not_handled = update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
-    switch_key_not_handled &= update_oneshot_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record);
-    switch_key_not_handled &= update_move_hold_layer(&switcher_nav_state, L_NAV, SWITCH_NAV, keycode, record);
-
-    if (!switch_key_not_handled) {
-        // Keys does not need further processing
-        return false;
-    }
-
+    update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
+    update_oneshot_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record);
+    update_move_hold_layer(&switcher_nav_state, L_NAV, SWITCH_NAV, keycode, record);
 
     // Custom keycodes
     bool let_qmk_handle_it = true;
