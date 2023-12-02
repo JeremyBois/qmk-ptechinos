@@ -131,7 +131,7 @@
     },
     "caps_word": {
         "enabled": true,
-        "both_shifts_turns_on": true
+        "both_shifts_turns_on": false
     },
     "leader_key": {
         "timing": false,
