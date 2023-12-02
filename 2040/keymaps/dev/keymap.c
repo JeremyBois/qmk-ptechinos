@@ -252,6 +252,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            _______, _______, _______,    _______, _______, _______
     ),
     /*
+     * COLEMAK-DH
+     * https://colemakmods.github.io/
+     *        ,-----------------------------------.                    ,-----------------------------------.
+     *        |       |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |  PSCR |
+     * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
+     * |      |   A   |   R  |   S  |   T  |   G  |                    |   M  |   N  |   E  |   I  |   O   |       |
+     * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
+     * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
+     *        |   Z   |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   Q   |
+     *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        `-----------------------------------/       /     \       \----------------------------------'
+     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
+     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
+     *                       `--------'--------'-------'           '-------'--------'-------'
+     */
+    [L_COLEMAK_DH] = LAYOUT(
+                      KC_Q, KC_W, KC_F, KC_P, KC_B,        KC_J, KC_L, KC_U, KC_Y, _______,
+     XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,        KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
+       KC_Z, LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+                           _______, _______, _______,    _______, _______, _______
+    ),
+    /*
      * NAV
      *  - Arrows | End / Begin | Top / Bottom
      * Left --> Useful with mouse (right hand) + Used with NAV active
@@ -391,23 +413,23 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
                                                       _______, _______, _______,   _______, _______, _______
     ),
     /* ADJUST
-     *         ,-----------------------------------.                    ,-----------------------------------.
-     *         |RGB_MO|hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP | MFFD |      |
-     * ,-------|------+------+------+------+-------+                    |-------+-------+------+------+------------.
-     * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY | NEXT |EEPRST|RESET|
-     * |       |      |      |      |      |       |-------.    ,-------|       |       |      |      |      |     |
-     * `-------+------+------+------+------+-------|       |    |       |-------+-------+------+------+------------'
-     *         |      | U_M  | U_L  | U_W  | U_WC  |-------|    |-------|QWERTY |COLEMAK|      |      |DEBUG |
-     *         |      |      |      |      |       |       |    |       |       |       |      |      |      |
-     *         `-----------------------------------/      /      \      \------------------------------------'
-     *                       |         |        | /      /        \      \ |        |   DEF    |
-     *                       |         |        |/      /          \      \|        |          |
-     *                       `---------'--------'------'            '------'--------'----------'
+     *         ,-----------------------------------.                    ,------------------------------------.
+     *         |RGB_MO|hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP  | MFFD |      |
+     * ,-------|------+------+------+------+-------+                    |-------+-------+-------+------+------------.
+     * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY  | NEXT |EEPRST|RESET|
+     * |       |      |      |      |      |       |-------.    ,-------|       |       |       |      |      |     |
+     * `-------+------+------+------+------+-------|       |    |       |-------+-------+-------+------+------------'
+     *         |      | U_M  | U_L  | U_W  | U_WC  |-------|    |-------|QWERTY |COLEMAK|COLEMAK|      |DEBUG |
+     *         |      |      |      |      |       |       |    |       |       |       |   DH  |      |      |
+     *         `-----------------------------------/      /      \      \-------------------------------------'
+     *                       |         |        | /      /        \      \ |        |   DEF     |
+     *                       |         |        |/      /          \      \|        |           |
+     *                       `---------'--------'------'            '------'--------'-----------'
      */
       [L_ADJUST] = LAYOUT(
               RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,        KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
      XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,        KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
-         XXXXXXX, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_COLEMAK), XXXXXXX, XXXXXXX, QK_DEBUG_TOGGLE,
+         XXXXXXX, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_COLEMAK), DF(L_COLEMAK_DH), XXXXXXX, QK_DEBUG_TOGGLE,
                                   XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, _______
     )
     };
