@@ -444,7 +444,7 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
  *        ,-----------------------------------.                    ,----------------------------------.
  *        |-------|       ESCAPE       |      |                    |      |      LAUNCHER      |------|
  * ,------+-------+ [«   +  {“  +   (  +------|                    |------+  )   +  }”  +  ]»  +------+------.
- * |      |       |    S_TAB   TAB            |-------.    ,-------|      |    BACK    DEL     |      |      |
+ * |      |       |            TAB            |-------.    ,-------|      |    BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
  *        |       |    GUI   COMMENT   |      |-------|    |-------|      |    CAPS    GUI            |
  *        `-----------------------------------/      /      \      \----------------------------------'
@@ -457,7 +457,6 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
     switch (index) {
         // Home / Tight combos
         case tab:
-        case s_tab:
         case back:
         case del:
         case launcher:
@@ -505,7 +504,6 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
         case curly_r:
         case tab:
         case adjust:
-        case s_tab:
         default:
             // Avoid roll to still be able to use mouse keys / game arrows keys
             return true;

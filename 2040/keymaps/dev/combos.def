@@ -6,7 +6,6 @@ COMB(launcher, A(KC_F2), KC_U, KC_I, KC_O)
 
 // HOME ROW
 // Left
-COMB(s_tab,S(KC_TAB), KC_S, KC_D)
 COMB(tab, KC_TAB, KC_D, KC_F)
 // Right
 COMB(back, KC_BSPC, KC_J, KC_K)
