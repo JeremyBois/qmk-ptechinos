@@ -60,6 +60,7 @@ void auto_mouse_set_active(void) {
     auto_mouse_context.active_timer = timer_read();
     if (!layer_state_is(auto_mouse_context.config.layer)) {
         layer_on(auto_mouse_context.config.layer);
+        auto_mouse_on_layer_active(&auto_mouse_context);
     }
 }
 
@@ -69,6 +70,7 @@ void auto_mouse_set_inactive(void) {
     auto_mouse_context.active_timer = 0.0;
     if (layer_state_is(auto_mouse_context.config.layer)) {
         layer_off(auto_mouse_context.config.layer);
+        auto_mouse_on_layer_inactive(&auto_mouse_context);
     }
 }
 
@@ -111,6 +113,10 @@ void auto_mouse_on_process_record(uint16_t keycode, keyrecord_t* record) {
         auto_mouse_context.active_timer = timer_read();
     }
 }
+
+__attribute__((weak)) void auto_mouse_on_layer_inactive(auto_mouse_data_t* context) {}
+
+__attribute__((weak)) void auto_mouse_on_layer_active(auto_mouse_data_t* context) {}
 
 __attribute__((weak)) bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
     return false;

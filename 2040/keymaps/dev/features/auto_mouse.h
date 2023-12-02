@@ -20,7 +20,6 @@ typedef struct {
     auto_mouse_config_t config;
 } auto_mouse_data_t;
 
-
 // Default value for the auto mouse layer configuration
 #ifndef PTECHINOS_AUTO_MOUSE_LAYER
 #    define PTECHINOS_AUTO_MOUSE_LAYER 0 // Layer to activate
@@ -41,7 +40,6 @@ typedef struct {
 #ifndef PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD
 #    define PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD 4 // Minimal movement to turn on the auto mouse layer
 #endif
-
 
 /**
  * @brief      Enable of disable the auto_mouse feature.
@@ -70,9 +68,23 @@ void auto_mouse_init(auto_mouse_config_t user_config);
 void auto_mouse_set_active(void);
 
 /**
+ * @brief      Event raised when layer is set active
+ *
+ * @param      context  The auto mouse context / configuration
+ */
+void auto_mouse_on_layer_active(auto_mouse_data_t* context);
+
+/**
  * @brief      Turn the mouse layer off.
  */
 void auto_mouse_set_inactive(void);
+
+/**
+ * @brief      Event raised when layer is set inactive
+ *
+ * @param      context  The auto mouse context / configuration
+ */
+void auto_mouse_on_layer_inactive(auto_mouse_data_t* context);
 
 /**
  * @brief      Indicates if the auto mouse layer is on or off.
