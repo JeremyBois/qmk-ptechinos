@@ -1,13 +1,11 @@
-#include <stdbool.h>
-#include "config.h"
-#include "debug.h"
+#include QMK_KEYBOARD_H
+
 #include "keycodes.h"
-#include "ptechinos.h"
 #include "quantum.h"
 #include "quantum_keycodes.h"
 #include "process_keycode/process_unicodemap.h"
 
-#include QMK_KEYBOARD_H
+#include "config.h"
 
 #include "features/customCodes.h"
 #include "g/keymap_combo.h"
