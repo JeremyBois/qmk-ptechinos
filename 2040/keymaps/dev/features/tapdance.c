@@ -4,7 +4,6 @@
 // Keep track of modifiers state to handle accented character better
 static uint8_t tap_dance_mod_state;
 
-
 td_state_t complex_dance(qk_tap_dance_state_t *state) {
     // Keep global mode state
     tap_dance_mod_state = get_mods();
@@ -37,18 +36,3 @@ td_state_t complex_dance(qk_tap_dance_state_t *state) {
     return TD_UNKNOWN;
 }
 #endif
-
-void tap_key_with_mods(uint16_t keycode, uint8_t mods) {
-    uint8_t prev_mods = get_mods();
-
-    clear_mods();
-    clear_keyboard();
-    add_key(keycode);
-    if (mods) set_mods(mods);
-    send_keyboard_report();
-    del_key(keycode);
-    clear_mods();
-    send_keyboard_report();
-    set_mods(prev_mods);
-    send_keyboard_report();
-};

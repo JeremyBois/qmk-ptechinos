@@ -1,6 +1,7 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "action.h"
 
 // Process tap hold, place in process_record_user().
 // If this returns false, we should also return false from process_record_user().

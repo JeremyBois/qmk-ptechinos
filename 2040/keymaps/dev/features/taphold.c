@@ -1,4 +1,7 @@
-#include "tap_hold.h"
+#include "keycodes.h"
+#include "quantum.h"
+
+#include "taphold.h"
 
 static bool     in_progress  = false;
 static uint16_t timer        = 0;

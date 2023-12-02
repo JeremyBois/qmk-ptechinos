@@ -1,6 +1,7 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "action.h"
 
 // ----
 // Mainly extracted from kapJI user code

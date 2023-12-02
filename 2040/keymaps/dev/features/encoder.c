@@ -1,7 +1,9 @@
 #ifdef ENCODER_ENABLE
 
-#    include "encoder.h"
+#    include "quantum.h"
 #    include "customCodes.h"
+
+#    include "encoder.h"
 
 // @NOTE Delay (>10) required on media keys to avoid computer to ignore / not receiving it
 

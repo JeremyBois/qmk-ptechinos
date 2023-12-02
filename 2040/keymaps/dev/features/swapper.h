@@ -1,6 +1,7 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "action.h"
 
 // Original author = callum-oakley
 // https://github.com/callum-oakley/qmk_firmware/blob/master/users/callum/swapper.h

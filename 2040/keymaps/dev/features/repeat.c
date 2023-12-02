@@ -1,3 +1,6 @@
+#include "keycodes.h"
+#include "quantum.h"
+
 #include "repeat.h"
 
 // ----
@@ -13,7 +16,9 @@ uint16_t last_keycode    = KC_NO;
 uint8_t  last_modifier   = 0;
 uint16_t pressed_keycode = KC_NO;
 
-uint16_t get_last_pressed_keycode(void) { return last_keycode; }
+uint16_t get_last_pressed_keycode(void) {
+    return last_keycode;
+}
 
 void process_repeat_key(uint16_t keycode, const keyrecord_t *record, uint16_t repeatKeycode) {
     if (keycode != repeatKeycode) {

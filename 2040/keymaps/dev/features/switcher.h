@@ -1,6 +1,7 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "action.h"
 
 //
 // Based on works from callum-oakley and daliusd

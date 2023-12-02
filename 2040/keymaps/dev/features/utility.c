@@ -1,3 +1,7 @@
+#include "action.h"
+#include "action_util.h"
+#include "quantum.h"
+
 #include "utility.h"
 
 void tap_key_with_mods(uint16_t keycode, uint8_t mods) {

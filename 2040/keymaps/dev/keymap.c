@@ -5,6 +5,7 @@
 #include "quantum_keycodes.h"
 #include "process_keycode/process_unicodemap.h"
 
+#include "2040.h"
 #include "config.h"
 
 #include "features/customCodes.h"
@@ -22,7 +23,7 @@
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ UNICODE                                         │
+// │ UNICODE                                             │
 // └─────────────────────────────────────────────────┘
 //
 
@@ -203,7 +204,7 @@ const uint32_t PROGMEM unicode_map[] = {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ LAYOUTS                                         │
+// │ LAYOUTS                                             │
 // └─────────────────────────────────────────────────┘
 //
 // clang-format off
@@ -753,7 +754,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ CAPS WORD                                       │
+// │ CAPS WORD                                           │
 // └─────────────────────────────────────────────────┘
 //
 bool caps_word_press_user(uint16_t keycode) {
@@ -786,7 +787,7 @@ bool caps_word_press_user(uint16_t keycode) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ MOD tap                                    │
+// │ MOD tap                                             │
 // └─────────────────────────────────────────────────┘
 //
 
@@ -826,7 +827,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ AUTO MOUSE (PTECHINOS)                          │
+// │ AUTO MOUSE (PTECHINOS)                              │
 // └─────────────────────────────────────────────────┘
 //
 

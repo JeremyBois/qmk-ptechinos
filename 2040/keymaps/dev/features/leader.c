@@ -16,9 +16,10 @@
 
 // See https://github.com/andrewjrae/kyria-keymap
 
-#include "leader.h"
-
 #include <string.h>
+#include "keycodes.h"
+
+#include "leader.h"
 
 #ifndef LEADER_ESC_KEY
 #    define LEADER_ESC_KEY KC_ESC
@@ -37,7 +38,7 @@ static const char keycode_to_ascii_lut[58] = {0, 0, 0, 0, 'a', 'b', 'c', 'd', 'e
 
 static uint8_t    leader_display_size;
 static const char space_ascii[] = "SPC";
-static char       leader_display[LEADER_DISPLAY_LEN + 1];  // add space for null terminator
+static char       leader_display[LEADER_DISPLAY_LEN + 1]; // add space for null terminator
 
 static void update_leader_display(uint16_t keycode) {
     leader_display[leader_display_size] = ' ';
@@ -61,14 +62,20 @@ static void update_leader_display(uint16_t keycode) {
     }
 }
 
-char *leader_display_str(void) { return leader_display; }
+char *leader_display_str(void) {
+    return leader_display;
+}
 #endif
 
 // The entry point for leader sequenc functions
-__attribute__((weak)) void *leader_start_func(uint16_t keycode) { return NULL; }
+__attribute__((weak)) void *leader_start_func(uint16_t keycode) {
+    return NULL;
+}
 
 // Check to see if we are leading
-bool is_leading(void) { return leading; }
+bool is_leading(void) {
+    return leading;
+}
 // Start leader sequence
 void start_leading(void) {
     leading     = true;

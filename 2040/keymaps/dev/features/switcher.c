@@ -1,5 +1,8 @@
-#include "switcher.h"
+#include "action_layer.h"
+#include "action_tapping.h"
 #include "action_util.h"
+
+#include "switcher.h"
 
 __attribute__((weak)) bool is_oneshot_mod_key(uint16_t keycode) {
     return false;
