@@ -11,14 +11,14 @@
     "build": {
         // LTO must be disabled on RP2040
         "lto": false,
-        "debounce_type": "sym_defer_pr"
+        "debounce_type": "asym_eager_defer_pk"
     },
     "processor": "RP2040",
     "bootloader": "rp2040",
     "bootloader_instructions": "Press twice the physical RESET button on the bottom of the board.",
     "development_board": "kb2040",
     "pin_compatible": "promicro",
-    "debounce": 4, // Default is 5 (lower is better)
+    "debounce": 5, // Default is 5 (lower is better)
     // Keyboard Matrix Assignments
     // https://learn.adafruit.com/adafruit-kb2040/pinouts
     // ROWS: AVR pins used for rows, top to bottom
