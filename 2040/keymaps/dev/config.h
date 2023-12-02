@@ -10,6 +10,15 @@
 // Using EE_HANDS (see info.json)
 
 // ┌─────────────────────────────────────────────────┐
+
+// ┌─────────────────────────────────────────────────┐
+// │ Hold tap                                        │
+// └─────────────────────────────────────────────────┘
+#define QUICK_TAP_TERM (TAPPING_TERM - 50)
+#define PERMISSIVE_HOLD_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+// ┌─────────────────────────────────────────────────┐
 // │ Combo                                           │
 // └─────────────────────────────────────────────────┘
 #ifdef COMBO_ENABLE
@@ -17,12 +26,12 @@
 #    define COMBO_MUST_TAP_PER_COMBO
 // If a combo triggers a modifier, only trigger when the combo is held
 #    define COMBO_MUST_HOLD_MODS
-// Bigger than default tap to avoid any risk of misfire
-#    define COMBO_HOLD_TERM 220
+// Bigger than default tapping term to avoid any risk of misfire
+#    define COMBO_HOLD_TERM (TAPPING_TERM + 30)
 #    define COMBO_TERM_PER_COMBO
 // All combos are specified from the base layer
 //  - saves space
-//  - allow position specific combo and not key specific
+//  - available on all layers at the same position
 #    define COMBO_ONLY_FROM_LAYER 0
 #endif
 

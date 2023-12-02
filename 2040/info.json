@@ -66,6 +66,7 @@
         // Make easier to write Caps words
         "caps_word": true,
         // 6KRO by default. NKRO works if enabled (+328)
+        // Device can be not recognize by Windows
         "nkro": false,
         // Save space by not using sounds
         "audio": false,
@@ -87,10 +88,10 @@
         "console": false
     },
     "qmk": {
-        "tap_keycode_delay": 20
+        "tap_keycode_delay": 0
     },
     "tapping": {
-        "term": 200,
+        "term": 180,
         // How many taps before triggering the toggle
         "toggle": 2
     },

@@ -788,10 +788,43 @@ bool caps_word_press_user(uint16_t keycode) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ AUTO MOUSE                                  │
+// │ MOD tap                                    │
 // └─────────────────────────────────────────────────┘
 //
 
+// get_hold_on_other_key_press as precedence (activated earlier) over get_permissive_hold
+// true  --> trigger hold
+// false --> trigger tap
+
+#if defined(PERMISSIVE_HOLD_PER_KEY)
+bool get_permissive_hold(uint16_t keycode, keyrecord_t* record) {
+    if (record->event.key.row == 3) {
+        // Bottom row mods
+        return true;
+    }
+    switch (keycode) {
+        case MT(MOD_LCTL, KC_SPC):
+            // Immediately select the hold action when another key is tapped.
+            return true;
+        default:
+            // Do not select the hold action when another key is tapped.
+            return false;
+    }
+}
+#endif
+
+#if defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
+    switch (keycode) {
+        case MT(MOD_RCTL, KC_ENT):
+            // Hold
+            return true;
+        default:
+            // Do not select the hold action when another key is tapped.
+            return false;
+    }
+}
+#endif
 // @TODO
 // Avoid triggering the layer even for a tiny movement
 // Solved (in part) by https://github.com/qmk/qmk_firmware/pull/21398
