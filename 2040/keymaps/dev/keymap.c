@@ -337,10 +337,10 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |   ©   |  F9  |  F8  |  F7  |  F11  |                    |  F11 |   7  |   8  |   9  | PSCR  |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |      |   ,   |  F3  |  F2  |  F1  |  F10  |                    |   0  |   1  |   2  |  3   |   .   |      |
+     * |      |   F10 |  F3  |  F2  |  F1  |   ,   |                    |   .  |   1  |   2  |   3  |   0   |      |
      * |      | SHIFT |      |      |      |       |-------.    ,-------|      |      |      |      | SHIFT |      |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
-     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |  4   |  5   |   6  |   €   |
+     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |   4  |   5  |   6  |   €   |
      *        |       | LALT |      |      |       |       |    |       |      |      |      | LALT |  RALT |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -349,7 +349,7 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_
      */
     [L_NUM] = LAYOUT(
                KCU_COPYRIGHT,  KC_F9, KC_F8, KC_F7, KC_F11,       KC_F11, KC_7, KC_8, KC_9, _______,
-    XXXXXXX, LSFT_T(KC_COMMA), KC_F3, KC_F2, KC_F1, KC_F10,       KC_0,   KC_1,  KC_2,  KC_3, RSFT_T(KC_DOT), XXXXXXX,
+    XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1, KC_COMMA,       KC_DOT,   KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
     KCU_POUND, LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
                                    _______, _______, _______,   _______, _______, _______
     ),
