@@ -167,7 +167,7 @@ void auto_mouse_on_pointing_device_task(report_mouse_t mouse_report) {
 
     if (!auto_mouse_is_active()) {
         // Avoid spurious activation using a threshold to discard false positive
-        if (distance > auto_mouse_context.config.threshold || scroll > auto_mouse_context.config.threshold / 2 || button_pressed) {
+        if (distance > auto_mouse_context.config.threshold || scroll > auto_mouse_context.config.threshold / 4 || button_pressed) {
             auto_mouse_set_active();
         }
     } else {

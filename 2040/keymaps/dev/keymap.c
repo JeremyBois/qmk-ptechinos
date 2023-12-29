@@ -21,6 +21,9 @@
 #    include "print.h"
 #endif // CONSOLE_ENABLE
 
+
+void auto_mouse_reset(void);
+
 //
 // ┌─────────────────────────────────────────────────┐
 // │ UNICODE                                             │
@@ -722,9 +725,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             break;
         // Handle special layers
         case TO(L_QWERTY):
+            // Force modifiers to cancel (should not be neccessary but just to be safe)
+            clear_mods();
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
             // Force end of mouse layer
             auto_mouse_set_inactive();
+            auto_mouse_reset();
 #endif
             break;
         case ML_ADJUST:
@@ -734,6 +740,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
                 // Force end of mouse layer
                 auto_mouse_set_inactive();
+                auto_mouse_reset();
 #endif
                 // ADJUST layer from combo
                 layer_move(L_ADJUST);
@@ -881,6 +888,16 @@ report_mouse_t pointing_device_task_user(report_mouse_t report) {
     return report;
 }
 #    endif
+
+void auto_mouse_reset(void) {
+    // Switch to mousing mode
+    if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
+        ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
+    }
+    if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_LEFT)) {
+        ptechinos_set_pointer_as_mousing(PTECHINOS_LEFT);
+    }
+}
 #endif
 
 //
