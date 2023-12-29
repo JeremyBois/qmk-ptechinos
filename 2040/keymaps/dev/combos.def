@@ -1,24 +1,24 @@
 // TOP ROW
 // Left
-COMB(escape_l, KC_ESC, KC_W, KC_E, KC_R)
+COMB(escape_l, KC_ESC, KC_L, KC_D, KC_W)
 // Right
-COMB(launcher, A(KC_F2), KC_U, KC_I, KC_O)
+COMB(launcher, A(KC_F2), KC_F, KC_O, KC_U)
 
 // HOME ROW
 // Left
-COMB(tab, KC_TAB, KC_D, KC_F)
+COMB(tab, KC_TAB, KC_T, KC_S)
 // Right
-COMB(back, KC_BSPC, KC_J, KC_K)
-COMB(del, KC_DEL, KC_K, KC_L)
+COMB(back, KC_BSPC, KC_H, KC_E)
+COMB(del, KC_DEL, KC_E, KC_A)
 
 // BOTTOM ROW
 // Left
-COMB(gui_l, KC_LGUI, LALT_T(KC_X), KC_C)
-COMB(comment, C(KC_SLSH), KC_C, KC_V)
+COMB(gui_l, KC_LGUI, LALT_T(KC_Q), KC_M)
+COMB(comment, C(KC_SLSH), KC_M, KC_C)
 
 // Right
 COMB(gui_r, KC_LGUI, KC_COMM, LALT_T(KC_DOT))
-COMB(caps, CW_TOGG, KC_M, KC_COMM)
+COMB(caps, CW_TOGG, KC_P, KC_COMM)
 
 // Thumbs
 // Left
@@ -29,13 +29,13 @@ COMB(adjust, ML_ADJUST, SWITCH_SYM, SWITCH_NUM)
 
 // Vertical HOME/TOP
 // Left
-COMB(square_l, KC_LBRC, KC_W, KC_S)
-COMB(curly_l,  KC_LPRN, KC_E, KC_D)
-COMB(round_l,  KC_LCBR, KC_R, KC_F)
+COMB(square_l, KC_LBRC, KC_L, KC_R)
+COMB(curly_l,  KC_LPRN, KC_D, KC_T)
+COMB(round_l,  KC_LCBR, KC_S, KC_W)
 // Right
-COMB(square_r, KC_RBRC, KC_O, KC_L)
-COMB(curly_r,  KC_RPRN, KC_I, KC_K)
-COMB(round_r,  KC_RCBR, KC_U, KC_J)
+COMB(square_r, KC_RBRC, KC_A, KC_U)
+COMB(curly_r,  KC_RPRN, KC_E, KC_O)
+COMB(round_r,  KC_RCBR, KC_H, KC_F)
 
 
 // // Numbers @TODO

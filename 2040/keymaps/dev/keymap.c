@@ -212,6 +212,28 @@ const uint32_t PROGMEM unicode_map[] = {
 //
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+      /*
+     * GRAPHITE (own mod taking avantage of other layers for symbols)
+     * v1(graphite) https://cyanophage.github.io/playground.html?layout=%27ldwbyfou%2F%3Bnrtsgkheai-xqmcvjp%2C.z
+     *        ,-----------------------------------.                    ,-----------------------------------.
+     *        |       |   L  |   D  |   W  |   B  |                    |   Y  |   F  |   O  |   U  |  PSCR |
+     * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
+     * |      |   N   |   R  |   T  |   S  |   G  |                    |   K  |   H  |   E  |   A  |   I   |       |
+     * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
+     * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
+     *        |   X   |   Q  |   M  |   C  |   V  |-------|    |-------|   J  |   P  |   ,  |   .  |   Z   |
+     *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        `-----------------------------------/       /     \       \----------------------------------'
+     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
+     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
+     *                       `--------'--------'-------'           '-------'--------'-------'
+     */
+    [L_GRAPHITE] = LAYOUT(
+                  XXXXXXX, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_PSCR,
+    XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_H, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
+             KC_X, LALT_T(KC_Q), KC_M, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_J, KC_P, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
+                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), TO(0)
+    ),
     /*
      * QWERTY
      *        ,-----------------------------------.                    ,-----------------------------------.
@@ -228,33 +250,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_QWERTY] = LAYOUT(
-                     KC_Q, KC_W, KC_E, KC_R, KC_T,        KC_Y, KC_U, KC_I, KC_O, KC_PSCR,
-    XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,        KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
-      KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_B, XXXXXXX,    XXXXXXX, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
-             SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), TO(L_QWERTY)
+                  XXXXXXX, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, _______,
+    XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
+             KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+                                 _______, _______, _______,     _______, _______, _______
     ),
-
     /*
-     * COLEMAK
-     * https://colemak.com/
+     * STRONK (own mod taking avantage of other layers for symbols)
+     * v1(engram) https://cyanophage.github.io/playground.html?layout=\youjkldw%2F'ciea%2C.htsn%3Bxgbvzqrmpf (old)
+     * v2(engram) https://cyanophage.github.io/playground.html?layout=%5Cyoujkhdw%2F%27ciea%2C.ntsl%3Bxgbvzqrmpf
+     * v3(stronk) https://cyanophage.github.io/playground.html?layout=%3Bldpbjgou%27-rtsnkymeai%2Fqwhfvxc%2C.z
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |   W  |   F  |   P  |   G  |                    |   J  |   L  |   U  |   Y  |  PSCR |
+     *        |       |   L  |   D  |   P  |   B  |                    |   J  |   G  |   O  |   U  |  PSCR |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * |      |   A   |   R  |   S  |   T  |   D  |                    |   H  |   N  |   E  |   I  |   O   |       |
+     * |      |   R   |   T  |   S  |   N  |   K  |                    |   Y  |   M  |   E  |   A  |   I   |       |
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   K  |   M  |   ,  |   .  |   Q   |
+     *        |   Q   |   W  |   H  |   F  |   V  |-------|    |-------|   X  |   C  |   ,  |   .  |   Z   |
      *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
      *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
-    [L_COLEMAK] = LAYOUT(
-                      KC_Q, KC_W, KC_F, KC_P, KC_G,        KC_J, KC_L, KC_U, KC_Y, _______,
-     XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_D,        KC_H, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
-       KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_B, _______,    _______, KC_K, KC_M, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
-                           _______, _______, _______,    _______, _______, _______
+    [L_STRONK] = LAYOUT(
+                  XXXXXXX, KC_L, KC_D, KC_P, KC_B,                      KC_J, KC_G, KC_O, KC_U, _______,
+    XXXXXXX, LSFT_T(KC_R), KC_T, KC_S, KC_N, KC_K,                      KC_Y, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
+             KC_Q, LALT_T(KC_W), KC_H, KC_F, KC_V, _______,    _______, KC_X, KC_C, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
+                                 _______, _______, _______,    _______, _______, _______
     ),
     /*
      * COLEMAK-DH
@@ -273,10 +296,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_COLEMAK_DH] = LAYOUT(
-                      KC_Q, KC_W, KC_F, KC_P, KC_B,        KC_J, KC_L, KC_U, KC_Y, _______,
-     XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,        KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
-       KC_Z, LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
-                           _______, _______, _______,    _______, _______, _______
+                  XXXXXXX, KC_W, KC_F, KC_P, KC_B,                      KC_J, KC_L, KC_U, KC_Y, _______,
+    XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,                      KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
+             KC_Z, LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+                                 _______, _______, _______,    _______, _______, _______
     ),
     /*
      * NAV
@@ -424,7 +447,7 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
      * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY  | NEXT |EEPRST|RESET|
      * |       |      |      |      |      |       |-------.    ,-------|       |       |       |      |      |     |
      * `-------+------+------+------+------+-------|       |    |       |-------+-------+-------+------+------------'
-     *         |      | U_M  | U_L  | U_W  | U_WC  |-------|    |-------|QWERTY |COLEMAK|COLEMAK|      |DEBUG |
+     *         |      | U_M  | U_L  | U_W  | U_WC  |-------|    |-------|QWERTY |CUSTOM |COLEMAK|      |DEBUG |
      *         |      |      |      |      |       |       |    |       |       |       |   DH  |      |      |
      *         `-----------------------------------/      /      \      \-------------------------------------'
      *                       |         |        | /      /        \      \ |        |   DEF     |
@@ -434,7 +457,7 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
       [L_ADJUST] = LAYOUT(
               RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,        KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
      XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,        KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
-         XXXXXXX, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_COLEMAK), DF(L_COLEMAK_DH), XXXXXXX, QK_DEBUG_TOGGLE,
+         XXXXXXX, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_GRAPHITE), DF(L_STRONK), DF(L_COLEMAK_DH), QK_DEBUG_TOGGLE,
                                   XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, _______
     )
     };
@@ -529,7 +552,7 @@ switcher_state switcher_nav_state = os_up_unqueued;
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
-        case TO(L_QWERTY):
+        case TO(0):
         case KC_ESC:
             return true;
         default:
@@ -539,7 +562,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 
 bool is_oneshot_layer_cancel_key(uint16_t keycode) {
     switch (keycode) {
-        case TO(L_QWERTY):
+        case TO(0):
         case SWITCH_NAV:
         case SWITCH_SYM:
         case SWITCH_NUM:
@@ -559,7 +582,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
             return true;
 
         // Layers
-        case TO(L_QWERTY):
+        case TO(0):
         case SWITCH_NAV:
         case SWITCH_SYM:
         case SWITCH_NUM:
@@ -724,7 +747,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         // Handle special layers
-        case TO(L_QWERTY):
+        case TO(0):
             // Force modifiers to cancel (should not be neccessary but just to be safe)
             clear_mods();
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
