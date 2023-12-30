@@ -7,15 +7,16 @@
 #    include "print.h"
 #endif // CONSOLE_ENABLE
 
-static auto_mouse_data_t auto_mouse_context = {.active_timer = (uint16_t)0,
-                                               .key_timer    = (uint16_t)0,
-                                               .is_enabled   = false,
-                                               .config       = {
-                                                         .layer     = (uint8_t)(PTECHINOS_AUTO_MOUSE_LAYER),
-                                                         .timeout   = (uint16_t)(PTECHINOS_AUTO_MOUSE_TIMEOUT),
-                                                         .key_delay = (uint16_t)(PTECHINOS_AUTO_MOUSE_KEY_DELAY),
-                                                         .debounce  = (uint8_t)(PTECHINOS_AUTO_MOUSE_DEBOUNCE),
-                                                         .threshold = (uint8_t)(PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD),
+static auto_mouse_data_t auto_mouse_context = {.active_timer      = (uint16_t)0,
+                                               .key_timer         = (uint16_t)0,
+                                               .mouse_key_tracker = (uint16_t)0,
+                                               .is_enabled        = false,
+                                               .config            = {
+                                                              .layer     = (uint8_t)(PTECHINOS_AUTO_MOUSE_LAYER),
+                                                              .timeout   = (uint16_t)(PTECHINOS_AUTO_MOUSE_TIMEOUT),
+                                                              .key_delay = (uint16_t)(PTECHINOS_AUTO_MOUSE_KEY_DELAY),
+                                                              .debounce  = (uint8_t)(PTECHINOS_AUTO_MOUSE_DEBOUNCE),
+                                                              .threshold = (uint8_t)(PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD),
                                                }};
 // clang-format off
 static void auto_mouse_debug(const char* location)
@@ -27,6 +28,7 @@ static void auto_mouse_debug(const char* location)
             "\tis_active=%d \tis_layer_on=%d\n"
             "\tactive_timer=%u\n"
             "\tkey_timer=%u\n"
+            "\tmouse_key_tracker=%u\n"
             "\t}\n"
             "  Config {\n"
             "\tlayer=%u\n"
@@ -41,6 +43,7 @@ static void auto_mouse_debug(const char* location)
             (int)layer_state_is(auto_mouse_context.config.layer),
             (uint)auto_mouse_context.active_timer,
             (uint)auto_mouse_context.key_timer,
+            (uint)auto_mouse_context.mouse_key_tracker,
             (uint)auto_mouse_context.config.layer,
             (uint)auto_mouse_context.config.timeout,
             (uint)auto_mouse_context.config.key_delay,
@@ -50,6 +53,16 @@ static void auto_mouse_debug(const char* location)
 #    endif // CONSOLE_ENABLE
 }
 // clang-format on
+
+static void auto_mouse_keyevent(bool pressed) {
+    if (pressed) {
+        auto_mouse_context.mouse_key_tracker++;
+    } else {
+        auto_mouse_context.mouse_key_tracker--;
+    }
+
+    auto_mouse_context.key_timer = timer_read();
+}
 
 void auto_mouse_set_active(void) {
     if (!auto_mouse_context.is_enabled) {
@@ -67,7 +80,9 @@ void auto_mouse_set_active(void) {
 void auto_mouse_set_inactive(void) {
     auto_mouse_debug("set_inactive");
 
-    auto_mouse_context.active_timer = 0.0;
+    auto_mouse_context.active_timer      = 0.0;
+    auto_mouse_context.mouse_key_tracker = 0;
+
     if (layer_state_is(auto_mouse_context.config.layer)) {
         layer_off(auto_mouse_context.config.layer);
         auto_mouse_on_layer_inactive(&auto_mouse_context);
@@ -103,14 +118,23 @@ void auto_mouse_on_process_record(uint16_t keycode, keyrecord_t* record) {
         }
     }
 
-    // @TODO Handle hold by using a key down counter
+    // Keeping track of active keys while mouse layer is active
+    if (IS_EVENT(record->event)) {
+        auto_mouse_keyevent(record->event.pressed);
+    }
+
     // Auto mouse layer is on
     bool isExitKey = auto_mouse_should_exit(keycode, record);
     if (isExitKey) {
         auto_mouse_set_inactive();
-        auto_mouse_context.key_timer = timer_read();
     } else {
         auto_mouse_context.active_timer = timer_read();
+    }
+
+    // Sanity check
+    if (auto_mouse_context.mouse_key_tracker < 0) {
+        auto_mouse_context.mouse_key_tracker = 0;
+        dprintf("[Auto Mouse (auto_mouse_on_process_record)]: key tracker error (<0) \n");
     }
 }
 
@@ -157,6 +181,11 @@ void auto_mouse_on_pointing_device_task(report_mouse_t mouse_report) {
 
     // Avoid spurious activation using a small delay on each non mouse key press
     if (timer_elapsed(auto_mouse_context.key_timer) <= auto_mouse_context.config.key_delay) {
+        return;
+    }
+
+    // Avoid deactivation while user holds a key on the mouse layer
+    if (auto_mouse_context.mouse_key_tracker > 0) {
         return;
     }
 

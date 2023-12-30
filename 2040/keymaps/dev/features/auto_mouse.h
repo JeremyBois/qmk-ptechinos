@@ -8,14 +8,15 @@
 typedef struct {
     uint8_t  layer;     // Layer to activate
     uint16_t timeout;   // Layer activation timeout if unused
-    uint8_t  key_delay; // Time delay after a non mousekey press / release
+    uint8_t  key_delay; // Time delay after a key press / release
     uint8_t  debounce;  // Time delay from last activation to next update
     uint8_t  threshold; // Minimal movement to turn on the auto mouse layer
 } auto_mouse_config_t;
 
 typedef struct {
-    uint16_t            active_timer; // Keep track of the mouse layer activation time
-    uint16_t            key_timer;    // Keep track of the last time a non mousekey was used
+    uint16_t            active_timer;      // Keep track of the mouse layer activation time
+    uint16_t            key_timer;         // Keep track of the last time a non mousekey was used
+    uint16_t            mouse_key_tracker; // Keep track of pressed / hold keys on mouse layer
     bool                is_enabled;
     auto_mouse_config_t config;
 } auto_mouse_data_t;
@@ -30,7 +31,7 @@ typedef struct {
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_KEY_DELAY
-#    define PTECHINOS_AUTO_MOUSE_KEY_DELAY (TAPPING_TERM + 20) // Time delay after a non mousekey press / release
+#    define PTECHINOS_AUTO_MOUSE_KEY_DELAY (TAPPING_TERM + 20) // Time delay after a key press / release
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_DEBOUNCE
