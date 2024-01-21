@@ -9,7 +9,7 @@
 // └─────────────────────────────────────────────────┘
 //
 // MOUSE should be last to always be the higher active whenever the cursor is moving
-enum custom_layers { L_GRAPHITE = 0, L_STRONK, L_COLEMAK_DH, L_QWERTY, L_NAV, L_NUM, L_SYM, L_MATH, L_GREEK, L_ADJUST, L_MOUSE };
+enum custom_layers { L_GRAPHITE = 0, L_STRONK, L_COLEMAK_DH, L_QWERTY, L_NAV, L_MATH, L_GREEK, L_NUM, L_SYM, L_ADJUST, L_MOUSE };
 
 //
 // ┌─────────────────────────────────────────────────┐
