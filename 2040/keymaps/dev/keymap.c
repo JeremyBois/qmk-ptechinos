@@ -595,13 +595,16 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     }
 }
 
-bool is_oneshot_layer_ignored_press(uint16_t keycode) {
+bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         // Some modifiers
         case KC_RIGHT_ALT:
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-            return true;
+            if (!record->tap.count) {
+                // Holds
+                return true;
+            }
         default:
             return false;
     }

@@ -20,11 +20,14 @@ __attribute__((weak)) bool is_oneshot_ignored_key(uint16_t keycode) {
     return false;
 }
 
-__attribute__((weak)) bool is_oneshot_layer_ignored_press(uint16_t keycode) {
+__attribute__((weak)) bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-            return true;
+            if (!record->tap.count) {
+                // Holds
+                return true;
+            }
         default:
             return false;
     }
@@ -117,7 +120,7 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                 // dprintf("cancel (off), layer: %d, ? -> os_up_unqueued\n", layer);
                 return false;
             }
-            if (is_oneshot_layer_ignored_press(keycode) && *state != os_up_unqueued) {
+            if (is_oneshot_layer_ignored_press(keycode, record) && *state != os_up_unqueued) {
                 // dprintf("key down, layer: %d, Ignored key DOWN\n", layer);
                 return true;
             }
@@ -329,7 +332,7 @@ bool update_move_mod_layer(tap_mod_state* state, uint16_t layer, uint16_t mod, u
                 *state = mm_up;
                 unregister_code(mod);
                 return false;
-            } else if (!is_oneshot_layer_ignored_press(keycode)) {
+            } else if (!is_oneshot_layer_ignored_press(keycode, record)) {
                 switch (*state) {
                     case mm_held_unused:
                         // Register mod and let qmk handle the pressed key + mod
@@ -381,7 +384,7 @@ bool update_tap_hold_layer(tap_mod_state* state, uint16_t layerTap, uint16_t lay
                 *state = mm_up;
                 layer_off(layerHold);
                 return false;
-            } else if (!is_oneshot_layer_ignored_press(keycode)) {
+            } else if (!is_oneshot_layer_ignored_press(keycode, record)) {
                 switch (*state) {
                     case mm_held_unused:
                         // Register layerHold and let qmk handle the pressed key in that layer

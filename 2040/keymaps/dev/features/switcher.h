@@ -64,7 +64,7 @@ bool is_oneshot_ignored_key(uint16_t keycode);
 //   - Modifier + one shot key --> modifier(one shot key) + leaving layer
 //   - Mod tap + release       --> tap action of key + leaving layer
 // True to ignore, False to handle
-bool is_oneshot_layer_ignored_press(uint16_t keycode);
+bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record);
 
 // Represents the three states a tap_mod key can be in
 typedef enum {
