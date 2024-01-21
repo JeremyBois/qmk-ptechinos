@@ -312,8 +312,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      | ATab  | MB2  | WH_D |  MB1  | PgDo |                    |  MB4 | Left | Down | Right|  MB5  |       |
      * |      | SHIFT |      |      |       |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------ +------|       |    |       |------+------+------+------+-------+-------'
-     *        |       | LDesk|Center| RDesk |      |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
-     *        |       | LALT |      |       |      |       |    |       |      |      |      | LALT | RALT  |
+     *        | CTab  | LDesk|Center| RDesk |      |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
+     *        | RALT  | LALT |      |       |      |       |    |       |      |      |      | LALT | RALT  |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
      *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl |        |
@@ -322,7 +322,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_NAV] = LAYOUT(
                  XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, KC_PGUP,        S_CLIP_HISTORY, KC_HOME, KC_UP, KC_END, _______,
 XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN5), XXXXXXX,
-  XXXXXXX, LALT_T(C_LDESK), S_CENTER, C_RDESK, XXXXXXX, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+  RALT_T(SW_CTAB), LALT_T(C_LDESK), S_CENTER, C_RDESK, XXXXXXX, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
                                      _______, _______, _______,    _______, _______, _______
     ),
     /*
@@ -547,6 +547,7 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
 //
 // Custom swappers
 bool swapper_atab_active = false;
+bool swapper_ctab_active = false;
 // Custom layer switchers
 switcher_state switcher_sym_state = os_up_unqueued;
 switcher_state switcher_num_state = os_up_unqueued;
@@ -618,6 +619,7 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Swapper on one key (no timer)
     update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
+    update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, RALT_T(SW_CTAB), keycode, record);
 
     // Custom layer change (no timer)
     update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
