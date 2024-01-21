@@ -21,7 +21,6 @@
 #    include "print.h"
 #endif // CONSOLE_ENABLE
 
-
 void auto_mouse_reset(void);
 
 //
@@ -222,7 +221,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |   X   |   Q  |   M  |   C  |   V  |-------|    |-------|   J  |   P  |   ,  |   .  |   Z   |
-     *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        | RALT  | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
      *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
@@ -231,7 +230,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_GRAPHITE] = LAYOUT(
                   XXXXXXX, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_PSCR,
     XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_H, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-             KC_X, LALT_T(KC_Q), KC_M, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_J, KC_P, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
+     RALT_T(KC_X), LALT_T(KC_Q), KC_M, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_J, KC_P, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
                     SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), TO(0)
     ),
     /*
@@ -243,7 +242,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   Q   |
-     *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
      *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl |        |
@@ -252,7 +251,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_QWERTY] = LAYOUT(
                   XXXXXXX, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, _______,
     XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
-             KC_Z, LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+     RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
                                  _______, _______, _______,     _______, _______, _______
     ),
     /*
@@ -267,7 +266,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |   Q   |   W  |   H  |   F  |   V  |-------|    |-------|   X  |   C  |   ,  |   .  |   Z   |
-     *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
      *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
@@ -276,7 +275,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_STRONK] = LAYOUT(
                   XXXXXXX, KC_L, KC_D, KC_P, KC_B,                      KC_J, KC_G, KC_O, KC_U, _______,
     XXXXXXX, LSFT_T(KC_R), KC_T, KC_S, KC_N, KC_K,                      KC_Y, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-             KC_Q, LALT_T(KC_W), KC_H, KC_F, KC_V, _______,    _______, KC_X, KC_C, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
+     RALT_T(KC_Q), LALT_T(KC_W), KC_H, KC_F, KC_V, _______,    _______, KC_X, KC_C, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
                                  _______, _______, _______,    _______, _______, _______
     ),
     /*
@@ -289,7 +288,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |   Z   |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   Q   |
-     *        |       | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
      *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
@@ -298,7 +297,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_COLEMAK_DH] = LAYOUT(
                   XXXXXXX, KC_W, KC_F, KC_P, KC_B,                      KC_J, KC_L, KC_U, KC_Y, _______,
     XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,                      KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
-             KC_Z, LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+     RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
                                  _______, _______, _______,    _______, _______, _______
     ),
     /*
@@ -335,7 +334,7 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC
      * |       | SHIFT|      |      |       |      |-------.    ,-------|       |      |      |      | SHIFT|     |
      * `-------+------+------+------+-------+------|  PSCR |    |       |-------+------+------+------+------------'
      *         | Cut  | Paste| Copy | Undo  | Redo |-------|    |-------|  Redo | Undo | Copy | Paste| Cut  |
-     *         |      | LALT |      |       |      |       |    |       |       |      |      | LALT | RALT |
+     *         | RALT | LALT |      |       |      |       |    |       |       |      |      | LALT | RALT |
      *         `-----------------------------------/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
      *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl |        |
@@ -343,17 +342,17 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC
      */
     #if defined(POINTING_DEVICE_ENABLE)
       [L_MOUSE] = LAYOUT(
-                        XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, PR_CPI_UP,       PL_CPI_UP, KC_BTN5, KC_BTN3, KC_BTN4, _______,
-XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_CPI_DOWN, KC_BTN1, PL_DS_TOOGLE, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
-                C(KC_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,   _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
-                                              _______, _______, _______,   _______, _______, _______
+                        XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, PR_CPI_UP,                     PL_CPI_UP, KC_BTN5, KC_BTN3, KC_BTN4, _______,
+XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,                     PL_CPI_DOWN, KC_BTN1, PL_DS_TOOGLE, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
+              RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,   _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+                                                    _______, _______, _______,    _______, _______, _______
     ),
       #else
       [L_MOUSE] = LAYOUT(
-                  XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,         XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,
- XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, XXXXXXX, KC_BTN1, XXXXXXX,         XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
-        C(KC_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
-                                      _______, _______, _______,     _______, _______, _______
+                  XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,                 XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,
+ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, XXXXXXX, KC_BTN1, XXXXXXX,                 XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
+RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+                                       _______, _______, _______,     _______, _______, _______
     ),
       #endif
     /* NUM
@@ -373,7 +372,7 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_
     [L_NUM] = LAYOUT(
                KCU_COPYRIGHT,  KC_F9, KC_F8, KC_F7, KC_F11,       KC_F11, KC_7, KC_8, KC_9, _______,
     XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1, KC_COMMA,       KC_DOT,   KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
-    KCU_POUND, LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
+   RALT_T(KCU_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
                                    _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
@@ -395,7 +394,7 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,       PL_
     [L_SYM] = LAYOUT(
                            TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,      KC_PERC, KC_AMPR, KC_ASTR, KC_QUES, TO(L_MATH),
 XXXXXXX, LSFT_T(KC_GRV), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH, KC_BSLS,      C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_CIRC), XXXXXXX,
-                       KC_PIPE, KC_EQL, KC_MINS, KC_PLUS, KC_DQUO, _______,   _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, RALT_T(C_C_CED),
+                      RALT_T(KC_PIPE), KC_EQL, KC_MINS, KC_PLUS, KC_DQUO, _______,   _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, RALT_T(C_C_CED),
                                                  _______, _______, _______,   _______, _______, _______
     ),
      /*
@@ -714,6 +713,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case RALT_T(C_EURO):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KCU_EURO);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RALT_T(C_POUND):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KCU_POUND);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RALT_T(KC_PIPE):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_PIPE);
                 let_qmk_handle_it = false;
             }
             break;
