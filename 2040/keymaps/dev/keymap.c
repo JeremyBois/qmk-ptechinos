@@ -378,13 +378,13 @@ RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_
     /* SYM
      *
      *        ,------------------------------------.                    ,------------------------------------.
-     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |   %   |   &  |   *  |   ?  | MATH  |
+     *        |       |   :  |  #   |  ;   |  ` ~  |                    | GREEK |   &  |   %  | MATH |       |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
-     * |      |   `…  |   à  |  _   |  é   |   /   |                    |   \   |   è  |   '  |   !  |  ^…   |      |
+     * |      |   ^…  |  `…  |  _   |  é   |   /   |                    |   \   |   *  |   '  |   !  |   ?   |      |
      * |      | SHIFT |      |      |      |       |-------.    ,-------|       |      |      |      | SHIFT |      |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
      *        |   |   | = ×  |  -   |  + ÷ |  "…   |-------|    |-------|  '…   |   @  |   "  |   $  |   ç   |
-     *        |       |      |      |      |       |       |    |       |       |      |      |      |  RALT |
+     *        | RALT  |      |      |      |       |       |    |       |       |      |      |      |  RALT |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF    |
      *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |         |
@@ -392,10 +392,10 @@ RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_
      *
      */
     [L_SYM] = LAYOUT(
-                           TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,      KC_PERC, KC_AMPR, KC_ASTR, KC_QUES, TO(L_MATH),
-XXXXXXX, LSFT_T(KC_GRV), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH, KC_BSLS,      C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_CIRC), XXXXXXX,
+                               XXXXXXX, KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     TO(L_GREEK), KC_AMPR, KC_PERC, TO(L_MATH), XXXXXXX,
+         XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, KC_ASTR, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
                       RALT_T(KC_PIPE), KC_EQL, KC_MINS, KC_PLUS, KC_DQUO, _______,   _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, RALT_T(C_C_CED),
-                                                 _______, _______, _______,   _______, _______, _______
+                                                        _______, _______, _______,   _______, _______, _______
     ),
      /*
      * MATH
@@ -754,6 +754,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LSFT_T(C_GA):
             if (record->tap.count && record->event.pressed) {
                 process_unicodemap(UP(GA, S_GA), record);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RSFT_T(KC_QUES):
+        case LSFT_T(KC_QUES):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_QUES);
                 let_qmk_handle_it = false;
             }
             break;
