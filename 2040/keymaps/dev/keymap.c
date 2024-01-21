@@ -471,8 +471,9 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
 /*
  *        ,-----------------------------------.                    ,----------------------------------.
  *        |-------|       ESCAPE       |      |                    |      |      LAUNCHER      |------|
- * ,------+-------+ [«   +  {“  +   (  +------|                    |------+  )   +  }”  +  ]»  +------+------.
- * |      |       |            TAB            |-------.    ,-------|      |    BACK    DEL     |      |      |
+ *        |-------|            TAB     |      |                    |      |                    |------|
+ * ,------+-------+ [«   +  {“  }+   (  +------|                    |------+  )   +  }”  +  ]»  +------+------.
+ * |      |       |      |      |             |-------.    ,-------|      |    BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
  *        |       |    GUI   COMMENT   |      |-------|    |-------|      |    CAPS    GUI            |
  *        `-----------------------------------/      /      \      \----------------------------------'
@@ -483,15 +484,17 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
 
 uint16_t get_combo_term(uint16_t index, combo_t* combo) {
     switch (index) {
-        // Home / Tight combos
+        // Default
         case tab:
-        case back:
-        case del:
         case launcher:
         case escape_l:
         case caps:
         case comment:
             return COMBO_TERM;
+        // Tight combos
+        case back:
+        case del:
+            return COMBO_TERM / 2;
         // Modifier combos
         case gui_l:
         case gui_r:
@@ -516,7 +519,6 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
     switch (index) {
         case escape_l:
         case caps:
-        case comment:
         case launcher:
         case back:
         case del:
@@ -526,11 +528,12 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
         case square_r:
         case gui_l:
         case gui_r:
+        case tab:
+        case comment:
             // Quick roll is allowed
             return false;
         case curly_l:
         case curly_r:
-        case tab:
         case adjust:
         default:
             // Avoid roll to still be able to use mouse keys / game arrows keys

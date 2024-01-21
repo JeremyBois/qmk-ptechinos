@@ -113,7 +113,7 @@
     },
     "combo": {
         // Default combo timeout is 200ms.
-        "term": 60
+        "term": 50
     },
     "mouse_key": {
         // https://www.reddit.com/r/olkb/comments/72u8ou/qmk_mouse_keys_rock/

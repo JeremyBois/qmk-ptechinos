@@ -1,12 +1,15 @@
 // TOP ROW
 // Left
 COMB(escape_l, KC_ESC, KC_L, KC_D, KC_W)
+COMB(tab, KC_TAB, KC_D, KC_W)
 // Right
 COMB(launcher, A(KC_F2), KC_F, KC_O, KC_U)
+// COMB(back, KC_BSPC, KC_F, KC_O)
+// COMB(del, KC_DEL, KC_O, KC_U)
 
 // HOME ROW
 // Left
-COMB(tab, KC_TAB, KC_T, KC_S)
+// COMB(tab, KC_TAB, KC_T, KC_S)
 // Right
 COMB(back, KC_BSPC, KC_H, KC_E)
 COMB(del, KC_DEL, KC_E, KC_A)
