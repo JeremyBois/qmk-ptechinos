@@ -8,7 +8,7 @@
 typedef struct {
     uint8_t  layer;     // Layer to activate
     uint16_t timeout;   // Layer activation timeout if unused
-    uint8_t  key_delay; // Time delay after a key press / release
+    uint16_t key_delay; // Time delay after a non mouse key press / release
     uint8_t  debounce;  // Time delay from last activation to next update
     uint8_t  threshold; // Minimal movement to turn on the auto mouse layer
 } auto_mouse_config_t;
@@ -27,11 +27,11 @@ typedef struct {
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_TIMEOUT
-#    define PTECHINOS_AUTO_MOUSE_TIMEOUT 700 // Layer activation timeout if unused
+#    define PTECHINOS_AUTO_MOUSE_TIMEOUT 600 // Layer activation timeout if unused
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_KEY_DELAY
-#    define PTECHINOS_AUTO_MOUSE_KEY_DELAY (TAPPING_TERM + 20) // Time delay after a key press / release
+#    define PTECHINOS_AUTO_MOUSE_KEY_DELAY ((int)(TAPPING_TERM * 1.5)) // Time delay after a non mouse key press / release
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_DEBOUNCE
@@ -40,6 +40,10 @@ typedef struct {
 
 #ifndef PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD
 #    define PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD 4 // Minimal movement to turn on the auto mouse layer
+#endif
+
+#ifndef PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER
+#    define PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER 1 // Erase the mouse report if mouse layer is inactive
 #endif
 
 /**
@@ -109,7 +113,7 @@ void auto_mouse_on_process_record(uint16_t keycode, keyrecord_t* record);
  *
  * @param[in]  mouse_report  The mouse report
  */
-void auto_mouse_on_pointing_device_task(report_mouse_t mouse_report);
+void auto_mouse_on_pointing_device_task(report_mouse_t* mouse_report);
 
 /**
  * @brief      Control if a key should or not turn off the auto mouse layer. Do some

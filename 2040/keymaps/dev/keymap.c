@@ -789,7 +789,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
                 // Force end of mouse layer
                 auto_mouse_set_inactive();
-                auto_mouse_reset();
 #endif
                 // ADJUST layer from combo
                 layer_move(L_ADJUST);
@@ -913,17 +912,17 @@ bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
 #        if defined(POINTING_DEVICE_COMBINED)
 report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
     report_mouse_t report = pointing_device_combine_reports(left_report, right_report);
-    auto_mouse_on_pointing_device_task(report);
+    auto_mouse_on_pointing_device_task(&report);
     return report;
 }
 #        elif defined(POINTING_DEVICE_LEFT)
 report_mouse_t pointing_device_task_user(report_mouse_t report) {
-    auto_mouse_on_pointing_device_task(report);
+    auto_mouse_on_pointing_device_task(&report);
     return report;
 }
 #        elif defined(POINTING_DEVICE_RIGHT)
 report_mouse_t pointing_device_task_user(report_mouse_t report) {
-    auto_mouse_on_pointing_device_task(report);
+    auto_mouse_on_pointing_device_task(&report);
     return report;
 }
 #        else
@@ -933,16 +932,16 @@ report_mouse_t pointing_device_task_user(report_mouse_t report) {
 report_mouse_t pointing_device_task_user(report_mouse_t report) {
     if (!is_keyboard_master()) return report;
 
-    auto_mouse_on_pointing_device_task(report);
+    auto_mouse_on_pointing_device_task(&report);
     return report;
 }
 #    endif
 
-void auto_mouse_reset(void) {
+void auto_mouse_on_layer_inactive(auto_mouse_data_t* context) {
     // Switch to mousing mode
-    if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
-        ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
-    }
+    // if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
+    ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
+    // }
     if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_LEFT)) {
         ptechinos_set_pointer_as_mousing(PTECHINOS_LEFT);
     }

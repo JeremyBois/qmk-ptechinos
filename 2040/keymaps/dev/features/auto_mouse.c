@@ -2,6 +2,7 @@
 #include "quantum.h"
 
 #include "auto_mouse.h"
+#include "report.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -60,11 +61,18 @@ static void auto_mouse_keyevent(bool pressed) {
     } else {
         auto_mouse_context.mouse_key_tracker--;
     }
+}
 
-    auto_mouse_context.key_timer = timer_read();
+static void erase_report(report_mouse_t* report) {
+    report->x       = 0.0f;
+    report->y       = 0.0f;
+    report->h       = 0.0f;
+    report->v       = 0.0f;
+    report->buttons = 0.0f;
 }
 
 void auto_mouse_set_active(void) {
+    // Do nothing when feature is disabled
     if (!auto_mouse_context.is_enabled) {
         return;
     }
@@ -78,6 +86,11 @@ void auto_mouse_set_active(void) {
 }
 
 void auto_mouse_set_inactive(void) {
+    // Do nothing when feature is disabled
+    if (!auto_mouse_context.is_enabled) {
+        return;
+    }
+
     auto_mouse_debug("set_inactive");
 
     auto_mouse_context.active_timer      = 0.0;
@@ -168,40 +181,44 @@ __attribute__((weak)) bool auto_mouse_should_exit(uint16_t keycode, keyrecord_t*
     return should_exit || auto_mouse_should_exit_user(keycode, record);
 }
 
-void auto_mouse_on_pointing_device_task(report_mouse_t mouse_report) {
+void auto_mouse_on_pointing_device_task(report_mouse_t* mouse_report) {
     // Do nothing is feature is disabled
     if (!auto_mouse_context.is_enabled) {
         return;
     }
 
-    // Avoid on / off using a small delay after activation
-    if (timer_elapsed(auto_mouse_context.active_timer) <= auto_mouse_context.config.debounce) {
-        return;
-    }
-
-    // Avoid spurious activation using a small delay on each non mouse key press
-    if (timer_elapsed(auto_mouse_context.key_timer) <= auto_mouse_context.config.key_delay) {
-        return;
-    }
-
-    // Avoid deactivation while user holds a key on the mouse layer
-    if (auto_mouse_context.mouse_key_tracker > 0) {
-        return;
-    }
-
     // Preprocessing of mouse report data
-    const uint8_t distance       = abs(mouse_report.x) + abs(mouse_report.y);
-    const uint8_t scroll         = abs(mouse_report.h) + abs(mouse_report.v);
-    const bool    button_pressed = mouse_report.buttons;
+    const uint8_t distance       = abs(mouse_report->x) + abs(mouse_report->y);
+    const uint8_t scroll         = abs(mouse_report->h) + abs(mouse_report->v);
+    const bool    button_pressed = mouse_report->buttons;
 
     if (!auto_mouse_is_active()) {
+        // Avoid spurious activation using a small delay on each non mouse key press
+        if (timer_elapsed(auto_mouse_context.key_timer) <= auto_mouse_context.config.key_delay) {
+#if PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER == 1
+            erase_report(mouse_report);
+#endif
+            return;
+        }
+
         // Avoid spurious activation using a threshold to discard false positive
         if (distance > auto_mouse_context.config.threshold || scroll > auto_mouse_context.config.threshold / 4 || button_pressed) {
             auto_mouse_set_active();
         }
     } else {
-        if (distance > 0 || scroll > 0 || button_pressed) {
+        if (distance > auto_mouse_context.config.threshold || scroll > 0 || button_pressed) {
             auto_mouse_context.active_timer = timer_read();
+            return;
+        }
+
+        // Avoid on / off using a small delay after activation
+        if (timer_elapsed(auto_mouse_context.active_timer) <= auto_mouse_context.config.debounce) {
+            return;
+        }
+
+        // Avoid deactivation while user holds a key on the mouse layer
+        if (auto_mouse_context.mouse_key_tracker > 0) {
+            return;
         }
 
         // Check if layer should be deactivated
