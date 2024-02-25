@@ -419,6 +419,7 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                
     ),
     /*
      * GREEK (Qwerty based position (letter pronunciation then shape))
+     * @TODO (match based layout)
      *        ,-----------------------------------.                    ,-----------------------------------.
      *        |       |  Ω ω |  Ε ε |  Ρ ρ | Τ τ  |                    |  Ψ ψ |  Υ υ |  Ι ι |  Ο ο |       |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.

@@ -56,3 +56,22 @@ Compile using **#define** for handness
     - ?? Maybe a device make a small motion move to another layer ??
     - Mouse key scrolling activate the layer
   - [x] Auto mouse key timer is not reset when using custom keycodes (like CPI increase)
+  - [ ] Leader key on inner right thumb
+    - Leader + Leader = TO(0)
+  - [x] Shift on thumbs
+    - Remove mod-taps on pinkies allowing game full compatibility
+    - Reduce complexity associated with selection of the correct pinky for the correct side
+  - [x] Easy access to symbols while inside the number layer
+    - Use a move_hold switcher for numbers
+      - Allow permanent switch to this layer (like for navigation)
+    - Use a oneshot_hold switcher for symbols with layer activation not move
+      - Previous *move* layer (nav or num) is still active and only replaced temporary by the symbol layer
+    - Can now stay inside the num layer for debugging and typing numbers while still getting access to symbols
+  - [x] Create a more ergonomic base layer that is compatible with the existing layer without drastic changes
+    - Inspiration from the following layers
+      - `Graphite` for keys global placement
+      - `Fire` for increasing rolls without increasing redirects to much using `m` with vowels
+  - [x] Avoid parasitics mouse movement due to trackball tiny movements while typing
+    - If mouse layer is active then mouse report is untouched
+    - If mouse layer is inactive then mouse report is erased
+

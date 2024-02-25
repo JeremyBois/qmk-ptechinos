@@ -12,7 +12,7 @@
 // ┌─────────────────────────────────────────────────┐
 // │ Debug                                           │
 // └─────────────────────────────────────────────────┘
-// Last measure --> 1225 (Custom Auto Mouse Layer - 02/12/2023)
+// Last measure --> 1225 (Custom Auto Mouse Layer - 02/12/2023) > 1000 (USB polling)
 // #define DEBUG_MATRIX_SCAN_RATE
 
 // ┌─────────────────────────────────────────────────┐

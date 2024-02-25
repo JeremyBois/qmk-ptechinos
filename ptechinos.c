@@ -28,7 +28,7 @@
 // [ ] Test slave right mode
 // [x] Use CPI in place of DPI
 // [ ] Add documentation
-// [ ] ?? User keymap overrides --> Add auto mouse layer support ??
+// [x] ?? User keymap overrides --> Add auto mouse layer support ??
 // [ ] ?? Add a joystick mode (https://www.yorku.ca/mack/FuturePlay1.html) ??
 // [ ] ?? Add a sniping (low CPI) mode ??
 // [ ] ?? Add gestures (copy/paste/back/next) ??
@@ -511,6 +511,10 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
         case PL_DS_TOOGLE:
             // Simulate dragscroll on hold (pressed / released)
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_LEFT);
+            // if (record->event.pressed) {
+            //     // Toogle between drag and mouse mode
+            //     ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_LEFT);
+            // }
             break;
         case PR_CPI_UP:
             if (record->event.pressed) {
@@ -531,6 +535,10 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
         case PR_DS_TOOGLE:
             // Simulate dragscroll on hold (pressed / released)
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
+            // if (record->event.pressed) {
+            //     // Toogle between drag and mouse mode
+            //     ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
+            // }
             break;
     }
     // ptechinos_print_config_to_console("process_record_kb", &g_ptechinos_pointer_config);

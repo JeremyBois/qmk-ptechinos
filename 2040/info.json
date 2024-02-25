@@ -18,7 +18,7 @@
     "bootloader_instructions": "Press twice the physical RESET button on the bottom of the board.",
     "development_board": "kb2040",
     "pin_compatible": "promicro",
-    "debounce": 6, // Default is 5 (lower is better)
+    "debounce": 8, // Default is 5 (lower is better)
     // Keyboard Matrix Assignments
     // https://learn.adafruit.com/adafruit-kb2040/pinouts
     // ROWS: AVR pins used for rows, top to bottom
