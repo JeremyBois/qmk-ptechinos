@@ -211,32 +211,34 @@ const uint32_t PROGMEM unicode_map[] = {
 //
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-      /*
-     * GRAPHITE (own mod taking avantage of other layers for symbols)
+    /*
      * v1(graphite) https://cyanophage.github.io/playground.html?layout=%27ldwbyfou%2F%3Bnrtsgkheai-xqmcvjp%2C.z
+     * v2(graphite) https://cyanophage.github.io/playground.html?layout=%5Cldwbyfou%5C%5Cnrtsgkmeai%2Fxqpcvjh%2C.z
+     * v3(custom) https://cyanophage.github.io/playground.html?layout=qldybzfouj%5Cnrtsgkmeai%2Fxwpcv%5Ch%2C.%5C
+     * v4(custom) https://cyanophage.github.io/playground.html?layout=qldybzfouj\nrtsgkmeai%2Fxwpcv%27h%2C.%3B
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |   L  |   D  |   W  |   B  |                    |   Y  |   F  |   O  |   U  |  PSCR |
+     *        |   Q   |   L  |   D  |   Y  |   B  |                    |   Z  |   F  |   O  |   U  |   J   |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * |      |   N   |   R  |   T  |   S  |   G  |                    |   K  |   H  |   E  |   A  |   I   |       |
+     * |      |   N   |   R  |   T  |   S  |   G  |                    |   K  |   M  |   E  |   A  |   I   |       |
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   X   |   Q  |   M  |   C  |   V  |-------|    |-------|   J  |   P  |   ,  |   .  |   Z   |
+     *        |   X   |   W  |   P  |   C  |   V  |-------|    |-------|      |   H  |   ,  |   .  |       |
      *        | RALT  | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
      *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
-    [L_GRAPHITE] = LAYOUT(
-                  XXXXXXX, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_PSCR,
-    XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_H, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-     RALT_T(KC_X), LALT_T(KC_Q), KC_M, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_J, KC_P, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
-                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), TO(0)
+    [L_BASE] = LAYOUT(
+                             KC_Q, KC_L, KC_D, KC_Y, KC_B,                      KC_Z, KC_F, KC_O, KC_U, KC_J,
+            XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
+             RALT_T(KC_X), LALT_T(KC_W), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, XXXXXXX, KC_H, KC_COMMA, LALT_T(KC_DOT), KC_RIGHT_ALT,
+                            SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), TO(0)
     ),
     /*
      * QWERTY
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  | PSCR  |
+     *        |       |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |       |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   |       |
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
@@ -249,40 +251,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_QWERTY] = LAYOUT(
-                  XXXXXXX, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, _______,
-    XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
-     RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
-                                 _______, _______, _______,     _______, _______, _______
-    ),
-    /*
-     * STRONK (own mod taking avantage of other layers for symbols)
-     * v1(engram) https://cyanophage.github.io/playground.html?layout=\youjkldw%2F'ciea%2C.htsn%3Bxgbvzqrmpf (old)
-     * v2(engram) https://cyanophage.github.io/playground.html?layout=%5Cyoujkhdw%2F%27ciea%2C.ntsl%3Bxgbvzqrmpf
-     * v3(stronk) https://cyanophage.github.io/playground.html?layout=%3Bldpbjgou%27-rtsnkymeai%2Fqwhfvxc%2C.z
-     *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |   L  |   D  |   P  |   B  |                    |   J  |   G  |   O  |   U  |  PSCR |
-     * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * |      |   R   |   T  |   S  |   N  |   K  |                    |   Y  |   M  |   E  |   A  |   I   |       |
-     * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
-     * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   Q   |   W  |   H  |   F  |   V  |-------|    |-------|   X  |   C  |   ,  |   .  |   Z   |
-     *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
-     *        `-----------------------------------/       /     \       \----------------------------------'
-     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
-     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
-     *                       `--------'--------'-------'           '-------'--------'-------'
-     */
-    [L_STRONK] = LAYOUT(
-                  XXXXXXX, KC_L, KC_D, KC_P, KC_B,                      KC_J, KC_G, KC_O, KC_U, _______,
-    XXXXXXX, LSFT_T(KC_R), KC_T, KC_S, KC_N, KC_K,                      KC_Y, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-     RALT_T(KC_Q), LALT_T(KC_W), KC_H, KC_F, KC_V, _______,    _______, KC_X, KC_C, KC_COMMA, LALT_T(KC_DOT), RALT_T(KC_Z),
-                                 _______, _______, _______,    _______, _______, _______
+                          XXXXXXX, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, _______,
+            XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
+             RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+                                         _______, _______, _______,     _______, _______, _______
     ),
     /*
      * COLEMAK-DH
      * https://colemakmods.github.io/
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |  PSCR |
+     *        |       |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |       |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |   A   |   R  |   S  |   T  |   G  |                    |   M  |   N  |   E  |   I  |   O   |       |
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
@@ -295,10 +273,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_COLEMAK_DH] = LAYOUT(
-                  XXXXXXX, KC_W, KC_F, KC_P, KC_B,                      KC_J, KC_L, KC_U, KC_Y, _______,
-    XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,                      KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
-     RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
-                                 _______, _______, _______,    _______, _______, _______
+                          XXXXXXX, KC_W, KC_F, KC_P, KC_B,                      KC_J, KC_L, KC_U, KC_Y, _______,
+            XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,                      KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
+             RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+                                         _______, _______, _______,    _______, _______, _______
     ),
     /*
      * NAV
@@ -321,7 +299,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [L_NAV] = LAYOUT(
                  XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, KC_PGUP,        S_CLIP_HISTORY, KC_HOME, KC_UP, KC_END, _______,
-XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, LSFT_T(KC_BTN5), XXXXXXX,
+XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, RSFT_T(KC_BTN5), XXXXXXX,
   RALT_T(SW_CTAB), LALT_T(C_LDESK), S_CENTER, C_RDESK, XXXXXXX, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
                                      _______, _______, _______,    _______, _______, _______
     ),
@@ -441,12 +419,12 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
     ),
     /* ADJUST
      *         ,-----------------------------------.                    ,------------------------------------.
-     *         |RGB_MO|hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP  | MFFD |      |
+     *         |      |hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP  | MFFD |      |
      * ,-------|------+------+------+------+-------+                    |-------+-------+-------+------+------------.
      * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY  | NEXT |EEPRST|RESET|
      * |       |      |      |      |      |       |-------.    ,-------|       |       |       |      |      |     |
      * `-------+------+------+------+------+-------|       |    |       |-------+-------+-------+------+------------'
-     *         |      | U_M  | U_L  | U_W  | U_WC  |-------|    |-------|QWERTY |CUSTOM |COLEMAK|      |DEBUG |
+     *         |RGB_MO| U_M  | U_L  | U_W  | U_WC  |-------|    |-------|QWERTY | BASE  |COLEMAK|      |DEBUG |
      *         |      |      |      |      |       |       |    |       |       |       |   DH  |      |      |
      *         `-----------------------------------/      /      \      \-------------------------------------'
      *                       |         |        | /      /        \      \ |        |   DEF     |
@@ -454,10 +432,10 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
      *                       `---------'--------'------'            '------'--------'-----------'
      */
       [L_ADJUST] = LAYOUT(
-              RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,        KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
-     XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,        KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
-         XXXXXXX, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_GRAPHITE), DF(L_STRONK), DF(L_COLEMAK_DH), QK_DEBUG_TOGGLE,
-                                  XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, _______
+         XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,                      KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
+XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,                      KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
+           RGB_MOD, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_BASE), DF(L_COLEMAK_DH), XXXXXXX, QK_DEBUG_TOGGLE,
+                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, ML_BASE
     )
     };
 // clang-format on
@@ -469,10 +447,10 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
 //
 /*
  *        ,-----------------------------------.                    ,----------------------------------.
- *        |-------|       ESCAPE       |      |                    |      |      LAUNCHER      |------|
- *        |-------|            TAB     |      |                    |      |                    |------|
- * ,------+-------+ [«   +  {“  }+   (  +------|                    |------+  )   +  }”  +  ]»  +------+------.
- * |      |       |      |      |             |-------.    ,-------|      |    BACK    DEL     |      |      |
+ *        |-------|           ESCAPE   |      |                    |      |      LAUNCHER      |------|
+ *        |-------| [«      (˘      {“ |      |                    |      |  )°     }”      ]» |------|
+ * ,------+-------+ [«   +  (˘      {“ +------|                    |------+  )   +  }”  +  ]»  +------+------.
+ * |      |       |      |     TAB            |-------.    ,-------|      |    BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
  *        |       |    GUI   COMMENT   |      |-------|    |-------|      |    CAPS    GUI            |
  *        `-----------------------------------/      /      \      \----------------------------------'
@@ -484,13 +462,13 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
 uint16_t get_combo_term(uint16_t index, combo_t* combo) {
     switch (index) {
         // Default
-        case tab:
         case launcher:
+            return COMBO_TERM;
+        // Tight combos
         case escape_l:
         case caps:
         case comment:
-            return COMBO_TERM;
-        // Tight combos
+        case tab:
         case back:
         case del:
             return COMBO_TERM / 2;
@@ -516,26 +494,28 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
 
 bool get_combo_must_tap(uint16_t index, combo_t* combo) {
     switch (index) {
-        case escape_l:
-        case caps:
         case launcher:
-        case back:
-        case del:
-        case round_l:
-        case round_r:
-        case square_l:
-        case square_r:
         case gui_l:
         case gui_r:
+        case back:
+        case del:
         case tab:
-        case comment:
             // Quick roll is allowed
             return false;
         case curly_l:
         case curly_r:
+        case round_l:
+        case round_r:
+        case square_l:
+        case square_r:
+            // Quick roll is allowed to avoid putting letters inside
+            return false;
+        case caps:
+        case escape_l:
+        case comment:
         case adjust:
         default:
-            // Avoid roll to still be able to use mouse keys / game arrows keys
+            // Roll is part of the typing process and combo should not make it harder
             return true;
     }
 }
@@ -556,6 +536,8 @@ switcher_state switcher_nav_state = os_up_unqueued;
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
         case TO(0):
+        case ML_BASE:
+        case LSFT_T(ML_BASE):
         case KC_ESC:
             return true;
         default:
@@ -566,6 +548,8 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 bool is_oneshot_layer_cancel_key(uint16_t keycode) {
     switch (keycode) {
         case TO(0):
+        case ML_BASE:
+        case LSFT_T(ML_BASE):
         case SWITCH_NAV:
         case SWITCH_SYM:
         case SWITCH_NUM:
@@ -586,6 +570,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
 
         // Layers
         case TO(0):
+        case ML_BASE:
         case SWITCH_NAV:
         case SWITCH_SYM:
         case SWITCH_NUM:

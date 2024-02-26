@@ -9,7 +9,7 @@
 // └─────────────────────────────────────────────────┘
 //
 // MOUSE should be last to always be the higher active whenever the cursor is moving
-enum custom_layers { L_GRAPHITE = 0, L_STRONK, L_COLEMAK_DH, L_QWERTY, L_NAV, L_MATH, L_GREEK, L_NUM, L_SYM, L_ADJUST, L_MOUSE };
+enum custom_layers { L_BASE = 0, L_COLEMAK_DH, L_QWERTY, L_NAV, L_MATH, L_GREEK, L_NUM, L_SYM, L_ADJUST, L_MOUSE };
 
 //
 // ┌─────────────────────────────────────────────────┐
@@ -51,7 +51,7 @@ enum custom_keycodes {
     SW_CTAB,
     SW_ATAB,
     // Combo layer
-    ML_MOUSE,
+    ML_BASE,
     ML_ADJUST,
     // Switcher of layer (not timer)
     SWITCH_SYM,
