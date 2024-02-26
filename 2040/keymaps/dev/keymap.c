@@ -1,3 +1,5 @@
+#include "action_layer.h"
+#include "keymap_us.h"
 #include QMK_KEYBOARD_H
 
 #include "keycodes.h"
@@ -226,14 +228,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        | RALT  | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
-     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
+     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl | LShift|
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_BASE] = LAYOUT(
-                             KC_Q, KC_L, KC_D, KC_Y, KC_B,                      KC_Z, KC_F, KC_O, KC_U, KC_J,
-            XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-             RALT_T(KC_X), LALT_T(KC_W), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, XXXXXXX, KC_H, KC_COMMA, LALT_T(KC_DOT), KC_RIGHT_ALT,
-                            SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), TO(0)
+                     KC_Q, KC_L, KC_D, KC_Y, KC_B,                      KC_Z, KC_F, KC_O, KC_U, KC_J,
+    XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
+     RALT_T(KC_X), LALT_T(KC_W), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, XXXXXXX, KC_H, KC_COMMA, LALT_T(KC_DOT), KC_RIGHT_ALT,
+                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LSFT_T(ML_BASE)
     ),
     /*
      * QWERTY
@@ -247,14 +249,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl |        |
+     *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_QWERTY] = LAYOUT(
-                          XXXXXXX, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, _______,
-            XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
-             RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
-                                         _______, _______, _______,     _______, _______, _______
+                  XXXXXXX, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, _______,
+    XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
+     RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+                                 _______, _______, _______,     _______, _______, _______
     ),
     /*
      * COLEMAK-DH
@@ -269,14 +271,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
-     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |       |
+     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl | LShift|
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_COLEMAK_DH] = LAYOUT(
-                          XXXXXXX, KC_W, KC_F, KC_P, KC_B,                      KC_J, KC_L, KC_U, KC_Y, _______,
-            XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,                      KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
-             RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
-                                         _______, _______, _______,    _______, _______, _______
+                  XXXXXXX, KC_W, KC_F, KC_P, KC_B,                      KC_J, KC_L, KC_U, KC_Y, _______,
+    XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,                      KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
+     RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
+                                 _______, _______, _______,    _______, _______, _______
     ),
     /*
      * NAV
@@ -285,95 +287,114 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *   - Moving between workspace with one hand (required to be able to use drag and drop)
      *   - Screen scrolling with one hand
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       | WH_L | WH_U | WH_R  | PgUp |                    |Clip_H| Home |  Up  | End  | PSCR  |
+     *        |       | WH_L | WH_U | WH_R  | PgUp |                    |Clip_H| Home |  Up  | End  |       |
      * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+-------.
      * |      | ATab  | MB2  | WH_D |  MB1  | PgDo |                    |  MB4 | Left | Down | Right|  MB5  |       |
      * |      | SHIFT |      |      |       |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------ +------|       |    |       |------+------+------+------+-------+-------'
-     *        | CTab  | LDesk|Center| RDesk |      |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
+     *        | CTab  | LDesk|Center| RDesk | PSCR |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
      *        | RALT  | LALT |      |       |      |       |    |       |      |      |      | LALT | RALT  |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl |        |
+     *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl | LShift |
      *                      `---------'--------'-------'            '------'--------'--------'
      */
     [L_NAV] = LAYOUT(
-                 XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, KC_PGUP,        S_CLIP_HISTORY, KC_HOME, KC_UP, KC_END, _______,
-XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,        KC_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, RSFT_T(KC_BTN5), XXXXXXX,
-  RALT_T(SW_CTAB), LALT_T(C_LDESK), S_CENTER, C_RDESK, XXXXXXX, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
-                                     _______, _______, _______,    _______, _______, _______
+                     XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, KC_PGUP,                      S_CLIP_HISTORY, KC_HOME, KC_UP, KC_END, _______,
+    XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,                      KC_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, RSFT_T(KC_BTN5), XXXXXXX,
+    RALT_T(SW_CTAB), LALT_T(C_LDESK), S_CENTER, C_RDESK, KC_PSCR, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+                                                _______, _______, _______,    _______, _______, _______
     ),
     /*
      * MOUSE
      *         ,-----------------------------------.                    ,-----------------------------------.
-     *         |      |  MB4 |  MB3 |  MB5  |RCPI_U|                    | LCPI_U|  MB5 |  MB3 |  MB4 | PSCR |
+     *         |      |  MB4 |  MB3 |  MB5  |RCPI_U|                    | LCPI_U|  MB5 |  MB3 |  MB4 |      |
      * ,-------|------+------+------+-------+------+                    |-------+------+------+------+------------.
      * |       | ATab |  MB2 |RScrol|  MB1  |RCPI_D|                    | LCPI_D|  MB1 | LScro|  MB2 | ATab |     |
      * |       | SHIFT|      |      |       |      |-------.    ,-------|       |      |      |      | SHIFT|     |
-     * `-------+------+------+------+-------+------|  PSCR |    |       |-------+------+------+------+------------'
+     * `-------+------+------+------+-------+------|       |    |       |-------+------+------+------+------------'
      *         | Cut  | Paste| Copy | Undo  | Redo |-------|    |-------|  Redo | Undo | Copy | Paste| Cut  |
      *         | RALT | LALT |      |       |      |       |    |       |       |      |      | LALT | RALT |
      *         `-----------------------------------/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
-     *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl |        |
+     *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl | LShift |
      *                      `---------'--------'-------'            '------'--------'--------'
      */
     #if defined(POINTING_DEVICE_ENABLE)
       [L_MOUSE] = LAYOUT(
-                        XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, PR_CPI_UP,                     PL_CPI_UP, KC_BTN5, KC_BTN3, KC_BTN4, _______,
-XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,                     PL_CPI_DOWN, KC_BTN1, PL_DS_TOOGLE, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
-              RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,   _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
-                                                    _______, _______, _______,    _______, _______, _______
+                            XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, PR_CPI_UP,                      PL_CPI_UP, KC_BTN5, KC_BTN3, KC_BTN4, _______,
+    XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, PR_DS_TOOGLE, KC_BTN1, PR_CPI_DOWN,                      PL_CPI_DOWN, KC_BTN1, PL_DS_TOOGLE, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
+                      RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+                                                         _______, _______, _______,    _______, _______, _______
     ),
       #else
       [L_MOUSE] = LAYOUT(
-                  XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,                 XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,
- XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, XXXXXXX, KC_BTN1, XXXXXXX,                 XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
-RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
-                                       _______, _______, _______,     _______, _______, _______
+                    XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,                       XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX,
+   XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, XXXXXXX, KC_BTN1, XXXXXXX,                       XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN2, LSFT_T(SW_ATAB), XXXXXXX,
+            RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+                                               _______, _______, _______,     _______, _______, _______
     ),
       #endif
     /* NUM
+     * F11 F12 → both side to be used with one hand or both while debugging
+     * 0 1 2 3 → home row (more used number, Benford's law)
+     * , .     → home row to be used with numbers
+     * £ €     → Generic currencies on the same layer
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |   ©   |  F9  |  F8  |  F7  |  F11  |                    |  F11 |   7  |   8  |   9  | PSCR  |
+     *        |       |  F9  |  F8  |  F7  |  F11  |                    |  F11 |   7  |   8  |   9  |       |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
      * |      |   F10 |  F3  |  F2  |  F1  |   ,   |                    |   .  |   1  |   2  |   3  |   0   |      |
      * |      | SHIFT |      |      |      |       |-------.    ,-------|      |      |      |      | SHIFT |      |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
      *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |   4  |   5  |   6  |   €   |
-     *        |       | LALT |      |      |       |       |    |       |      |      |      | LALT |  RALT |
+     *        | RALT  | LALT |      |      |       |       |    |       |      |      |      | LALT |  RALT |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  RCTRL |        |
+     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  RCTRL | LShift |
      *                       `---------'--------'------'            '------'--------'--------'
      */
     [L_NUM] = LAYOUT(
-               KCU_COPYRIGHT,  KC_F9, KC_F8, KC_F7, KC_F11,       KC_F11, KC_7, KC_8, KC_9, _______,
-    XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1, KC_COMMA,       KC_DOT,   KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
-   RALT_T(KCU_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
-                                   _______, _______, _______,   _______, _______, _______
+                     XXXXXXX,  KC_F9, KC_F8, KC_F7, KC_F11,                     KC_F11, KC_7, KC_8, KC_9, XXXXXXX,
+   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_DOT, KC_0,  KC_1,  KC_2, RSFT_T(KC_3), XXXXXXX,
+     RALT_T(C_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
+                                          _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
+     * _        → easier left spot due to its high frequency with letters
+     * ^… `…    → left → easy to combine with vowels on the right
+     * | + - =  → left → number layer right and easy rollin += -= |= and easy repeat for ++ -- ==
+     * / \      → facing each other on each side
+     * : # ;    → left → easy to reach and repeat (markdown ##, cpp ::, ocaml ;;)
+     * `        → left → not used a lot but when repeat a lot when used (markdown ``` or ``)
+     * @        → right due to moderate use
+     * ç        → right due to moderate use (should not be under `a` to reduce sfb)
+     * ! ?      → right due to moderate use and !!
+     * '        → right to make l' d' s' bigram easier (l, d and s on the left)
+     * é è      → easy to type common french accented letter (follow /\ orientation for memonic)
+     * & *      → not that frequent (except for cpp) and not repeated
+     * $ %      → Less common but still useful
+     *          → Move to advanced layers (MATH and GREEK)
+     *
      *
      *        ,------------------------------------.                    ,------------------------------------.
-     *        |       |   :  |  #   |  ;   |  ` ~  |                    | GREEK |   &  |   %  | MATH |       |
+     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |   %   |   &  |   *  |   $  |  MATH |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
-     * |      |   ^…  |  `…  |  _   |  é   |   /   |                    |   \   |   *  |   '  |   !  |   ?   |      |
+     * |      |   ^…  |  `…  |  _   |  é   |   /   |                    |   \   |   è  |   '  |   !  |   ?   |      |
      * |      | SHIFT |      |      |      |       |-------.    ,-------|       |      |      |      | SHIFT |      |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |   |   | = ×  |  -   |  + ÷ |  "…   |-------|    |-------|  '…   |   @  |   "  |   $  |   ç   |
-     *        | RALT  |      |      |      |       |       |    |       |       |      |      |      |  RALT |
+     *        |   |   |  + ÷ |  -   |  = × |  "…   |-------|    |-------|  '…   |   ç  |   "  |   @  | RShift|
+     *        |       |      |      |      |       |       |    |       |       |      |      |      |       |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF    |
-     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |         |
+     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  LCtrl |  LShift |
      *                       `---------'--------'------'            '------'--------'---------'
      *
      */
     [L_SYM] = LAYOUT(
-                               XXXXXXX, KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     TO(L_GREEK), KC_AMPR, KC_PERC, TO(L_MATH), XXXXXXX,
-         XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, KC_ASTR, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
-                      RALT_T(KC_PIPE), KC_EQL, KC_MINS, KC_PLUS, KC_DQUO, _______,   _______, KC_QUOT, KC_AT, C_DQUOT, KC_DLR, RALT_T(C_C_CED),
-                                                        _______, _______, _______,   _______, _______, _______
+                  TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     KC_PERC, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
+XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
+                     KC_PIPE, KC_PLUS, KC_MINS, KC_EQL, KC_DQUO, _______,   _______, KC_QUOT, KCU_C_CEDILLA, C_DQUOT, KC_AT, KC_RSFT,
+                                               _______, _______, _______,   _______, _______, _______
     ),
      /*
      * MATH
@@ -387,7 +408,7 @@ RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_
      *        |       |      |      |      |      |       |    |       |      |      |      |      |       |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl |        |
+     *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_MATH] = LAYOUT(
@@ -408,12 +429,12 @@ RALT_T(C_X), LALT_T(C_V), C(KC_C), C(KC_Z), C(KC_Y), _______,     _______, C(KC_
      *        |       |      |      |      |      |       |    |       |      |      |      |      |       |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl |        |
+     *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `--------'--------'------'            '------'--------'--------'
      */
       [L_GREEK] = LAYOUT(
-         UP(GQ, S_GQ), UP(GW, S_GW), UP(GE, S_GE), UP(GR, S_GR), UP(GT, S_GT),       UP(GY, S_GY), UP(GU, S_GU), UP(GI, S_GI), UP(GO, S_GO), _______,
-XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),       UP(GH, S_GH), XXXXXXX, UP(GK, S_GK), UP(GL, S_GL), RSFT_T(C_GP), XXXXXXX,
+          UP(GQ, S_GQ), UP(GW, S_GW), UP(GE, S_GE), UP(GR, S_GR), UP(GT, S_GT),                     UP(GY, S_GY), UP(GU, S_GU), UP(GI, S_GI), UP(GO, S_GO), _______,
+ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),                     UP(GH, S_GH), XXXXXXX, UP(GK, S_GK), UP(GL, S_GL), RSFT_T(C_GP), XXXXXXX,
        UP(GZ, S_GZ), UP(GX, S_GX), UP(GC, S_GC), XXXXXXX, UP(GB, S_GB), _______,   _______, UP(GN, S_GN), UP(GM, S_GM),  XXXXXXX, XXXXXXX, UP(GQ, S_GQ),
                                                       _______, _______, _______,   _______, _______, _______
     ),
@@ -435,7 +456,7 @@ XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),  
          XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,                      KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
 XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,                      KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
            RGB_MOD, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_BASE), DF(L_COLEMAK_DH), XXXXXXX, QK_DEBUG_TOGGLE,
-                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, ML_BASE
+                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, LSFT_T(ML_BASE)
     )
     };
 // clang-format on
@@ -608,7 +629,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     // Custom layer change (no timer)
     update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
-    update_oneshot_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record);
+    update_move_hold_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record);
     update_move_hold_layer(&switcher_nav_state, L_NAV, SWITCH_NAV, keycode, record);
 
     // Custom keycodes
@@ -730,6 +751,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
+        case LSFT_T(C_GP):
         case RSFT_T(C_GP):
             if (record->tap.count && record->event.pressed) {
                 process_unicodemap(UP(GP, S_GP), record);
@@ -737,6 +759,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         case LSFT_T(C_GA):
+        case RSFT_T(C_GA):
             if (record->tap.count && record->event.pressed) {
                 process_unicodemap(UP(GA, S_GA), record);
                 let_qmk_handle_it = false;
@@ -758,13 +781,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         // Handle special layers
+        case LSFT_T(ML_BASE):
+        case RSFT_T(ML_BASE):
+            if (record->tap.count && record->event.pressed) {
+                // Intercept a press
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
+                // Force end of mouse layer
+                auto_mouse_set_inactive();
+#endif
+                // Force modifiers to cancel (should not be neccessary but just to be safe)
+                clear_mods();
+                // Back to home layer
+                layer_move(0);
+                let_qmk_handle_it = false;
+            }
+            break;
         case TO(0):
             // Force modifiers to cancel (should not be neccessary but just to be safe)
             clear_mods();
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
             // Force end of mouse layer
             auto_mouse_set_inactive();
-            auto_mouse_reset();
 #endif
             break;
         case ML_ADJUST:
@@ -811,6 +848,8 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_UNDS:
         case KC_MINS:
         case LSFT_T(KC_CIRC):
+        case RSFT_T(KC_CIRC):
+        case KC_CIRC:
             return true;
 
         // Changing layers continue Caps Word, without shifting.
@@ -856,6 +895,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t* record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case MT(MOD_RCTL, KC_ENT):
+        case LSFT_T(ML_BASE):
             // Hold
             return true;
         default:
