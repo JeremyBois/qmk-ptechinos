@@ -228,14 +228,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        | RALT  | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
-     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl | LShift|
+     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |  LAlt |
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_BASE] = LAYOUT(
                      KC_Q, KC_L, KC_D, KC_Y, KC_B,                      KC_Z, KC_F, KC_O, KC_U, KC_J,
     XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
      RALT_T(KC_X), LALT_T(KC_W), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, XXXXXXX, KC_H, KC_COMMA, LALT_T(KC_DOT), KC_RIGHT_ALT,
-                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LSFT_T(ML_BASE)
+                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LALT_T(ML_BASE)
     ),
     /*
      * QWERTY
@@ -457,7 +457,7 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                
          XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,                      KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
 XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,                      KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
            RGB_MOD, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_BASE), DF(L_COLEMAK_DH), XXXXXXX, QK_DEBUG_TOGGLE,
-                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, LSFT_T(ML_BASE)
+                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, LALT_T(ML_BASE)
     )
     };
 // clang-format on
@@ -561,6 +561,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
         case TO(0):
         case ML_BASE:
         case LSFT_T(ML_BASE):
+        case LALT_T(ML_BASE):
         case KC_ESC:
             return true;
         default:
@@ -573,6 +574,7 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode) {
         case TO(0):
         case ML_BASE:
         case LSFT_T(ML_BASE):
+        case LALT_T(ML_BASE):
         case SWITCH_NAV:
         case SWITCH_SYM:
         case SWITCH_NUM:
@@ -784,6 +786,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             break;
         // Handle special layers
         case LSFT_T(ML_BASE):
+        case LALT_T(ML_BASE):
         case RSFT_T(ML_BASE):
             if (record->tap.count && record->event.pressed) {
                 // Intercept a press
@@ -898,6 +901,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case MT(MOD_RCTL, KC_ENT):
         case LSFT_T(ML_BASE):
+        case LALT_T(ML_BASE):
             // Hold
             return true;
         default:
