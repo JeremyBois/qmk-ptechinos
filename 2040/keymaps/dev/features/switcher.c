@@ -2,6 +2,7 @@
 #include "action_tapping.h"
 #include "action_util.h"
 
+#include "quantum.h"
 #include "switcher.h"
 
 __attribute__((weak)) bool is_oneshot_mod_key(uint16_t keycode) {
@@ -171,11 +172,17 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
     return true;
 }
 
-bool update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
+bool update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t* record, layer_state_t* layer_memory) {
     if (keycode == trigger) {
         if (record->event.pressed) {
-            // Trigger keydown
-            layer_move(layer);
+            if (!layer_state_is(layer))
+            {
+                // Keep track of previous stack
+                *layer_memory = layer_state;
+
+                // Trigger keydown
+                layer_move(layer);
+            }
             *state = os_down_unused;
             return false;
         } else {
@@ -183,12 +190,16 @@ bool update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
             switch (*state) {
                 case os_down_unused:
                     // If we didn't use the layer while trigger was held, queue it.
+                    layer_move(layer);
                     *state = os_up_queued;
                     return false;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.
                     *state = os_up_unqueued;
-                    layer_off(layer);
+
+                    // Revert to previous state forcing switcher layer off
+                    layer_state_set((*layer_memory) & ~((layer_state_t)1 << layer));
+
                     return false;
                 default:
                     break;
@@ -229,25 +240,16 @@ bool update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
             }
         }
     }
+
     return true;
 }
 
 bool update_active_hold_layer(switcher_state* state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
     if (keycode == trigger) {
         if (record->event.pressed) {
-            // Maybe better to use IS_LAYER_ON(layer) to be sure ??
-            if (*state == os_up_queued || *state == os_up_queued_used) {
-                // Deactivate if active
-                layer_off(layer);
-                *state = os_up_unqueued;
-            } else {
-                // Activate if inactive
-                if (*state == os_up_unqueued) {
-                    layer_on(layer);
-                }
-                *state = os_down_unused;
-            }
-
+            // Trigger keydown
+            layer_on(layer);
+            *state = os_down_unused;
             return false;
         } else {
             // Trigger keyup
@@ -294,6 +296,21 @@ bool update_active_hold_layer(switcher_state* state, uint16_t layer, uint16_t tr
                 }
             }
         }
+        else {
+           // Handle special case where a upper layer is active while this one is also active
+           // but with lower precedence
+           // Ex: Move to NAV (upper layer) then hold NUM (lower layer) and pressing another key
+           if (record->event.pressed) {
+               switch (*state) {
+                   case os_down_unused:
+                       // Force deactivation
+                       *state = os_down_used;
+                       break;
+                   default:
+                       break;
+               }
+           }
+       }
     }
     return true;
 }

@@ -2,6 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #include "action.h"
+#include "action_layer.h"
 
 //
 // Based on works from callum-oakley and daliusd
@@ -34,7 +35,7 @@ bool update_oneshot_layer(switcher_state *state, uint16_t layer, uint16_t trigge
 // If the trigger is held down then the @layer layer is activated (layer_move).
 //    - If the trigger is released before any other key then @layer activation is persistent
 //    - If the trigger is still held while another key is pressed then @layer remains active until the trigger key is released (layer_off)
-bool update_move_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
+bool update_move_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record, layer_state_t* layer_memory);
 
 // Same as update_move_hold_layer but using layer_on not layer_move
 bool update_active_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);

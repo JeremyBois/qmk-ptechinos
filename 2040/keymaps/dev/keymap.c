@@ -554,6 +554,7 @@ bool swapper_ctab_active = false;
 switcher_state switcher_sym_state = os_up_unqueued;
 switcher_state switcher_num_state = os_up_unqueued;
 switcher_state switcher_nav_state = os_up_unqueued;
+layer_state_t switcher_layer_backup = 0;
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
@@ -630,8 +631,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     // Custom layer change (no timer)
     update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
-    update_move_hold_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record);
-    update_move_hold_layer(&switcher_nav_state, L_NAV, SWITCH_NAV, keycode, record);
+    update_move_hold_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record, &switcher_layer_backup);
+    update_move_hold_layer(&switcher_nav_state, L_NAV, SWITCH_NAV, keycode, record, &switcher_layer_backup);
 
     // Custom keycodes
     bool let_qmk_handle_it = true;
