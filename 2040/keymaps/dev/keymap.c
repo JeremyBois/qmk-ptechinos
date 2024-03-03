@@ -418,15 +418,14 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                
                                                                      _______, _______, _______,   _______, _______, _______
     ),
     /*
-     * GREEK (Qwerty based position (letter pronunciation then shape))
-     * @TODO (match based layout)
+     * GREEK (Base on base layer letter positions, letter pronunciation then shape)
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |  Ω ω |  Ε ε |  Ρ ρ | Τ τ  |                    |  Ψ ψ |  Υ υ |  Ι ι |  Ο ο |       |
+     *        |  Θ θ  |  Λ λ |  Δ δ |  Ψ ψ |  Β β |                    |  Ζ ζ |  Φ φ |  Ο ο |  Υ υ |       |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * |      |  Α α  |  Σ σ |  Δ δ |  Φ φ | Γ γ  |                    |  Η η |      |  Κ κ |  Λ λ |  Π π  |       |
+     * |      |  Ν ν  |  Ρ ρ |  Τ τ |  Σ σ |  Γ γ |                    |  Κ κ |  Μ μ |  Ε ε |  Α α |  Ι ι  |       |
      * |      | Shift |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |  Ζ ζ  |  Ξ ξ |  Χ χ |      | Β β  |-------|    |-------|  Ν ν |  Μ μ |      |      | Θ θ   |
+     *        |  Ξ ξ  |  Ω ω |  Π π |  Χ χ |      |-------|    |-------|      |  Η η |      |      |       |
      *        |       |      |      |      |      |       |    |       |      |      |      |      |       |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -434,10 +433,10 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                
      *                       `--------'--------'------'            '------'--------'--------'
      */
       [L_GREEK] = LAYOUT(
-          UP(GQ, S_GQ), UP(GW, S_GW), UP(GE, S_GE), UP(GR, S_GR), UP(GT, S_GT),                     UP(GY, S_GY), UP(GU, S_GU), UP(GI, S_GI), UP(GO, S_GO), _______,
- XXXXXXX, LSFT_T(C_GA), UP(GS, S_GS), UP(GD, S_GD), UP(GF, S_GF), UP(GG, S_GG),                     UP(GH, S_GH), XXXXXXX, UP(GK, S_GK), UP(GL, S_GL), RSFT_T(C_GP), XXXXXXX,
-       UP(GZ, S_GZ), UP(GX, S_GX), UP(GC, S_GC), XXXXXXX, UP(GB, S_GB), _______,   _______, UP(GN, S_GN), UP(GM, S_GM),  XXXXXXX, XXXXXXX, UP(GQ, S_GQ),
-                                                      _______, _______, _______,   _______, _______, _______
+          UP(GQ, S_GQ), UP(GL, S_GL), UP(GD, S_GD), UP(GY, S_GY), UP(GB, S_GB),                     UP(GZ, S_GZ), UP(GF, S_GF), UP(GO, S_GO), UP(GU, S_GU), XXXXXXX,
+ XXXXXXX, LSFT_T(C_GN), UP(GR, S_GR), UP(GT, S_GT), UP(GS, S_GS), UP(GG, S_GG),                     UP(GK, S_GK), UP(GM, S_GM), UP(GE, S_GE), UP(GA, S_GA), RSFT_T(C_GI), XXXXXXX,
+               UP(GX, S_GX), UP(GW, S_GW), UP(GP, S_GP), UP(GC, S_GC), XXXXXXX, _______,   _______, XXXXXXX, UP(GH, S_GH),  XXXXXXX, XXXXXXX, XXXXXXX,
+                                                              _______, _______, _______,   _______, _______, _______
     ),
     /* ADJUST
      *         ,-----------------------------------.                    ,------------------------------------.
@@ -755,17 +754,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
-        case LSFT_T(C_GP):
-        case RSFT_T(C_GP):
+        case LSFT_T(C_GI):
+        case RSFT_T(C_GI):
             if (record->tap.count && record->event.pressed) {
-                process_unicodemap(UP(GP, S_GP), record);
+                process_unicodemap(UP(GI, S_GI), record);
                 let_qmk_handle_it = false;
             }
             break;
-        case LSFT_T(C_GA):
-        case RSFT_T(C_GA):
+        case LSFT_T(C_GN):
+        case RSFT_T(C_GN):
             if (record->tap.count && record->event.pressed) {
-                process_unicodemap(UP(GA, S_GA), record);
+                process_unicodemap(UP(GN, S_GN), record);
                 let_qmk_handle_it = false;
             }
             break;

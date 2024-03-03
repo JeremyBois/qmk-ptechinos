@@ -37,8 +37,8 @@ enum custom_keycodes {
     C_V,
     C_LDESK,
     C_RDESK,
-    C_GA,
-    C_GP,
+    C_GN,
+    C_GI,
     // Diacritics
     C_A_GRV,
     C_E_GRV,
