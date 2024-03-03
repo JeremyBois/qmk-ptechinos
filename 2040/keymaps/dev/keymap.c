@@ -337,7 +337,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       #endif
     /* NUM
      * F11 F12 → both side to be used with one hand or both while debugging
-     * 0 1 2 3 → home row (more used number, Benford's law)
+     * 1 2 3 0 → home row (more used number, Benford's law)
      * , .     → home row to be used with numbers
      * £ €     → Generic currencies on the same layer
      *        ,------------------------------------.                    ,-----------------------------------.
@@ -355,7 +355,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [L_NUM] = LAYOUT(
                      XXXXXXX,  KC_F9, KC_F8, KC_F7, KC_F11,                     KC_F11, KC_7, KC_8, KC_9, XXXXXXX,
-   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_DOT, KC_0,  KC_1,  KC_2, RSFT_T(KC_3), XXXXXXX,
+   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_DOT, KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
      RALT_T(C_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
                                           _______, _______, _______,   _______, _______, _______
     ),
