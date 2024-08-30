@@ -18,6 +18,7 @@
 // https://qmk.github.io/qmk_mkdocs/master/en/serial_driver/#usart-half-duplex
 // Force the usage of PIO1 peripheral as TX (RP2040)
 #define SERIAL_PIO_USE_PIO1
+// @TODO(Jeremy) DATA DRIVEN --> See keyboard.json
 
 // ┌─────────────────────────────────────────────────┐
 // │ Bootloader                                      │
@@ -66,6 +67,7 @@
 // Limits the frequency that the sensor is polled for motion
 #    define POINTING_DEVICE_TASK_THROTTLE_MS 10
 #endif
+
 // ┌─────────────────────────────────────────────────┐
 // │ PWM3360 Trackball                               │
 // └─────────────────────────────────────────────────┘
