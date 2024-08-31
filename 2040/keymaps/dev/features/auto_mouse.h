@@ -27,11 +27,11 @@ typedef struct {
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_TIMEOUT
-#    define PTECHINOS_AUTO_MOUSE_TIMEOUT 600 // Layer activation timeout if unused
+#    define PTECHINOS_AUTO_MOUSE_TIMEOUT 700 // Layer activation timeout if unused
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_KEY_DELAY
-#    define PTECHINOS_AUTO_MOUSE_KEY_DELAY ((int)(TAPPING_TERM * 1.5)) // Time delay after a non mouse key press / release
+#    define PTECHINOS_AUTO_MOUSE_KEY_DELAY ((int)(TAPPING_TERM * 1.75)) // Time delay after a non mouse key press / release
 #endif
 
 #ifndef PTECHINOS_AUTO_MOUSE_DEBOUNCE

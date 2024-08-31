@@ -79,6 +79,8 @@ void auto_mouse_set_active(void) {
     auto_mouse_debug("set_active");
 
     auto_mouse_context.active_timer = timer_read();
+    auto_mouse_context.mouse_key_tracker = 0;
+
     if (!layer_state_is(auto_mouse_context.config.layer)) {
         layer_on(auto_mouse_context.config.layer);
         auto_mouse_on_layer_active(&auto_mouse_context);
@@ -93,7 +95,7 @@ void auto_mouse_set_inactive(void) {
 
     auto_mouse_debug("set_inactive");
 
-    auto_mouse_context.active_timer      = 0.0;
+    auto_mouse_context.active_timer      = auto_mouse_context.config.timeout+1;
     auto_mouse_context.mouse_key_tracker = 0;
 
     if (layer_state_is(auto_mouse_context.config.layer)) {

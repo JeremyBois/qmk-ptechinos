@@ -187,7 +187,7 @@ static void ptechinos_pointing_device_set_cpi(pointer_config_t* config, pointer_
             if (config->is_dragscroll_left_enabled) {
                 ptechinos_pointing_device_set_cpi_internal(true, PTECHINOS_DRAGSCROLL_LEFT);
             } else {
-                uint16_t cpi = ptechinos_get_pointer_mousing_cpi(side);
+                uint16_t cpi = ptechinos_get_pointer_mousing_cpi(PTECHINOS_LEFT);
                 ptechinos_pointing_device_set_cpi_internal(true, cpi);
             }
             break;
@@ -195,7 +195,7 @@ static void ptechinos_pointing_device_set_cpi(pointer_config_t* config, pointer_
             if (config->is_dragscroll_right_enabled) {
                 ptechinos_pointing_device_set_cpi_internal(false, PTECHINOS_DRAGSCROLL_RIGHT);
             } else {
-                uint16_t cpi = ptechinos_get_pointer_mousing_cpi(side);
+                uint16_t cpi = ptechinos_get_pointer_mousing_cpi(PTECHINOS_RIGHT);
                 ptechinos_pointing_device_set_cpi_internal(false, cpi);
             }
             break;

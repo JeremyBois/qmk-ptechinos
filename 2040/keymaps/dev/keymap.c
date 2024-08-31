@@ -969,9 +969,9 @@ report_mouse_t pointing_device_task_user(report_mouse_t report) {
 
 void auto_mouse_on_layer_inactive(auto_mouse_data_t* context) {
     // Switch to mousing mode
-    // if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
-    ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
-    // }
+    if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
+      ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
+    }
     if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_LEFT)) {
         ptechinos_set_pointer_as_mousing(PTECHINOS_LEFT);
     }
