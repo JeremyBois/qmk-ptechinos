@@ -485,9 +485,10 @@ void matrix_init_kb(void) {
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
+    bool let_qmk_handle_it = true;
     if (!process_record_user(keycode, record)) {
         // ptechinos_print_config_to_console("process_record_user", &g_ptechinos_pointer_config);
-        return false;
+        let_qmk_handle_it = false;
     }
 
     // Pointer specific code
@@ -507,14 +508,11 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
                     ptechinos_set_pointer_mousing_cpi(PTECHINOS_LEFT, false);
                 }
             }
+            let_qmk_handle_it = false;
             break;
         case PL_DS_TOOGLE:
             // Simulate dragscroll on hold (pressed / released)
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_LEFT);
-            // if (record->event.pressed) {
-            //     // Toogle between drag and mouse mode
-            //     ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_LEFT);
-            // }
             break;
         case PR_CPI_UP:
             if (record->event.pressed) {
@@ -523,6 +521,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
                     ptechinos_set_pointer_mousing_cpi(PTECHINOS_RIGHT, true);
                 }
             }
+            let_qmk_handle_it = false;
             break;
         case PR_CPI_DOWN:
             if (record->event.pressed) {
@@ -531,19 +530,17 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
                     ptechinos_set_pointer_mousing_cpi(PTECHINOS_RIGHT, false);
                 }
             }
+            let_qmk_handle_it = false;
             break;
         case PR_DS_TOOGLE:
             // Simulate dragscroll on hold (pressed / released)
             ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
-            // if (record->event.pressed) {
-            //     // Toogle between drag and mouse mode
-            //     ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
-            // }
+            let_qmk_handle_it = false;
             break;
     }
     // ptechinos_print_config_to_console("process_record_kb", &g_ptechinos_pointer_config);
 
-    return true;
+    return let_qmk_handle_it;
 }
 
 #endif

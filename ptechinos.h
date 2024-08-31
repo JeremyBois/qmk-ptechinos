@@ -7,8 +7,10 @@
 // #define SPLIT_POINTING_ENABLE
 // #define POINTING_DEVICE_COMBINED
 // #endif
+// // Only for LSP (must be removed)
 
 #include "quantum_keycodes.h"
+
 #if defined(KEYBOARD_ptechinos_2040)
 #    include "2040.h"
 #elif defined(KEYBOARD_ptechinos_promicro)

@@ -14,7 +14,6 @@
 #include "g/keymap_combo.h"
 
 #include "features/encoder.h"
-#include "features/utility.h"
 #include "features/swapper.h"
 #include "features/switcher.h"
 #include "features/auto_mouse.h"
@@ -218,13 +217,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * v2(graphite) https://cyanophage.github.io/playground.html?layout=%5Cldwbyfou%5C%5Cnrtsgkmeai%2Fxqpcvjh%2C.z
      * v3(custom) https://cyanophage.github.io/playground.html?layout=qldybzfouj%5Cnrtsgkmeai%2Fxwpcv%5Ch%2C.%5C
      * v4(custom) https://cyanophage.github.io/playground.html?layout=qldybzfouj\nrtsgkmeai%2Fxwpcv%27h%2C.%3B
+     * v5(custom) https://cyanophage.github.io/playground.html?layout=qldwbyfou%2F%3Bnrtsgkmeai%27xjpcvzh%2C.-
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |   Q   |   L  |   D  |   Y  |   B  |                    |   Z  |   F  |   O  |   U  |   J   |
+     *        |   Q   |   L  |   D  |   W  |   B  |                    |   Y  |   F  |   O  |   U  |   Y   |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |   N   |   R  |   T  |   S  |   G  |                    |   K  |   M  |   E  |   A  |   I   |       |
      * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   X   |   W  |   P  |   C  |   V  |-------|    |-------|      |   H  |   ,  |   .  |       |
+     *        |   X   |   J  |   P  |   C  |   V  |-------|    |-------|   Z  |   H  |   ,  |   .  |       |
      *        | RALT  | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
@@ -232,9 +232,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_BASE] = LAYOUT(
-                     KC_Q, KC_L, KC_D, KC_Y, KC_B,                      KC_Z, KC_F, KC_O, KC_U, KC_J,
+                     KC_Q, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_Y,
     XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-     RALT_T(KC_X), LALT_T(KC_W), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, XXXXXXX, KC_H, KC_COMMA, LALT_T(KC_DOT), KC_RIGHT_ALT,
+     RALT_T(KC_X), LALT_T(KC_J), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_Z, KC_H, KC_COMMA, LALT_T(KC_DOT), KC_RIGHT_ALT,
                     SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LALT_T(ML_BASE)
     ),
     /*
@@ -420,12 +420,12 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                
     /*
      * GREEK (Base on base layer letter positions, letter pronunciation then shape)
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |  Θ θ  |  Λ λ |  Δ δ |  Ψ ψ |  Β β |                    |  Ζ ζ |  Φ φ |  Ο ο |  Υ υ |       |
+     *        |  Θ θ  |  Λ λ |  Δ δ |  Ω ω |  Β β |                    |  Ψ ψ |  Φ φ |  Ο ο |  Υ υ | Ψ ψ   |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |  Ν ν  |  Ρ ρ |  Τ τ |  Σ σ |  Γ γ |                    |  Κ κ |  Μ μ |  Ε ε |  Α α |  Ι ι  |       |
      * |      | Shift |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |  Ξ ξ  |  Ω ω |  Π π |  Χ χ |      |-------|    |-------|      |  Η η |      |      |       |
+     *        |  Ξ ξ  |  Θ θ |  Π π |  Χ χ |      |-------|    |-------|  Ζ ζ |  Η η |      |      |       |
      *        |       |      |      |      |      |       |    |       |      |      |      |      |       |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -433,9 +433,9 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                
      *                       `--------'--------'------'            '------'--------'--------'
      */
       [L_GREEK] = LAYOUT(
-          UP(GQ, S_GQ), UP(GL, S_GL), UP(GD, S_GD), UP(GY, S_GY), UP(GB, S_GB),                     UP(GZ, S_GZ), UP(GF, S_GF), UP(GO, S_GO), UP(GU, S_GU), XXXXXXX,
+          UP(GQ, S_GQ), UP(GL, S_GL), UP(GD, S_GD), UP(GW, S_GW), UP(GB, S_GB),                     UP(GY, S_GY), UP(GF, S_GF), UP(GO, S_GO), UP(GU, S_GU), UP(GY, S_GY),
  XXXXXXX, LSFT_T(C_GN), UP(GR, S_GR), UP(GT, S_GT), UP(GS, S_GS), UP(GG, S_GG),                     UP(GK, S_GK), UP(GM, S_GM), UP(GE, S_GE), UP(GA, S_GA), RSFT_T(C_GI), XXXXXXX,
-               UP(GX, S_GX), UP(GW, S_GW), UP(GP, S_GP), UP(GC, S_GC), XXXXXXX, _______,   _______, XXXXXXX, UP(GH, S_GH),  XXXXXXX, XXXXXXX, XXXXXXX,
+               UP(GX, S_GX), UP(GQ, S_GQ), UP(GP, S_GP), UP(GC, S_GC), XXXXXXX, _______,   _______, UP(GZ, S_GZ), UP(GH, S_GH),  XXXXXXX, XXXXXXX, XXXXXXX,
                                                               _______, _______, _______,   _______, _______, _______
     ),
     /* ADJUST

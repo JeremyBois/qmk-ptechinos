@@ -2,6 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #include "quantum_keycodes.h"
+#include "features/utility.h"
 
 //
 // ┌─────────────────────────────────────────────────┐
