@@ -343,10 +343,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |       |  F9  |  F8  |  F7  |  F11  |                    |  F11 |   7  |   8  |   9  |       |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |      |   F10 |  F3  |  F2  |  F1  |   ,   |                    |   .  |   1  |   2  |   3  |   0   |      |
+     * |      |   F10 |  F3  |  F2  |  F1  |   ,   |                    |   6  |   1  |   2  |   3  |   0   |      |
      * |      | SHIFT |      |      |      |       |-------.    ,-------|      |      |      |      | SHIFT |      |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
-     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |   4  |   5  |   6  |   €   |
+     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |   4  |   5  |   .  |   €   |
      *        | RALT  | LALT |      |      |       |       |    |       |      |      |      | LALT |  RALT |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
@@ -355,8 +355,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [L_NUM] = LAYOUT(
                      XXXXXXX,  KC_F9, KC_F8, KC_F7, KC_F11,                     KC_F11, KC_7, KC_8, KC_9, XXXXXXX,
-   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_DOT, KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
-     RALT_T(C_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
+   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_6, KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
+     RALT_T(C_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_DOT), RALT_T(C_EURO),
                                           _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
