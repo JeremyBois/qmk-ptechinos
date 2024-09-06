@@ -377,12 +377,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      *
      *        ,------------------------------------.                    ,------------------------------------.
-     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |   %   |   &  |   *  |   $  |  MATH |
+     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |       |   &  |   *  |   $  |  MATH |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
-     * |      |   ^…  |  `…  |  _   |  é   |   /   |                    |   \   |   è  |   '  |   !  |   ?   |      |
+     * |      |   ^…  |  `…  |  - _ |  é   |   /   |                    |   \   |   è  |  ' " |   !  |   ?   |      |
      * |      | SHIFT |      |      |      |       |-------.    ,-------|       |      |      |      | SHIFT |      |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |   |   |  + ÷ |  -   |  = × |  "…   |-------|    |-------|  '…   |   ç  |   "  |   @  | RShift|
+     *        |       |   |  |  + ÷ |  = × |  "…   |-------|    |-------|  '…   |   ç  |   %  |   @  | RShift|
      *        |       |      |      |      |       |       |    |       |       |      |      |      |       |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF    |
@@ -391,9 +391,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
     [L_SYM] = LAYOUT(
-                  TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     KC_PERC, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
-XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
-                     KC_PIPE, KC_PLUS, KC_MINS, KC_EQL, KC_DQUO, _______,   _______, KC_QUOT, KCU_C_CEDILLA, C_DQUOT, KC_AT, KC_RSFT,
+                  TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     XXXXXXX, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
+XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_MINS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
+                     XXXXXXX, KC_PIPE, KC_PLUS, KC_EQL, KC_DQUO, _______,   _______, KC_QUOT, KCU_C_CEDILLA, KC_PERC, KC_AT, KC_RSFT,
                                                _______, _______, _______,   _______, _______, _______
     ),
      /*
@@ -851,8 +851,6 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_DEL:
         case KC_UNDS:
         case KC_MINS:
-        case LSFT_T(KC_CIRC):
-        case RSFT_T(KC_CIRC):
         case KC_CIRC:
             return true;
 
@@ -862,6 +860,11 @@ bool caps_word_press_user(uint16_t keycode) {
         case SWITCH_SYM:
         case SWITCH_NAV:
             return true;
+
+        // Mod taps event are passed as modifier keycode only to user
+        case KC_LSFT:
+        case KC_RSFT:
+          return true;
 
         default:
             return false; // Deactivate Caps Word.
