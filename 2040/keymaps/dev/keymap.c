@@ -218,66 +218,66 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * v2(graphite) https://cyanophage.github.io/playground.html?layout=%5Cldwbyfou%5C%5Cnrtsgkmeai%2Fxqpcvjh%2C.z
      * v3(custom) https://cyanophage.github.io/playground.html?layout=qldybzfouj%5Cnrtsgkmeai%2Fxwpcv%5Ch%2C.%5C
      * v4(custom) https://cyanophage.github.io/playground.html?layout=qldybzfouj\nrtsgkmeai%2Fxwpcv%27h%2C.%3B
-     * v5(custom) https://cyanophage.github.io/playground.html?layout=qldwbyfou%2F%3Bnrtsgkmeai%27xjpcvzh%2C.-
+     * v5(custom) https://cyanophage.github.io/playground.html?layout=qldwbyfou%252F%253Bnrtsgkmeai-xjpcvzh%252C.'
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |   Q   |   L  |   D  |   W  |   B  |                    |   Y  |   F  |   O  |   U  |   Y   |
+     *        |   Q   |   L  |   D  |   W  |   B  |                    |   Y  |   F  |   O  |   U  | RShift|
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |   N   |   R  |   T  |   S  |   G  |                    |   K  |   M  |   E  |   A  |   I   |       |
-     * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
+     * |      | LShift|      |      |      |      |-------.    ,-------|      |      |      |      | RShift|       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   X   |   J  |   P  |   C  |   V  |-------|    |-------|   Z  |   H  |   ,  |   .  |       |
-     *        | RALT  | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        |   X   |   J  |   P  |   C  |   V  |-------|    |-------|   Z  |   H  |   ,  |   .  | Repeat|
+     *        | RAlt  | LAlt |      |      |      |       |    |       |      |      |      | LAlt | RAlt  |
      *        `-----------------------------------/       /     \       \----------------------------------'
-     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
-     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl |  LAlt |
+     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter | DEF   |
+     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl | LShift|
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_BASE] = LAYOUT(
-                     KC_Q, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_Y,
-    XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-     RALT_T(KC_X), LALT_T(KC_J), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_Z, KC_H, KC_COMMA, LALT_T(KC_DOT), KC_RIGHT_ALT,
-                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LALT_T(ML_BASE)
+                     KC_Q, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_RSFT,
+            XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,              KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
+     RALT_T(KC_X), LALT_T(KC_J), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_Z, KC_H, KC_COMMA, LALT_T(KC_DOT), RALT_T(QK_REP),
+                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LSFT_T(ML_BASE)
     ),
     /*
      * QWERTY
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |       |
+     *        |       |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  | RShift|
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |   A   |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   P   |       |
-     * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
+     * |      |       |      |      |      |      |-------.    ,-------|      |      |      |      |       |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   Q   |
-     *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
+     *        |  RAlt | LAlt |      |      |      |       |    |       |      |      |      | LAlt | RAlt  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
+     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter | DEF    |
      *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_QWERTY] = LAYOUT(
                   XXXXXXX, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, _______,
-    XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
+            XXXXXXX, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,               KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_P), XXXXXXX,
      RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_V, KC_B, _______,     _______, KC_N, KC_M,  KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
                                  _______, _______, _______,     _______, _______, _______
     ),
     /*
      * COLEMAK-DH
      * https://colemakmods.github.io/
-     *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |       |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |       |
-     * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * |      |   A   |   R  |   S  |   T  |   G  |                    |   M  |   N  |   E  |   I  |   O   |       |
-     * |      | SHIFT |      |      |      |      |-------.    ,-------|      |      |      |      | SHIFT |       |
-     * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   Z   |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   Q   |
-     *        |  RALT | LALT |      |      |      |       |    |       |      |      |      | LALT | RALT  |
-     *        `-----------------------------------/       /     \       \----------------------------------'
-     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DEF  |
-     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl | LShift|
-     *                       `--------'--------'-------'           '-------'--------'-------'
+     *        ,-----------------------------------.                    ,------------------------------------.
+     *        |       |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U   |   Y  | RShift|
+     * ,------+-------+------+------+------+------|                    |------+------+-------+------+-------+-------.
+     * |      |   A   |   R  |   S  |   T  |   G  |                    |   M  |   N  |   E   |   I  |   O   |       |
+     * |      |       |      |      |      |      |-------.    ,-------|      |      |       |      |       |       |
+     * `------+-------+------+------+------+------|       |    |       |------+------+-------+------+-------+-------'
+     *        |   Z   |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,   |   .  |   Q   |
+     *        |  RAlt | LAlt |      |      |      |       |    |       |      |      |       | LAlt | RAlt  |
+     *        `-----------------------------------/       /     \       \-----------------------------------'
+     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter | DEF    |
+     *                       |   NAV  | LCtrl  |/  NUM  /         \ SYM   \|  RCtrl | LShift |
+     *                       `--------'--------'-------'           '-------'--------'--------'
      */
     [L_COLEMAK_DH] = LAYOUT(
                   XXXXXXX, KC_W, KC_F, KC_P, KC_B,                      KC_J, KC_L, KC_U, KC_Y, _______,
-    XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,                      KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
+            XXXXXXX, LSFT_T(KC_A), KC_R, KC_S, KC_T, KC_G,              KC_M, KC_N, KC_E, KC_I, RSFT_T(KC_O), XXXXXXX,
      RALT_T(KC_Z), LALT_T(KC_X), KC_C, KC_D, KC_V, _______,    _______, KC_K, KC_H, KC_COMM, LALT_T(KC_DOT), RALT_T(KC_Q),
                                  _______, _______, _______,    _______, _______, _______
     ),
@@ -291,33 +291,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        |       | WH_L | WH_U | WH_R  | PgUp |                    |Clip_H| Home |  Up  | End  |       |
      * ,------+-------+------+------+-------+------|                    |------+------+------+------+-------+-------.
      * |      | ATab  | MB2  | WH_D |  MB1  | PgDo |                    |  MB4 | Left | Down | Right|  MB5  |       |
-     * |      | SHIFT |      |      |       |      |-------.    ,-------|      |      |      |      | SHIFT |       |
+     * |      | LShift|      |      |       |      |-------.    ,-------|      |      |      |      | RShift|       |
      * `------+-------+------+------+------ +------|       |    |       |------+------+------+------+-------+-------'
-     *        | CTab  | LDesk|Center| RDesk | PSCR |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
-     *        | RALT  | LALT |      |       |      |       |    |       |      |      |      | LALT | RALT  |
+     *        |       | LDesk|Center| RDesk | PSCR |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
+     *        | RAlt  | LAlt |      |       |      |       |    |       |      |      |      | LAlt | RAlt  |
      *        `------------------------------------/      /      \      \-----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
+     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | DEF    |
      *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl | LShift |
      *                      `---------'--------'-------'            '------'--------'--------'
      */
     [L_NAV] = LAYOUT(
                      XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, KC_PGUP,                      S_CLIP_HISTORY, KC_HOME, KC_UP, KC_END, _______,
     XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,                      KC_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, RSFT_T(KC_BTN5), XXXXXXX,
-    RALT_T(SW_CTAB), LALT_T(C_LDESK), S_CENTER, C_RDESK, KC_PSCR, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
+    KC_RALT, LALT_T(C_LDESK), S_CENTER, C_RDESK, KC_PSCR, _______,    _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
                                                 _______, _______, _______,    _______, _______, _______
     ),
     /*
      * MOUSE
-     *         ,-----------------------------------.                    ,-----------------------------------.
-     *         |      |  MB4 |  MB3 |  MB5  |RCPI_U|                    | LCPI_U|  MB5 |  MB3 |  MB4 |      |
-     * ,-------|------+------+------+-------+------+                    |-------+------+------+------+------------.
-     * |       | ATab |  MB2 |RScrol|  MB1  |RCPI_D|                    | LCPI_D|  MB1 | LScro|  MB2 | ATab |     |
-     * |       | SHIFT|      |      |       |      |-------.    ,-------|       |      |      |      | SHIFT|     |
-     * `-------+------+------+------+-------+------|       |    |       |-------+------+------+------+------------'
-     *         | Cut  | Paste| Copy | Undo  | Redo |-------|    |-------|  Redo | Undo | Copy | Paste| Cut  |
-     *         | RALT | LALT |      |       |      |       |    |       |       |      |      | LALT | RALT |
-     *         `-----------------------------------/      /      \      \-----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter |  DEF   |
+     *         ,-----------------------------------.                    ,------------------------------------.
+     *         |      |  MB4 |  MB3 |  MB5  |RCPI_U|                    | LCPI_U|  MB5 |  MB3 |  MB4 |       |
+     * ,-------|------+------+------+-------+------+                    |-------+------+------+------+--------------.
+     * |       | ATab |  MB2 |RScrol|  MB1  |RCPI_D|                    | LCPI_D|  MB1 | LScro|  MB2 | ATab  |      |
+     * |       | Shift|      |      |       |      |-------.    ,-------|       |      |      |      | RShift|      |
+     * `-------+------+------+------+-------+------|       |    |       |-------+------+------+------+--------------'
+     *         | Cut  | Paste| Copy | Undo  | Redo |-------|    |-------|  Redo | Undo | Copy | Paste| Cut   |
+     *         | RAlt | LAlt |      |       |      |       |    |       |       |      |      | LAlt | RAlt  |
+     *         `-----------------------------------/      /      \      \------------------------------------'
+     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | DEF    |
      *                      |   NAV   | LCtrl  |/  NUM  /          \ SYM  \|  RCtrl | LShift |
      *                      `---------'--------'-------'            '------'--------'--------'
      */
@@ -337,53 +337,56 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
       #endif
     /* NUM
-     * F11 F12 → both side to be used with one hand or both while debugging
+     * F11 F12 → both side to be used with both`or one hand (useful when debugging)
      * 1 2 3 0 → home row (more used number, Benford's law)
      * , .     → home row to be used with numbers
      * £ €     → Generic currencies on the same layer
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |       |  F9  |  F8  |  F7  |  F11  |                    |  F11 |   7  |   8  |   9  |       |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |      |   F10 |  F3  |  F2  |  F1  |   ,   |                    |   6  |   1  |   2  |   3  |   0   |      |
-     * |      | SHIFT |      |      |      |       |-------.    ,-------|      |      |      |      | SHIFT |      |
+     * |      |   F10 |  F3  |  F2  |  F1  |   ,   |                    |   .  |   1  |   2  |   3  |   0   |      |
+     * |      | LShift|      |      |      |       |-------.    ,-------|      |      |      |      | RShift|      |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
-     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |   4  |   5  |   .  |   €   |
-     *        | RALT  | LALT |      |      |       |       |    |       |      |      |      | LALT |  RALT |
+     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |   4  |   5  |   6  |   €   |
+     *        | RAlt  | LAlt |      |      |       |       |    |       |      |      |      | LAlt |  RAlt |
      *        `------------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
-     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  RCTRL | LShift |
+     *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter | DEF    |
+     *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `---------'--------'------'            '------'--------'--------'
      */
     [L_NUM] = LAYOUT(
                      XXXXXXX,  KC_F9, KC_F8, KC_F7, KC_F11,                     KC_F11, KC_7, KC_8, KC_9, XXXXXXX,
-   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_6, KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
-     RALT_T(C_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_DOT), RALT_T(C_EURO),
+   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_DOT, KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
+     RALT_T(C_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
                                           _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
-     * _        → easier left spot due to its high frequency with letters
+     * _        → easier left spot due to its high frequency (avoid redirection if place on the right side)
      * ^… `…    → left → easy to combine with vowels on the right
-     * | + - =  → left → number layer right and easy rollin += -= |= and easy repeat for ++ -- ==
-     * / \      → facing each other on each side
+     * '… "…    → right → less used diacritics
+     * | + - =  → left → number layer right and easy rollin += -= |= and easy repeat for ++ -- == ||
+     * _        → Split - and _ for quicker access of both
+     * / \      → facing each other on each side (/\ memonic)
      * : # ;    → left → easy to reach and repeat (markdown ##, cpp ::, ocaml ;;)
-     * `        → left → not used a lot but when repeat a lot when used (markdown ``` or ``)
+     * `        → left → not used a lot but could be repeat a lot when used (markdown ``` or ``)
      * @        → right due to moderate use
-     * ç        → right due to moderate use (should not be under `a` to reduce sfb)
-     * ! ?      → right due to moderate use and !!
+     * ç        → right due to moderate use (should not be under `a` to reduce sfb with french "ça")
+     * ! ?      → right due to moderate use
      * '        → right to make l' d' s' bigram easier (l, d and s on the left)
      * é è      → easy to type common french accented letter (follow /\ orientation for memonic)
+     * à        → easy to type common french accented letter (rollin with space, the next more probable)
      * & *      → not that frequent (except for cpp) and not repeated
      * $ %      → Less common but still useful
      *          → Move to advanced layers (MATH and GREEK)
      *
      *
      *        ,------------------------------------.                    ,------------------------------------.
-     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |       |   &  |   *  |   $  |  MATH |
+     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |   %   |   &  |   *  |   $  |  MATH |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
-     * |      |   ^…  |  `…  |  - _ |  é   |   /   |                    |   \   |   è  |  ' " |   !  |   ?   |      |
-     * |      | SHIFT |      |      |      |       |-------.    ,-------|       |      |      |      | SHIFT |      |
+     * |      |   ^…  |   à  |  _   |  é   |   /   |                    |   \   |   è  |  ' " |   !  |   ?   |      |
+     * |      | LShift|      |      |      |       |-------.    ,-------|       |      |      |      | RShift|      |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |       |   |  |  + ÷ |  = × |  "…   |-------|    |-------|  '…   |   ç  |   %  |   @  | RShift|
+     *        |   |   |   -  |  + ÷ |  = × |  `…   |-------|    |-------|  '…   |   ç  |   %  |   @  |  "…   |
      *        |       |      |      |      |       |       |    |       |       |      |      |      |       |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF    |
@@ -392,9 +395,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
     [L_SYM] = LAYOUT(
-                  TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     XXXXXXX, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
-XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_MINS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
-                     XXXXXXX, KC_PIPE, KC_PLUS, KC_EQL, KC_DQUO, _______,   _______, KC_QUOT, KCU_C_CEDILLA, KC_PERC, KC_AT, KC_RSFT,
+                   TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     XXXXXXX, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
+XXXXXXX, LSFT_T(KC_CIRC), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
+                     KC_PIPE, KC_MINS, KC_PLUS, KC_EQL, KC_GRV, _______,   _______, KC_QUOT, KCU_C_CEDILLA, KC_PERC, KC_AT, KC_DQUO,
                                                _______, _______, _______,   _______, _______, _______
     ),
      /*
@@ -408,7 +411,7 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_MINS, KCU_E_ACUTE, KC_SLSH,                
      *        |   ∥   |  ∑   |  ∏   |  ∀   |   ∘  |-------|    |-------|  ℕ   | ℤ   |   ℚ  |  ℝ   |  ℂ   |
      *        |       |      |      |      |      |       |    |       |      |      |      |      |       |
      *        `-----------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
+     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter | DEF    |
      *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `--------'--------'------'            '------'--------'--------'
      */
@@ -424,12 +427,12 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_MINS, KCU_E_ACUTE, KC_SLSH,                
      *        |  Θ θ  |  Λ λ |  Δ δ |  Ω ω |  Β β |                    |  Ψ ψ |  Φ φ |  Ο ο |  Υ υ | Ψ ψ   |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * |      |  Ν ν  |  Ρ ρ |  Τ τ |  Σ σ |  Γ γ |                    |  Κ κ |  Μ μ |  Ε ε |  Α α |  Ι ι  |       |
-     * |      | Shift |      |      |      |      |-------.    ,-------|      |      |      |      | Shift |       |
+     * |      | LShift|      |      |      |      |-------.    ,-------|      |      |      |      | RShift|       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |  Ξ ξ  |  Θ θ |  Π π |  Χ χ |      |-------|    |-------|  Ζ ζ |  Η η |      |      |       |
      *        |       |      |      |      |      |       |    |       |      |      |      |      |       |
      *        `-----------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |  DEF   |
+     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter | DEF    |
      *                       |   NAV  | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `--------'--------'------'            '------'--------'--------'
      */
@@ -457,7 +460,7 @@ XXXXXXX, LSFT_T(KC_CIRC), KC_GRV, KC_MINS, KCU_E_ACUTE, KC_SLSH,                
          XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,                      KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
 XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,                      KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
            RGB_MOD, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_BASE), DF(L_COLEMAK_DH), XXXXXXX, QK_DEBUG_TOGGLE,
-                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, LALT_T(ML_BASE)
+                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, ML_BASE
     )
     };
 // clang-format on
@@ -469,9 +472,9 @@ XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,                      KC_VO
 //
 /*
  *        ,-----------------------------------.                    ,----------------------------------.
- *        |-------|           ESCAPE   |      |                    |      |      LAUNCHER      |------|
- *        |-------| [«      (˘      {“ |      |                    |      |  )°     }”      ]» |------|
- * ,------+-------+ [«   +  (˘      {“ +------|                    |------+  )   +  }”  +  ]»  +------+------.
+ *        |-------|      |    ESCAPE   |      |                    |      |      LAUNCHER      |------|
+ *        |-------| [«   +  (˘      {“ |      |                    |      |  }”     )°     ]»  |------|
+ * ,------+-------+ [«   +  (˘      {“ +------|                    |------+  }”     )°     ]»  +------+------.
  * |      |       |      |     TAB            |-------.    ,-------|      |    BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+------+------+------+------+------'
  *        |       |    GUI   COMMENT   |      |-------|    |-------|      |    CAPS    GUI            |
@@ -737,6 +740,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
+        case RALT_T(C_UNDS):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(LSFT(KC_UNDS));
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RALT_T(C_QUOT):
+            if (record->tap.count && record->event.pressed) {
+                TAP_SIMPLE_QUOTE;
+                let_qmk_handle_it = false;
+            }
+            break;
         case RALT_T(C_POUND):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KCU_POUND);
@@ -758,6 +773,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LALT_T(C_LDESK):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KCU_LEFT_DESK);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RALT_T(QK_REP):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(QK_REP);
                 let_qmk_handle_it = false;
             }
             break;
@@ -915,12 +936,13 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t* record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case MT(MOD_RCTL, KC_ENT):
+        case RSFT_T(ML_BASE):
         case LSFT_T(ML_BASE):
         case LALT_T(ML_BASE):
             // Hold
             return true;
         default:
-            // Do not select the hold action when another key is tapped.
+            // Do not select the hold action until another key is tapped.
             return false;
     }
 }
@@ -986,7 +1008,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t report) {
 void auto_mouse_on_layer_inactive(auto_mouse_data_t* context) {
     // Switch to mousing mode
     if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
-      ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
+        ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
     }
     if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_LEFT)) {
         ptechinos_set_pointer_as_mousing(PTECHINOS_LEFT);

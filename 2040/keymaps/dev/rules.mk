@@ -20,6 +20,9 @@ endif
 # Unicode maps
 UNICODEMAP_ENABLE = yes
 
+# Repeat
+REPEAT_KEY_ENABLE = yes
+
 # Sources
 SRC += features/encoder.c
 SRC += features/utility.c

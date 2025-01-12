@@ -40,6 +40,8 @@ enum custom_keycodes {
     C_RDESK,
     C_GN,
     C_GI,
+    // Symbols requiring a shift
+    C_UNDS,
     // Diacritics
     C_A_GRV,
     C_E_GRV,
