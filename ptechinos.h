@@ -12,7 +12,7 @@
 #include "quantum_keycodes.h"
 
 #if defined(KEYBOARD_ptechinos_2040)
-#    include "2040.h"
+// Data driven (see keyboard.json)
 #elif defined(KEYBOARD_ptechinos_promicro)
 #    include "promicro.h"
 #else

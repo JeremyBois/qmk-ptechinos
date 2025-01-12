@@ -180,11 +180,11 @@ static void ptechinos_pointing_device_set_cpi_internal(bool left, uint16_t cpi) 
 /**
  *\brief Set the appropriate CPI on the device based on the input config.
  */
-static void ptechinos_pointing_device_set_cpi(pointer_config_t* config, pointer_side_t side) {
+static void ptechinos_pointing_device_set_cpi(pointer_side_t side) {
     ptechinos_print_config_to_console("set_cpi", &g_ptechinos_pointer_config);
     switch (side) {
         case PTECHINOS_LEFT:
-            if (config->is_dragscroll_left_enabled) {
+            if (g_ptechinos_pointer_config.is_dragscroll_left_enabled) {
                 ptechinos_pointing_device_set_cpi_internal(true, PTECHINOS_DRAGSCROLL_LEFT);
             } else {
                 uint16_t cpi = ptechinos_get_pointer_mousing_cpi(PTECHINOS_LEFT);
@@ -192,7 +192,7 @@ static void ptechinos_pointing_device_set_cpi(pointer_config_t* config, pointer_
             }
             break;
         case PTECHINOS_RIGHT:
-            if (config->is_dragscroll_right_enabled) {
+            if (g_ptechinos_pointer_config.is_dragscroll_right_enabled) {
                 ptechinos_pointing_device_set_cpi_internal(false, PTECHINOS_DRAGSCROLL_RIGHT);
             } else {
                 uint16_t cpi = ptechinos_get_pointer_mousing_cpi(PTECHINOS_RIGHT);
@@ -225,7 +225,7 @@ void ptechinos_set_pointer_as_mousing(pointer_side_t side) {
             break;
     }
     // Update device
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, side);
+    ptechinos_pointing_device_set_cpi(side);
 
     // Non persistent data --> Do nothing
 }
@@ -271,7 +271,7 @@ void ptechinos_set_pointer_mousing_cpi(pointer_side_t side, bool increase) {
             break;
     }
     // Update device
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, side);
+    ptechinos_pointing_device_set_cpi(side);
 
     // Persistent data --> update EEPROM
     ptechinos_write_config_to_eeprom(&g_ptechinos_pointer_config);
@@ -301,7 +301,7 @@ void ptechinos_set_pointer_as_dragscroll(pointer_side_t side) {
             break;
     }
     // Update device
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, side);
+    ptechinos_pointing_device_set_cpi(side);
 
     // Non persistent data --> Do nothing
 }
@@ -415,12 +415,12 @@ void pointing_device_init_kb(void) {
     // Called before keyboard_post_init_kb in keyboard_init (see QMK keyboard.c)
 #    if defined(SPLIT_POINTING_ENABLE)
 #        if defined(POINTING_DEVICE_COMBINED)
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_LEFT);
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_RIGHT);
+    ptechinos_pointing_device_set_cpi(PTECHINOS_LEFT);
+    ptechinos_pointing_device_set_cpi(PTECHINOS_RIGHT);
 #        elif defined(POINTING_DEVICE_LEFT)
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_LEFT);
+    ptechinos_pointing_device_set_cpi(PTECHINOS_LEFT);
 #        elif defined(POINTING_DEVICE_RIGHT)
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_RIGHT);
+    ptechinos_pointing_device_set_cpi(PTECHINOS_RIGHT);
 #        else
 #            error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
 #        endif
@@ -428,7 +428,7 @@ void pointing_device_init_kb(void) {
     if (!is_keyboard_master()) return;
 
     pointer_side_t side = is_keyboard_left() ? PTECHINOS_LEFT : PTECHINOS_RIGHT;
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, side);
+    ptechinos_pointing_device_set_cpi(side);
 #    endif
 
     // Already called by pointing_device_init (see QMK pointing_device.c)
@@ -468,8 +468,8 @@ void eeconfig_init_kb(void) {
     ptechinos_write_config_to_eeprom(&g_ptechinos_pointer_config);
 
     // Reset all devices even if user only use one
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_LEFT);
-    ptechinos_pointing_device_set_cpi(&g_ptechinos_pointer_config, PTECHINOS_RIGHT);
+    ptechinos_pointing_device_set_cpi(PTECHINOS_LEFT);
+    ptechinos_pointing_device_set_cpi(PTECHINOS_RIGHT);
 
     // Let user do whatever he wants
     eeconfig_init_user();
@@ -511,8 +511,11 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
             let_qmk_handle_it = false;
             break;
         case PL_DS_TOOGLE:
-            // Simulate dragscroll on hold (pressed / released)
-            ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_LEFT);
+            // Only handle hold and release
+            if (!record->event.pressed || (!record->tap.count && record->event.pressed)) {
+                // Simulate dragscroll on hold
+                ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_LEFT);
+            }
             break;
         case PR_CPI_UP:
             if (record->event.pressed) {
@@ -533,8 +536,11 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
             let_qmk_handle_it = false;
             break;
         case PR_DS_TOOGLE:
-            // Simulate dragscroll on hold (pressed / released)
-            ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
+            // Only handle hold and release
+            if (!record->event.pressed || (!record->tap.count && record->event.pressed)) {
+                // Simulate dragscroll on hold
+                ptechinos_toogle_pointer_between_mousing_dragscroll(PTECHINOS_RIGHT);
+            }
             let_qmk_handle_it = false;
             break;
     }
