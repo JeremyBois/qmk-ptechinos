@@ -64,7 +64,13 @@
             "driver": "vendor",
             "pin": "GP1"
         },
-        "soft_serial_speed": 1
+        "soft_serial_speed": 1,
+        // Detect master using USB connection
+        "usb_detect": {
+            "enabled": true,
+            "timeout": 2000,
+            "polling_interval": 10
+        },
     },
     "features": {
         // Rotary encoders (+1112)
@@ -97,7 +103,7 @@
         // Software way to enter boot mode
         "bootmagic": false,
         // Console for debug (+4686)
-        "console": false
+        "console": false,
     },
     "qmk": {
         "tap_keycode_delay": 0
@@ -191,7 +197,7 @@
                 {"label": "R10", "matrix": [5, 2], "x": 13, "y": 1},
                 {"label": "R06", "matrix": [5, 1], "x": 14, "y": 1},
                 {"label": "R02", "matrix": [5, 0], "x": 15, "y": 1},
-                {"label": "R04", "matrix": [7, 0], "x": 16,   "y": 1}
+                {"label": "R04", "matrix": [7, 0], "x": 16,   "y": 1},
 
                 // Low
                 {"label": "L03", "matrix": [2, 0], "x": 1, "y": 2},
@@ -222,7 +228,7 @@
 
                 {"label": "R16", "matrix": [7, 3], "x": 9,    "y": 3},
                 {"label": "R12", "matrix": [7, 2], "x": 10,   "y": 3, "w": 1.5},
-                {"label": "R08", "matrix": [7, 1], "x": 11.5, "y": 3},
+                {"label": "R08", "matrix": [7, 1], "x": 11.5, "y": 3}
             ]
         }
     }
