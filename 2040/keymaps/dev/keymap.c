@@ -548,43 +548,49 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
 //
 // Custom swappers
 bool swapper_atab_active = false;
-bool swapper_ctab_active = false;
+// bool swapper_ctab_active = false;
 // Custom layer switchers
-switcher_state switcher_sym_state = os_up_unqueued;
-switcher_state switcher_num_state = os_up_unqueued;
-switcher_state switcher_nav_state = os_up_unqueued;
-layer_state_t switcher_layer_backup = 0;
+switcher_state switcher_sym_state    = os_up_unqueued;
+switcher_state switcher_num_state    = os_up_unqueued;
+switcher_state switcher_nav_state    = os_up_unqueued;
+layer_state_t  switcher_layer_backup = 0;
 
-bool is_oneshot_cancel_key(uint16_t keycode) {
+bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case TO(0):
         case ML_BASE:
-        case LSFT_T(ML_BASE):
-        case LALT_T(ML_BASE):
         case KC_ESC:
             return true;
+        case RSFT_T(ML_BASE):
+        case LSFT_T(ML_BASE):
+        case LALT_T(ML_BASE):
+            // Pressed and tap
+            return record->tap.count;
         default:
             return false;
     }
 }
 
-bool is_oneshot_layer_cancel_key(uint16_t keycode) {
+bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case TO(0):
         case ML_BASE:
-        case LSFT_T(ML_BASE):
-        case LALT_T(ML_BASE):
         case SWITCH_NAV:
         case SWITCH_SYM:
         case SWITCH_NUM:
         case KC_ESC:
             return true;
+        case RSFT_T(ML_BASE):
+        case LSFT_T(ML_BASE):
+        case LALT_T(ML_BASE):
+            // Pressed and tap
+            return record->tap.count;
         default:
             return false;
     }
 }
 
-bool is_oneshot_ignored_key(uint16_t keycode) {
+bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         // Modifiers
         case QK_MODS ... QK_MODS_MAX:
@@ -599,7 +605,6 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
         case SWITCH_SYM:
         case SWITCH_NUM:
             return true;
-
         default:
             return false;
     }
@@ -609,12 +614,12 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         // Some modifiers
         case KC_RIGHT_ALT:
+            // Holds
+            return !record->tap.count;
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-            if (!record->tap.count) {
-                // Holds
-                return true;
-            }
+            // Holds
+            return !record->tap.count;
         default:
             return false;
     }
@@ -628,11 +633,12 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Swapper on one key (no timer)
     update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
-    update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, RALT_T(SW_CTAB), keycode, record);
+    // update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, RALT_T(SW_CTAB), keycode, record);
 
     // Custom layer change (no timer)
     update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
-    update_move_hold_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record, &switcher_layer_backup);
+    update_oneshot_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record);
+    // update_move_hold_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record, &switcher_layer_backup);
     update_move_hold_layer(&switcher_nav_state, L_NAV, SWITCH_NAV, keycode, record, &switcher_layer_backup);
 
     // Custom keycodes

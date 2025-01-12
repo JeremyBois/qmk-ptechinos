@@ -9,15 +9,15 @@ __attribute__((weak)) bool is_oneshot_mod_key(uint16_t keycode) {
     return false;
 }
 
-__attribute__((weak)) bool is_oneshot_cancel_key(uint16_t keycode) {
+__attribute__((weak)) bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record) {
     return false;
 }
 
-__attribute__((weak)) bool is_oneshot_layer_cancel_key(uint16_t keycode) {
+__attribute__((weak)) bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
     return false;
 }
 
-__attribute__((weak)) bool is_oneshot_ignored_key(uint16_t keycode) {
+__attribute__((weak)) bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
     return false;
 }
 
@@ -60,13 +60,13 @@ void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint1
         }
     } else {
         if (record->event.pressed) {
-            if (is_oneshot_cancel_key(keycode) && *state != os_up_unqueued) {
+            if (is_oneshot_cancel_key(keycode, record) && *state != os_up_unqueued) {
                 // Cancel oneshot on designated cancel keydown.
                 *state = os_up_unqueued;
                 unregister_code(mod);
             }
         } else {
-            if (!is_oneshot_ignored_key(keycode)) {
+            if (!is_oneshot_ignored_key(keycode, record)) {
                 // On non-ignored keyup, consider the oneshot used.
                 switch (*state) {
                     case os_down_unused:
@@ -114,7 +114,7 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
         }
     } else {
         if (record->event.pressed) {
-            if (is_oneshot_layer_cancel_key(keycode) && *state != os_up_unqueued) {
+            if (is_oneshot_layer_cancel_key(keycode, record) && *state != os_up_unqueued) {
                 // Cancel oneshot layer on designated cancel keydown.
                 *state = os_up_unqueued;
                 layer_off(layer);
@@ -344,7 +344,7 @@ bool update_move_mod_layer(tap_mod_state* state, uint16_t layer, uint16_t mod, u
         }
     } else {
         if (record->event.pressed) {
-            if (is_oneshot_cancel_key(keycode) && *state != mm_up) {
+            if (is_oneshot_cancel_key(keycode, record) && *state != mm_up) {
                 // Cancel modifier
                 *state = mm_up;
                 unregister_code(mod);
@@ -396,7 +396,7 @@ bool update_tap_hold_layer(tap_mod_state* state, uint16_t layerTap, uint16_t lay
         }
     } else {
         if (record->event.pressed) {
-            if (is_oneshot_cancel_key(keycode) && *state != mm_up) {
+            if (is_oneshot_cancel_key(keycode, record) && *state != mm_up) {
                 // Cancel modifier
                 *state = mm_up;
                 layer_off(layerHold);

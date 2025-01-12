@@ -47,17 +47,17 @@ bool update_active_hold_layer(switcher_state *state, uint16_t layer, uint16_t tr
 bool is_oneshot_mod_key(uint16_t keycode);
 
 // To be implemented by the consumer.Defines keys to cancel oneshot mods.
-bool is_oneshot_cancel_key(uint16_t keycode);
+bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record);
 
 // To be implemented by the consumer.Defines keys to cancel oneshot layers.
-bool is_oneshot_layer_cancel_key(uint16_t keycode);
+bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record);
 
 // To be implemented by the consumer.
 // Defines keys to ignore when determining whether a oneshot mod has been used.
 // Setting this to modifiers and layer change keys allows stacking multiple oneshot modifiers
 // and carrying them between layers.
 // True to ignore, False to handle
-bool is_oneshot_ignored_key(uint16_t keycode);
+bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record);
 
 // To be implemented by the consumer.
 // Defines keys for which pressed event is ignore but the release event is handled
