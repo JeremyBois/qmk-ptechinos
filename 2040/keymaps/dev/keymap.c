@@ -1,4 +1,5 @@
 #include "action_layer.h"
+#include "caps_word.h"
 #include "keymap_us.h"
 #include QMK_KEYBOARD_H
 
@@ -790,6 +791,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         // Handle special layers
+        case ML_BASE:
         case LSFT_T(ML_BASE):
         case LALT_T(ML_BASE):
         case RSFT_T(ML_BASE):
@@ -799,6 +801,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 // Force end of mouse layer
                 auto_mouse_set_inactive();
 #endif
+                // Reset caps word
+                caps_word_off();
                 // Force modifiers to cancel (should not be neccessary but just to be safe)
                 clear_mods();
                 // Back to home layer
@@ -807,12 +811,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         case TO(0):
-            // Force modifiers to cancel (should not be neccessary but just to be safe)
-            clear_mods();
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
             // Force end of mouse layer
             auto_mouse_set_inactive();
 #endif
+            // Reset caps word
+            caps_word_off();
+            // Force modifiers to cancel (should not be neccessary but just to be safe)
+            clear_mods();
+            let_qmk_handle_it = true;
             break;
         case ML_ADJUST:
             if (record->event.pressed) {
@@ -867,10 +874,10 @@ bool caps_word_press_user(uint16_t keycode) {
         case SWITCH_NAV:
             return true;
 
-        // Mod taps event are passed as modifier keycode only to user
-        case KC_LSFT:
-        case KC_RSFT:
-          return true;
+            // // Mod taps event are passed as modifier keycode only to user
+            // case KC_LSFT:
+            // case KC_RSFT:
+            //   return true;
 
         default:
             return false; // Deactivate Caps Word.

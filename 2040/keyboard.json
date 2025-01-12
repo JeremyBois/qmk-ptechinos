@@ -144,7 +144,8 @@
     },
     "caps_word": {
         "enabled": true,
-        "both_shifts_turns_on": false
+        "both_shifts_turns_on": false,
+        "invert_on_shift": true
     },
     "leader_key": {
         "timing": false,
