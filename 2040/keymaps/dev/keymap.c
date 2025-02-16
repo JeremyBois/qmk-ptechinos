@@ -642,20 +642,48 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
 // │ CUSTOM KEYCODE HANDLING                             │
 // └─────────────────────────────────────────────────┘
 //
+
+void clear_keyboard_state(void) {
+    // Reset caps word
+    caps_word_off();
+    // Force modifiers to cancel (should not be neccessary but just to be safe)
+    clear_mods();
+
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_ENABLE)
+    // Force end of mouse layer
+    auto_mouse_set_inactive();
+#endif
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    // dprintf("Keycode %d --> Is Tap: %d\n", keycode,  record->tap.count);
+
     // Swapper on one key (no timer)
     update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
     // update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, RALT_T(SW_CTAB), keycode, record);
 
     // Custom layer change (no timer)
-    update_oneshot_layer(&switcher_sym_state, L_SYM, SWITCH_SYM, keycode, record);
-    update_oneshot_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record);
-    // update_move_hold_layer(&switcher_num_state, L_NUM, SWITCH_NUM, keycode, record, &switcher_layer_backup);
-    update_move_hold_layer(&switcher_nav_state, L_NAV, SWITCH_NAV, keycode, record, &switcher_layer_backup);
+    update_oneshot_layer(&switcher_sym_state, L_SYM, LT_SWITCH_SYM, keycode, record);
+    // update_oneshot_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record);
+    update_move_hold_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record, &switcher_layer_backup);
+    update_move_hold_layer(&switcher_nav_state, L_NAV, LT_SWITCH_NAV, keycode, record, &switcher_layer_backup);
 
     // Custom keycodes
     bool let_qmk_handle_it = true;
     switch (keycode) {
+        // Custom swapper
+        case LSFT_T(SW_ATAB):
+          let_qmk_handle_it = false;
+          break;
+        // Custom layer handling
+        case SWITCH_NUM:
+        case LT_SWITCH_NUM:
+        case SWITCH_NAV:
+        case LT_SWITCH_NAV:
+        case SWITCH_SYM:
+        case LT_SWITCH_SYM:
+          let_qmk_handle_it = false;
+          break;
         // Handle dead keys sequences
         case C_GRV:
             if (record->event.pressed) {
@@ -822,46 +850,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         // Handle special layers
-        case ML_BASE:
         case LSFT_T(ML_BASE):
         case LALT_T(ML_BASE):
         case RSFT_T(ML_BASE):
+            // Intercept a press
             if (record->tap.count && record->event.pressed) {
-                // Intercept a press
-#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
-                // Force end of mouse layer
-                auto_mouse_set_inactive();
-#endif
-                // Reset caps word
-                caps_word_off();
-                // Force modifiers to cancel (should not be neccessary but just to be safe)
-                clear_mods();
-                // Back to home layer
+                // Back to HOME layer
                 layer_move(0);
+                clear_keyboard_state();
                 let_qmk_handle_it = false;
             }
             break;
-        case TO(0):
-#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
-            // Force end of mouse layer
-            auto_mouse_set_inactive();
-#endif
-            // Reset caps word
-            caps_word_off();
-            // Force modifiers to cancel (should not be neccessary but just to be safe)
-            clear_mods();
-            let_qmk_handle_it = true;
+        case ML_MOUSE:
+            // Intercept a press
+            if (record->event.pressed) {
+                layer_move(L_MOUSE);
+                clear_keyboard_state();
+                let_qmk_handle_it = false;
+            }
+            break;
+        case ML_BASE:
+            // Intercept a press
+            if (record->event.pressed) {
+                // Back to HOME layer
+                layer_move(0);
+                clear_keyboard_state();
+                let_qmk_handle_it = false;
+            }
             break;
         case ML_ADJUST:
+            // Intercept a press
             if (record->event.pressed) {
-                // Force modifiers to cancel (should not be neccessary but just to be safe)
-                clear_mods();
-#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
-                // Force end of mouse layer
-                auto_mouse_set_inactive();
-#endif
-                // ADJUST layer from combo
+                // Go to ADJUST layer
                 layer_move(L_ADJUST);
+                clear_keyboard_state();
                 let_qmk_handle_it = false;
             }
             break;
