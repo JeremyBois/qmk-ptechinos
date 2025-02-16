@@ -481,23 +481,24 @@ XXXXXXX, LSFT_T(KC_CIRC), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,               
     ),
 #endif
     /* ADJUST
+     *         ,-----------------------------------.                    ,-------------------------------------.
      *         |      |hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP  | MFFD |      |
      * ,-------|------+------+------+------+-------+                    |-------+-------+-------+------+------------.
-     * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY  | NEXT |EEPRST|RESET|
+     * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY  | NEXT |VOLMUT|     |
      * |       |      |      |      |      |       |-------.    ,-------|       |       |       |      |      |     |
      * `-------+------+------+------+------+-------|       |    |       |-------+-------+-------+------+------------'
-     *         |RGB_MO| U_M  | U_L  | U_W  | U_WC  |-------|    |-------|QWERTY | BASE  |COLEMAK|      |DEBUG |
-     *         |      |      |      |      |       |       |    |       |       |       |   DH  |      |      |
+     *         |RGB_MO| U_M  |  U_W | U_WC |  U_L  |-------|    |-------| BASE  |QWERTY | DEBUG |RESET |EEPRST|
+     *         |      |      |      |      |       |       |    |       |       |       |       |      |      |
      *         `-----------------------------------/      /      \      \-------------------------------------'
      *                       |         |        | /      /        \      \ |        |   DEF     |
      *                       |         |        |/      /          \      \|        |           |
      *                       `---------'--------'------'            '------'--------'-----------'
      */
       [L_ADJUST] = LAYOUT(
-         XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,                      KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
-XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,                      KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, EE_CLR, QK_BOOT,
-           RGB_MOD, UC_MAC, UC_LINX, UC_WIN, UC_WINC, XXXXXXX,    XXXXXXX, DF(L_QWERTY), DF(L_BASE), DF(L_COLEMAK_DH), XXXXXXX, QK_DEBUG_TOGGLE,
-                                    XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, ML_BASE
+         XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, KC_BRIU,                         KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
+XXXXXXX, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, KC_BRID,                         KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, XXXXXXX,
+           RGB_MOD, UC_MAC, UC_WIN, UC_WINC, UC_LINX, XXXXXXX,       XXXXXXX, DF(L_BASE), DF(L_QWERTY), QK_DEBUG_TOGGLE, QK_BOOT, EE_CLR,
+                                    XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, ML_BASE
     )
     };
 // clang-format on
