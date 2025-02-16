@@ -70,11 +70,11 @@
             "enabled": true,
             "timeout": 2000,
             "polling_interval": 10
-        },
+        }
     },
     "features": {
         // Rotary encoders (+1112)
-        "encoder": true,
+        "encoder": false,
         // Mouse keys (+1482). Not required for trackball usage
         "mousekey": true,
         // Audio control and System control (+450)
