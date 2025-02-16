@@ -57,11 +57,56 @@
 // https://www.reddit.com/r/olkb/comments/72u8ou/qmk_mouse_keys_rock/
 #ifdef MOUSEKEY_ENABLE
 #    define MOUSEKEY_WHEEL_MAX_SPEED 8
-#    define MOUSEKEY_WHEEL_TIME_TO_MAX 80
-// Enable quadratic curve :
-//   - accurate small movements
-//   - fast large motion
-#    define MK_KINETIC_SPEED 1
+#    define MOUSEKEY_WHEEL_TIME_TO_MAX 64
+
+// Quadratic acceleration (allow small and large movements)
+#    ifdef MOUSEKEY_KINETIC
+#        define MK_KINETIC_SPEED
+#    endif
+
+// Constant on hold (default + 3 modes) or on tap (3 modes)
+#    ifdef MOUSEKEY_CONSTANT
+#        define MK_3_SPEED
+#        ifdef MOUSEKEY_CONSTANT_HOLD
+#            define MK_MOMENTARY_ACCEL
+#        endif
+#    endif
+
+// Constant on hold + Acceleration as default
+#    ifdef MOUSEKEY_COMBINED
+#        define MK_COMBINED
+#    endif
+#endif
+
+#if defined(MOUSEKEY_CONSTANT) || defined(MOUSEKEY_COMBINED)
+//       Overrides modes for mousing
+#    define MK_C_OFFSET_0 4
+#    define MK_C_INTERVAL_0 16
+#    define MK_C_OFFSET_2 28
+#    define MK_C_INTERVAL_2 16
+#    ifdef MOUSEKEY_CONSTANT_HOLD
+#        define MK_C_OFFSET_1 8
+#        define MK_C_INTERVAL_1 16
+#        define MK_C_OFFSET_UNMOD 15
+#        define MK_C_INTERVAL_UNMOD 16
+#    else
+#        define MK_C_OFFSET_1 14
+#        define MK_C_INTERVAL_1 16
+#    endif
+//       Overrides modes for scrolling
+#    define MK_W_OFFSET_0 1
+#    define MK_W_INTERVAL_0 100
+#    define MK_W_OFFSET_2 1
+#    define MK_W_INTERVAL_2 20
+#    ifdef MOUSEKEY_CONSTANT_HOLD
+#        define MK_W_OFFSET_1 1
+#        define MK_W_INTERVAL_1 70
+#        define MK_W_OFFSET_UNMOD 1
+#        define MK_W_INTERVAL_UNMOD 40
+#    else
+#        define MK_W_OFFSET_1 1
+#        define MK_W_INTERVAL_1 40
+#    endif
 #endif
 
 #ifdef POINTING_DEVICE_ENABLE
@@ -78,7 +123,6 @@
 #    define POINTING_DEVICE_ROTATION_90
 // Invert the Y axis (trackball / right side)
 #    define POINTING_DEVICE_INVERT_Y_RIGHT 1
-
 
 // ┌─────────────────────────────────────────────────┐
 // │ Trackpad                                        │

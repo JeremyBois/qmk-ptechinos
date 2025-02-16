@@ -138,8 +138,8 @@
         "enabled": true,
         "delay": 0,
         "interval": 16, // 60Hz
-        "max_speed": 6,
-        "time_to_max": 60,
+        "max_speed": 3,
+        "time_to_max": 64,
         "wheel_delay": 0
     },
     "oneshot": {
