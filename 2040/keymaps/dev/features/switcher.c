@@ -91,15 +91,25 @@ bool update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
             if (*state == os_up_unqueued) {
                 layer_on(layer);
             }
-            *state = os_down_unused;
+            if (record->tap.count) {
+                // Make layer permanent on tap
+                *state = os_up_queued;
+            }
+            else
+            {
+                // Wait for keyup event to decide if we must make layer permanent or not
+                *state = os_down_unused;
+            }
             return false;
         } else {
             // Trigger keyup
             switch (*state) {
                 case os_down_unused:
-                    // If we didn't use the layer while trigger was held, queue it.
-                    *state = os_up_queued;
-                    // dprintf("Trigger keyup -> os_down_unused\n");
+                    // If we didn't use the layer while trigger was held
+                    // We only want to switch to layer on tap
+                    // // dprintf("Trigger keyup -> os_down_unused\n");
+                    *state = os_up_unqueued;
+                    layer_off(layer);
                     return false;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.
@@ -183,15 +193,28 @@ bool update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
                 // Trigger keydown
                 layer_move(layer);
             }
-            *state = os_down_unused;
+            // dprintf("Trigger keyup --> Is Tap: %d\n", record->tap.count);
+            if (record->tap.count) {
+                // Make layer permanent on tap
+                *state = os_up_queued;
+            }
+            else
+            {
+                // Wait for keyup event to decide if we must make layer permanent or not
+                *state = os_down_unused;
+            }
             return false;
         } else {
             // Trigger keyup
             switch (*state) {
                 case os_down_unused:
-                    // If we didn't use the layer while trigger was held, queue it.
-                    layer_move(layer);
-                    *state = os_up_queued;
+                    // If we didn't use the layer while trigger was held
+                    // We only want to switch to layer on tap
+                    *state = os_up_unqueued;
+
+                    // Revert to previous state forcing switcher layer off
+                    layer_state_set((*layer_memory) & ~((layer_state_t)1 << layer));
+
                     return false;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.

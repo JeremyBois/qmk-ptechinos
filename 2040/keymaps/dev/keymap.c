@@ -243,9 +243,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [L_BASE] = LAYOUT(
                      KC_Q, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_RSFT,
-            XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,              KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-                    SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LSFT_T(ML_BASE)
+    XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
      RALT_T(KC_X), LALT_T(KC_J), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_Z, KC_H, KC_COMMA, LALT_T(KC_DOT), RALT_T(C_AU),
+                    LT_SWITCH_NAV, LCTL_T(KC_SPC), LT_SWITCH_NUM,    LT_SWITCH_SYM, RCTL_T(KC_ENT), LSFT_T(ML_BASE)
     ),
     /*
      * QWERTY
@@ -589,9 +589,14 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case TO(0):
         case ML_BASE:
+        case ML_ADJUST:
+        case ML_MOUSE:
         case SWITCH_NAV:
+        case LT_SWITCH_NAV:
         case SWITCH_SYM:
+        case LT_SWITCH_SYM:
         case SWITCH_NUM:
+        case LT_SWITCH_NUM:
         case KC_ESC:
             return true;
         case RSFT_T(ML_BASE):
@@ -613,11 +618,12 @@ bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
             return true;
 
         // Layers
-        case TO(0):
-        case ML_BASE:
         case SWITCH_NAV:
+        case LT_SWITCH_NAV:
         case SWITCH_SYM:
+        case LT_SWITCH_SYM:
         case SWITCH_NUM:
+        case LT_SWITCH_NUM:
             return true;
         default:
             return false;
@@ -928,9 +934,9 @@ bool caps_word_press_user(uint16_t keycode) {
 
         // Changing layers continue Caps Word, without shifting.
         // Except when moving back to default layer
-        case SWITCH_NUM:
-        case SWITCH_SYM:
-        case SWITCH_NAV:
+        case LT_SWITCH_NUM:
+        case LT_SWITCH_SYM:
+        case LT_SWITCH_NAV:
             return true;
 
             // // Mod taps event are passed as modifier keycode only to user
@@ -1003,9 +1009,9 @@ bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
     bool should_exit = false;
     switch (keycode) {
         // Switching a layer should terminate the auto mouse layer
-        case SWITCH_SYM:
-        case SWITCH_NUM:
-        case SWITCH_NAV:
+        case LT_SWITCH_SYM:
+        case LT_SWITCH_NUM:
+        case LT_SWITCH_NAV:
             should_exit = true;
             break;
         default:

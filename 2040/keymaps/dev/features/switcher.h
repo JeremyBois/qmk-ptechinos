@@ -27,13 +27,10 @@ void update_oneshot(switcher_state *state, uint16_t mod, uint16_t trigger, uint1
 // Oneshot implementation for layers
 bool update_oneshot_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
-// Custom move / hold layer implementation that doesn't rely on timers. If the trigger is held down the layer is tui
-// and another key is pressed then the layer is turn off when the the layer key is released (layer_off).
-// If the trigger key is released before any other key then the layer stay active (layer_move).
-
+// Custom move / hold layer implementation that doesn't rely on timers.
 // If the trigger is tapped then we move to the @layer layer (layer_move).
 // If the trigger is held down then the @layer layer is activated (layer_move).
-//    - If the trigger is released before any other key then @layer activation is persistent
+//    - If the trigger is released before any other key then @layer activation is deactivated
 //    - If the trigger is still held while another key is pressed then @layer remains active until the trigger key is released (layer_off)
 bool update_move_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record, layer_state_t* layer_memory);
 

@@ -81,6 +81,12 @@ enum custom_keycodes {
 #define KCU_POUND RALT(KC_DLR)      // £
 #define KCU_DEGREE S(RALT(KC_SCLN)) // °
 
+
+// Trick to detect tap vs hold on custom layer handling
+#define LT_SWITCH_NUM LT(0, SWITCH_NUM)
+#define LT_SWITCH_NAV LT(0, SWITCH_NAV)
+#define LT_SWITCH_SYM LT(0, SWITCH_SYM)
+
 //
 // ┌─────────────────────────────────────────────────┐
 // │ TAP ALIAS                                           │
