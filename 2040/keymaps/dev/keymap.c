@@ -417,7 +417,7 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,                   
      *
      *
      *        ,------------------------------------.                    ,------------------------------------.
-     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |   %   |   &  |   *  |   $  |  MATH |
+     *        | GREEK |   :  |  #   |  ;   |  ` ~  |                    |   °   |   &  |   *  |   $  |  MATH |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
      * |      |   ^…  |   à  |  _   |  é   |   /   |                    |   \   |   è  |  ' " |   !  |   ?   |      |
      * |      | LShift|      |      |      |       |-------.    ,-------|       |      |      |      | RShift|      |
@@ -431,7 +431,7 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,                   
      *
      */
     [L_SYM] = LAYOUT(
-                   TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     XXXXXXX, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
+                   TO(L_GREEK), KC_COLN, KC_HASH, KC_SCLN, C_GRV,                     KCU_DEGREE, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
 XXXXXXX, LSFT_T(KC_CIRC), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,                     KC_BSLS, C_E_GRV, C_QUOT, KC_EXLM, RSFT_T(KC_QUES), XXXXXXX,
                      KC_PIPE, KC_MINS, KC_PLUS, KC_EQL, KC_GRV, _______,   _______, KC_QUOT, KCU_C_CEDILLA, KC_PERC, KC_AT, KC_DQUO,
                                                _______, _______, _______,   _______, _______, _______
@@ -884,6 +884,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LSFT_T(KC_QUES):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KC_QUES);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case LSFT_T(KC_DQUO):
+        case RSFT_T(KC_DQUO):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_DQUO);
                 let_qmk_handle_it = false;
             }
             break;
