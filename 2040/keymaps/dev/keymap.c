@@ -372,29 +372,30 @@ XXXXXXX, LSFT_T(SW_ATAB), KC_BTN2, KC_WH_D, KC_BTN1, KC_PGDN,                   
          MS_ACL0,KC_LALT, MS_ACL1, MS_ACL1, MS_ACL2, _______,             _______, C(KC_Y), C(KC_Z), C(KC_C), LALT_T(C_V), RALT_T(C_X),
                                             _______, _______, _______,    _______, _______, _______
     ),
- //    /* NUM
- //     * 1 2 3 0 → Home row (more used number, Benford's law)
- //     * . ,     → On number side to be used with one hand
- //     * £ €     → Generic currencies on the same layer
+    /* NUM
+     * 1 2 3 0 → All numbers on the home row to make all of them easier to reach
+     * . ,     → On number place as in the base layer
+     * £ €     → Generic currencies on the same layer
+     *
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |       |  F9  |  F8  |  F7  |  F11  |                    |  F11 |   7  |   8  |   9  |       |
+     *        |   F5  |  F6  |  F7  |  F8  |  F9   |                    |  F4  |  F3  |  F2  |  F1  |  F10  |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * |      |   F10 |  F3  |  F2  |  F1  |   ,   |                    |   .  |   1  |   2  |   3  |   0   |      |
+     * |      |    5  |   6  |   7  |  8   |   9   |                    |   4  |   3  |   2  |   1  |   0   |      |
      * |      | LShift|      |      |      |       |-------.    ,-------|      |      |      |      | RShift|      |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
-     *        |   £   |  F6  |  F5  |  F4  |  F12  |-------|    |-------|  F12 |   4  |   5  |   6  |   €   |
-     *        | RAlt  | LAlt |      |      |       |       |    |       |      |      |      | LAlt |  RAlt |
+     *        |   €   |      |  F12 |  F11 |  F10  |-------|    |-------|  F10 | F11  |   ,  |   .  |   £   |
+     *        | RAlt  | LAlt |      |      |       |       |    |       |      |      |   €  | LAlt |  RAlt |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter | DEF    |
      *                       |   NAV   | LCtrl  |/  NUM /          \ SYM  \|  RCtrl | LShift |
      *                       `---------'--------'------'            '------'--------'--------'
      */
-    [L_NUM] = LAYOUT(
-                     XXXXXXX,  KC_F9, KC_F8, KC_F7, KC_F11,                     KC_F11, KC_7, KC_8, KC_9, XXXXXXX,
-   XXXXXXX, LSFT_T(KC_F10), KC_F3, KC_F2, KC_F1,  KC_COMMA,                     KC_DOT, KC_1,  KC_2,  KC_3, RSFT_T(KC_0), XXXXXXX,
-     RALT_T(C_POUND), LALT_T(KC_F6), KC_F5, KC_F4,  KC_F12, _______,   _______, KC_F12,  KC_4,  KC_5,  LALT_T(KC_6), RALT_T(C_EURO),
+       [L_NUM] = LAYOUT(
+                         KC_5,  KC_F6, KC_F7, KC_F8, KC_F9,                     KC_F4, KC_3, KC_F2, KC_F1, KC_F10,
+             XXXXXXX, LSFT_T(KC_5), KC_6, KC_7, KC_8, KC_9,                     KC_4,  KC_3, KC_2, KC_1, RSFT_T(KC_0), XXXXXXX,
+      RALT_T(C_EURO), KC_LEFT_ALT, KC_F12, KC_F11,  KC_F10, _______,   _______, KC_F10, KC_F11, KC_COMMA, LALT_T(KC_DOT), RALT_T(KCU_POUND),
                                           _______, _______, _______,   _______, _______, _______
-    ),
+       ),
     /* SYM
      * _        → easier left spot due to its high frequency (avoid redirection if place on the right side)
      * ^… `…    → left → easy to combine with vowels on the right
@@ -709,8 +710,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         // Custom swapper
         case LSFT_T(SW_ATAB):
-          let_qmk_handle_it = false;
-          break;
+            let_qmk_handle_it = false;
+            break;
         // Custom layer handling
         case SWITCH_NUM:
         case LT_SWITCH_NUM:
@@ -718,8 +719,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LT_SWITCH_NAV:
         case SWITCH_SYM:
         case LT_SWITCH_SYM:
-          let_qmk_handle_it = false;
-          break;
+            let_qmk_handle_it = false;
+            break;
         // Handle dead keys sequences
         case C_GRV:
             if (record->event.pressed) {
@@ -818,6 +819,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case RALT_T(C_EURO):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KCU_EURO);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RALT_T(KCU_POUND):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KCU_POUND);
                 let_qmk_handle_it = false;
             }
             break;
