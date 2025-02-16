@@ -1,3 +1,5 @@
+#include "_wait.h"
+#include "action.h"
 #include "action_layer.h"
 #include "caps_word.h"
 #include "keymap_us.h"
@@ -232,7 +234,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      |   N   |   R  |   T  |   S  |   G  |                    |   K  |   M  |   E  |   A  |   I   |       |
      * |      | LShift|      |      |      |      |-------.    ,-------|      |      |      |      | RShift|       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   X   |   J  |   P  |   C  |   V  |-------|    |-------|   Z  |   H  |   ,  |   .  | Repeat|
+     *        |   X   |   J  |   P  |   C  |   V  |-------|    |-------|   Z  |   H  |   ,  |   .  |  AU   |
      *        | RAlt  | LAlt |      |      |      |       |    |       |      |      |      | LAlt | RAlt  |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter | DEF   |
@@ -242,8 +244,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_BASE] = LAYOUT(
                      KC_Q, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, KC_RSFT,
             XXXXXXX, LSFT_T(KC_N), KC_R, KC_T, KC_S, KC_G,              KC_K, KC_M, KC_E, KC_A, RSFT_T(KC_I), XXXXXXX,
-     RALT_T(KC_X), LALT_T(KC_J), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_Z, KC_H, KC_COMMA, LALT_T(KC_DOT), RALT_T(QK_REP),
                     SWITCH_NAV, LCTL_T(KC_SPC), SWITCH_NUM,    SWITCH_SYM, RCTL_T(KC_ENT), LSFT_T(ML_BASE)
+     RALT_T(KC_X), LALT_T(KC_J), KC_P, KC_C, KC_V, XXXXXXX,    XXXXXXX, KC_Z, KC_H, KC_COMMA, LALT_T(KC_DOT), RALT_T(C_AU),
     ),
     /*
      * QWERTY
@@ -764,6 +766,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
+        case RALT_T(C_AU):
+            if (record->tap.count && record->event.pressed) {
+                // Remove SFB (especially for french)
+                tap_code16(KC_A);
+                wait_ms(5);
+                tap_code16(KC_U);
+                let_qmk_handle_it = false;
+            }
+            break;
         case RALT_T(C_C_CED):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KCU_C_CEDILLA);
@@ -809,12 +820,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LALT_T(C_LDESK):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KCU_LEFT_DESK);
-                let_qmk_handle_it = false;
-            }
-            break;
-        case RALT_T(QK_REP):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(QK_REP);
                 let_qmk_handle_it = false;
             }
             break;

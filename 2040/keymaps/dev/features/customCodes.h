@@ -32,6 +32,7 @@ enum custom_keycodes {
     C_DQUOT,
     C_GRV,
     // Wrapper for mod tap interception
+    C_AU,
     C_EURO,
     C_POUND,
     C_X,
