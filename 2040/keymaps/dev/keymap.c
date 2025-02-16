@@ -2,11 +2,13 @@
 #include "caps_word.h"
 #include "keymap_us.h"
 #include QMK_KEYBOARD_H
-
 #include "keycodes.h"
 #include "quantum.h"
 #include "quantum_keycodes.h"
-#include "process_keycode/process_unicodemap.h"
+
+#if defined(UNICODEMAP_ENABLE)
+#    include "process_keycode/process_unicodemap.h"
+#endif
 
 #include "2040.h"
 #include "config.h"
@@ -34,6 +36,7 @@ void auto_mouse_reset(void);
 // └─────────────────────────────────────────────────┘
 //
 
+#if defined(UNICODEMAP_ENABLE)
 enum unicode_names {
     // Greek (lower / upper)
     GA = 0,
@@ -208,6 +211,7 @@ const uint32_t PROGMEM unicode_map[] = {
     [M_INTEGER]        = 0x2124, // ℤ
     [M_COMPLEXE]       = 0x2102, // ℂ
 };
+#endif
 
 //
 // ┌─────────────────────────────────────────────────┐
@@ -403,6 +407,7 @@ XXXXXXX, LSFT_T(KC_CIRC), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,               
                      KC_PIPE, KC_MINS, KC_PLUS, KC_EQL, KC_GRV, _______,   _______, KC_QUOT, KCU_C_CEDILLA, KC_PERC, KC_AT, KC_DQUO,
                                                _______, _______, _______,   _______, _______, _______
     ),
+#if defined(UNICODEMAP_ENABLE)
      /*
      * MATH
      *        ,-----------------------------------.                    ,-----------------------------------.
@@ -445,8 +450,8 @@ XXXXXXX, LSFT_T(KC_CIRC), C_A_GRV, KC_UNDS, KCU_E_ACUTE, KC_SLSH,               
                UP(GX, S_GX), UP(GQ, S_GQ), UP(GP, S_GP), UP(GC, S_GC), XXXXXXX, _______,   _______, UP(GZ, S_GZ), UP(GH, S_GH),  XXXXXXX, XXXXXXX, XXXXXXX,
                                                               _______, _______, _______,   _______, _______, _______
     ),
+#endif
     /* ADJUST
-     *         ,-----------------------------------.                    ,------------------------------------.
      *         |      |hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP  | MFFD |      |
      * ,-------|------+------+------+------+-------+                    |-------+-------+-------+------+------------.
      * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY  | NEXT |EEPRST|RESET|
@@ -785,6 +790,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
+#if defined(UNICODEMAP_ENABLE)
         case LSFT_T(C_GI):
         case RSFT_T(C_GI):
             if (record->tap.count && record->event.pressed) {
@@ -799,6 +805,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
+#endif
         case RSFT_T(KC_QUES):
         case LSFT_T(KC_QUES):
             if (record->tap.count && record->event.pressed) {
