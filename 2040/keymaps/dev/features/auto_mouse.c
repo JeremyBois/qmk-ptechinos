@@ -4,9 +4,11 @@
 #include "auto_mouse.h"
 #include "report.h"
 
-#ifdef CONSOLE_ENABLE
-#    include "print.h"
-#endif // CONSOLE_ENABLE
+#ifdef PTECHINOS_AUTO_MOUSE_ENABLE
+
+#    ifdef CONSOLE_ENABLE
+#        include "print.h"
+#    endif // CONSOLE_ENABLE
 
 static auto_mouse_data_t auto_mouse_context = {.active_timer      = (uint16_t)0,
                                                .key_timer         = (uint16_t)0,
@@ -78,7 +80,7 @@ void auto_mouse_set_active(void) {
     }
     auto_mouse_debug("set_active");
 
-    auto_mouse_context.active_timer = timer_read();
+    auto_mouse_context.active_timer      = timer_read();
     auto_mouse_context.mouse_key_tracker = 0;
 
     if (!layer_state_is(auto_mouse_context.config.layer)) {
@@ -95,7 +97,7 @@ void auto_mouse_set_inactive(void) {
 
     auto_mouse_debug("set_inactive");
 
-    auto_mouse_context.active_timer      = auto_mouse_context.config.timeout+1;
+    auto_mouse_context.active_timer      = auto_mouse_context.config.timeout + 1;
     auto_mouse_context.mouse_key_tracker = 0;
 
     if (layer_state_is(auto_mouse_context.config.layer)) {
@@ -197,9 +199,9 @@ void auto_mouse_on_pointing_device_task(report_mouse_t* mouse_report) {
     if (!auto_mouse_is_active()) {
         // Avoid spurious activation using a small delay on each non mouse key press
         if (timer_elapsed(auto_mouse_context.key_timer) <= auto_mouse_context.config.key_delay) {
-#if PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER == 1
+#    if PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER == 1
             erase_report(mouse_report);
-#endif
+#    endif
             return;
         }
 
@@ -229,3 +231,5 @@ void auto_mouse_on_pointing_device_task(report_mouse_t* mouse_report) {
         }
     }
 }
+
+#endif

@@ -1,5 +1,6 @@
 #pragma once
 
+#if defined(PTECHINOS_POINTING_DEVICE_ENABLE)
 // // Only for LSP (must be removed)
 // #ifndef POINTING_DEVICE_ENABLE
 // #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
@@ -9,22 +10,22 @@
 // #endif
 // // Only for LSP (must be removed)
 
-#include "quantum_keycodes.h"
+#    include "quantum_keycodes.h"
 
-#if defined(KEYBOARD_ptechinos_2040)
+#    if defined(KEYBOARD_ptechinos_2040)
 // Data driven (see keyboard.json)
-#elif defined(KEYBOARD_ptechinos_promicro)
-#    include "promicro.h"
-#else
-#    error "Unsuported hardware"
-#endif
+#    elif defined(KEYBOARD_ptechinos_promicro)
+#        include "promicro.h"
+#    else
+#        error "Unsuported hardware"
+#    endif
 
-#include "quantum.h"
+#    include "quantum.h"
 
-#ifdef POINTING_DEVICE_ENABLE
+#    ifdef POINTING_DEVICE_ENABLE
 typedef enum pointer_side { PTECHINOS_RIGHT = 0, PTECHINOS_LEFT = 1 } pointer_side_t; // Value match boolean on QMK (left == true)
 
-#    ifndef NO_PTECHINOS_KEYCODES
+#        ifndef NO_PTECHINOS_KEYCODES
 enum ptechinos_keycodes {
     PL_CPI_UP = QK_KB_0,
     PL_CPI_DOWN,
@@ -33,7 +34,7 @@ enum ptechinos_keycodes {
     PL_DS_TOOGLE,
     PR_DS_TOOGLE,
 };
-#    endif // !NO_PTECHINOS_KEYCODES
+#        endif // !NO_PTECHINOS_KEYCODES
 
 //
 // MOUSING
@@ -77,4 +78,5 @@ void ptechinos_set_pointer_as_dragscroll(pointer_side_t side);
 //
 void ptechinos_toogle_pointer_between_mousing_dragscroll(pointer_side_t side);
 
-#endif // POINTING_DEVICE_ENABLE
+#    endif // POINTING_DEVICE_ENABLE
+#endif

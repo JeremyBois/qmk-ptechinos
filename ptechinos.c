@@ -1,11 +1,13 @@
 #include "ptechinos.h"
 #include <stdint.h>
 
-#ifdef CONSOLE_ENABLE
-#    include "print.h"
-#endif // CONSOLE_ENABLE
+#if defined(PTECHINOS_POINTING_DEVICE_ENABLE)
 
-#ifdef POINTING_DEVICE_ENABLE
+#    ifdef CONSOLE_ENABLE
+#        include "print.h"
+#    endif // CONSOLE_ENABLE
+
+#    ifdef POINTING_DEVICE_ENABLE
 
 // DOCUMENTATION / INSPIRATION
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/eeconfig.h
@@ -49,32 +51,32 @@
 // UNSURE
 
 // Persistence in EEPROM
-#    ifndef PTECHINOS_EEPROM_READ_WRITE_DISABLED
-#        define PTECHINOS_EEPROM_READ_WRITE
-#    endif // PTECHINOS_EEPROM_READ_WRITE_DISABLED
+#        ifndef PTECHINOS_EEPROM_READ_WRITE_DISABLED
+#            define PTECHINOS_EEPROM_READ_WRITE
+#        endif // PTECHINOS_EEPROM_READ_WRITE_DISABLED
 
 // Mousing (Avoid values below 100)
-#    ifndef PTECHINOS_MOUSING_CPI_MIN
-#        define PTECHINOS_MOUSING_CPI_MIN 200
-#    endif // PTECHINOS_MOUSING_CPI_MIN
+#        ifndef PTECHINOS_MOUSING_CPI_MIN
+#            define PTECHINOS_MOUSING_CPI_MIN 200
+#        endif // PTECHINOS_MOUSING_CPI_MIN
 
-#    ifndef PTECHINOS_MOUSING_CPI_CONFIG_STEP
-#        define PTECHINOS_MOUSING_CPI_CONFIG_STEP 200
-#    endif // PTECHINOS_MOUSING_CPI_CONFIG_STEP
+#        ifndef PTECHINOS_MOUSING_CPI_CONFIG_STEP
+#            define PTECHINOS_MOUSING_CPI_CONFIG_STEP 200
+#        endif // PTECHINOS_MOUSING_CPI_CONFIG_STEP
 
 // Scrolling (Avoid values below 100)
-#    ifndef PTECHINOS_DRAGSCROLL_LEFT
-#        define PTECHINOS_DRAGSCROLL_LEFT 100
-#    endif // PTECHINOS_DRAGSCROLL_LEFT
-#    ifndef PTECHINOS_DRAGSCROLL_RIGHT
-#        define PTECHINOS_DRAGSCROLL_RIGHT 250
-#    endif // PTECHINOS_DRAGSCROLL_RIGHT
-#    ifndef PTECHINOS_SCROLL_DIVISOR_H
-#        define PTECHINOS_SCROLL_DIVISOR_H 5.0
-#    endif // PTECHINOS_SCROLL_DIVISOR_H
-#    ifndef PTECHINOS_SCROLL_DIVISOR_V
-#        define PTECHINOS_SCROLL_DIVISOR_V 5.0
-#    endif // PTECHINOS_SCROLL_DIVISOR_V
+#        ifndef PTECHINOS_DRAGSCROLL_LEFT
+#            define PTECHINOS_DRAGSCROLL_LEFT 100
+#        endif // PTECHINOS_DRAGSCROLL_LEFT
+#        ifndef PTECHINOS_DRAGSCROLL_RIGHT
+#            define PTECHINOS_DRAGSCROLL_RIGHT 250
+#        endif // PTECHINOS_DRAGSCROLL_RIGHT
+#        ifndef PTECHINOS_SCROLL_DIVISOR_H
+#            define PTECHINOS_SCROLL_DIVISOR_H 5.0
+#        endif // PTECHINOS_SCROLL_DIVISOR_H
+#        ifndef PTECHINOS_SCROLL_DIVISOR_V
+#            define PTECHINOS_SCROLL_DIVISOR_V 5.0
+#        endif // PTECHINOS_SCROLL_DIVISOR_V
 
 // Pointing data
 typedef union {
@@ -107,7 +109,7 @@ static pointer_config_t g_ptechinos_pointer_config = {0};
  *   - sniping CPI: internal table index/actual CPI
  */
 static void ptechinos_print_config_to_console(const char* location, pointer_config_t* config) {
-#    ifdef CONSOLE_ENABLE
+#        ifdef CONSOLE_ENABLE
     dprintf("[Ptechinos] %s\n"
             "CONFIG = {\n"
             "\traw = 0x%lX,\n"
@@ -121,7 +123,7 @@ static void ptechinos_print_config_to_console(const char* location, pointer_conf
             "\t}\n"
             "}\n",
             location, config->raw, config->is_dragscroll_left_enabled, config->mousing_left_cpi, ptechinos_get_pointer_mousing_cpi(PTECHINOS_LEFT), config->is_dragscroll_right_enabled, config->mousing_right_cpi, ptechinos_get_pointer_mousing_cpi(PTECHINOS_RIGHT));
-#    endif // CONSOLE_ENABLE
+#        endif // CONSOLE_ENABLE
 }
 
 // static void ptechinos_print_mouse_report_to_console(const char* location, pointer_side_t side, report_mouse_t* report) {
@@ -144,11 +146,11 @@ static void ptechinos_print_config_to_console(const char* location, pointer_conf
  * are purposefully ignored since we do not want to persist them to memory.
  */
 static void ptechinos_read_config_from_eeprom(pointer_config_t* config) {
-#    ifdef PTECHINOS_EEPROM_READ_WRITE
+#        ifdef PTECHINOS_EEPROM_READ_WRITE
     config->raw = eeconfig_read_kb();
-#    else
+#        else
     config.raw = 0;
-#    endif
+#        endif
 
     config->is_dragscroll_left_enabled  = false;
     config->is_dragscroll_right_enabled = false;
@@ -161,20 +163,20 @@ static void ptechinos_read_config_from_eeprom(pointer_config_t* config) {
  * This include `is_dragscroll_[left|right]_enabled` states.
  */
 static void ptechinos_write_config_to_eeprom(pointer_config_t* config) {
-#    ifdef PTECHINOS_EEPROM_READ_WRITE
+#        ifdef PTECHINOS_EEPROM_READ_WRITE
     eeconfig_update_kb(config->raw);
-#    else
+#        else
     config.raw = 0;
-#    endif
+#        endif
 }
 
 // Helper to make it easier to set CPI
 static void ptechinos_pointing_device_set_cpi_internal(bool left, uint16_t cpi) {
-#    if defined(SPLIT_POINTING_ENABLE) && defined(POINTING_DEVICE_COMBINED)
+#        if defined(SPLIT_POINTING_ENABLE) && defined(POINTING_DEVICE_COMBINED)
     pointing_device_set_cpi_on_side(left, cpi);
-#    else
+#        else
     pointing_device_set_cpi(cpi);
-#    endif
+#        endif
 }
 
 /**
@@ -339,19 +341,19 @@ static void ptechinos_pointing_device_task_drag_scroll(report_mouse_t* mouse_rep
 
     // Clear accumulators on assignment
     if (scaled_scroll_h != 0) {
-#    ifdef PTECHINOS_DRAGSCROLL_INVERT_X
+#        ifdef PTECHINOS_DRAGSCROLL_INVERT_X
         mouse_report->h = -scaled_scroll_h;
-#    else
+#        else
         mouse_report->h = scaled_scroll_h;
-#    endif // PTECHINOS_DRAGSCROLL_INVERT_X
+#        endif // PTECHINOS_DRAGSCROLL_INVERT_X
         acc_h = 0;
     }
     if (scaled_scroll_v != 0) {
-#    ifdef PTECHINOS_DRAGSCROLL_INVERT_Y
+#        ifdef PTECHINOS_DRAGSCROLL_INVERT_Y
         mouse_report->v = -scaled_scroll_v;
-#    else
+#        else
         mouse_report->v = scaled_scroll_v;
-#    endif // PTECHINOS_DRAGSCROLL_INVERT_Y
+#        endif // PTECHINOS_DRAGSCROLL_INVERT_Y
         acc_v = 0;
     }
 
@@ -360,9 +362,9 @@ static void ptechinos_pointing_device_task_drag_scroll(report_mouse_t* mouse_rep
     mouse_report->y = 0;
 }
 
-#    if defined(SPLIT_POINTING_ENABLE)
+#        if defined(SPLIT_POINTING_ENABLE)
 // With SPLIT_POINTING_ENABLE  pointing task is only called on the master side (the one with USB connected)
-#        if defined(POINTING_DEVICE_COMBINED)
+#            if defined(POINTING_DEVICE_COMBINED)
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
     // ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_LEFT, &left_report);
     // ptechinos_print_mouse_report_to_console("task_drag_scroll (BEFORE)", PTECHINOS_RIGHT, &right_report);
@@ -376,24 +378,24 @@ report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, repo
     // ptechinos_print_mouse_report_to_console("task_drag_scroll (AFTER)", PTECHINOS_RIGHT, &right_report);
     return pointing_device_task_combined_user(left_report, right_report);
 }
-#        elif defined(POINTING_DEVICE_LEFT)
+#            elif defined(POINTING_DEVICE_LEFT)
 report_mouse_t pointing_device_task_kb(report_mouse_t report) {
     if (g_ptechinos_pointer_config.is_dragscroll_left_enabled) {
         ptechinos_pointing_device_task_drag_scroll(&report);
     }
     return pointing_device_task_user(report);
 }
-#        elif defined(POINTING_DEVICE_RIGHT)
+#            elif defined(POINTING_DEVICE_RIGHT)
 report_mouse_t pointing_device_task_kb(report_mouse_t report) {
     if (g_ptechinos_pointer_config.is_dragscroll_right_enabled) {
         ptechinos_pointing_device_task_drag_scroll(&report);
     }
     return pointing_device_task_user(report);
 }
+#            else
+#                error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
+#            endif
 #        else
-#            error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
-#        endif
-#    else
 report_mouse_t pointing_device_task_kb(report_mouse_t report) {
     if (!is_keyboard_master()) return report;
 
@@ -409,27 +411,27 @@ report_mouse_t pointing_device_task_kb(report_mouse_t report) {
     report = pointing_device_task_user(report);
     return report;
 }
-#    endif
+#        endif
 
 void pointing_device_init_kb(void) {
     // Called before keyboard_post_init_kb in keyboard_init (see QMK keyboard.c)
-#    if defined(SPLIT_POINTING_ENABLE)
-#        if defined(POINTING_DEVICE_COMBINED)
+#        if defined(SPLIT_POINTING_ENABLE)
+#            if defined(POINTING_DEVICE_COMBINED)
     ptechinos_pointing_device_set_cpi(PTECHINOS_LEFT);
     ptechinos_pointing_device_set_cpi(PTECHINOS_RIGHT);
-#        elif defined(POINTING_DEVICE_LEFT)
+#            elif defined(POINTING_DEVICE_LEFT)
     ptechinos_pointing_device_set_cpi(PTECHINOS_LEFT);
-#        elif defined(POINTING_DEVICE_RIGHT)
+#            elif defined(POINTING_DEVICE_RIGHT)
     ptechinos_pointing_device_set_cpi(PTECHINOS_RIGHT);
+#            else
+#                error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
+#            endif
 #        else
-#            error "You need to define the side(s) the pointing device is on. POINTING_DEVICE_COMBINED / POINTING_DEVICE_LEFT / POINTING_DEVICE_RIGHT"
-#        endif
-#    else
     if (!is_keyboard_master()) return;
 
     pointer_side_t side = is_keyboard_left() ? PTECHINOS_LEFT : PTECHINOS_RIGHT;
     ptechinos_pointing_device_set_cpi(side);
-#    endif
+#        endif
 
     // Already called by pointing_device_init (see QMK pointing_device.c)
     // pointing_device_init_user();
@@ -438,7 +440,7 @@ void pointing_device_init_kb(void) {
 //
 // AUTO MOUSE (QMK)
 //
-#    if defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
+#        if defined(POINTING_DEVICE_AUTO_MOUSE_ENABLE)
 /**
  * @brief Keyboard level callback for adding keyrecords as mouse keys
  */
@@ -454,7 +456,7 @@ bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
     }
     return is_mouse_record_user(keycode, record);
 }
-#    endif
+#        endif
 
 //
 // COMMON (QMK)
@@ -549,4 +551,5 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     return let_qmk_handle_it;
 }
 
+#    endif
 #endif

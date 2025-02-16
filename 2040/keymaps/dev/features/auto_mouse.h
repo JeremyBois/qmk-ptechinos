@@ -5,6 +5,7 @@
 #include "action.h"
 #include "report.h"
 
+#ifdef PTECHINOS_AUTO_MOUSE_ENABLE
 typedef struct {
     uint8_t  layer;     // Layer to activate
     uint16_t timeout;   // Layer activation timeout if unused
@@ -22,29 +23,29 @@ typedef struct {
 } auto_mouse_data_t;
 
 // Default value for the auto mouse layer configuration
-#ifndef PTECHINOS_AUTO_MOUSE_LAYER
-#    define PTECHINOS_AUTO_MOUSE_LAYER 0 // Layer to activate
-#endif
+#    ifndef PTECHINOS_AUTO_MOUSE_LAYER
+#        define PTECHINOS_AUTO_MOUSE_LAYER 0 // Layer to activate
+#    endif
 
-#ifndef PTECHINOS_AUTO_MOUSE_TIMEOUT
-#    define PTECHINOS_AUTO_MOUSE_TIMEOUT 700 // Layer activation timeout if unused
-#endif
+#    ifndef PTECHINOS_AUTO_MOUSE_TIMEOUT
+#        define PTECHINOS_AUTO_MOUSE_TIMEOUT 700 // Layer activation timeout if unused
+#    endif
 
-#ifndef PTECHINOS_AUTO_MOUSE_KEY_DELAY
-#    define PTECHINOS_AUTO_MOUSE_KEY_DELAY ((int)(TAPPING_TERM * 1.75)) // Time delay after a non mouse key press / release
-#endif
+#    ifndef PTECHINOS_AUTO_MOUSE_KEY_DELAY
+#        define PTECHINOS_AUTO_MOUSE_KEY_DELAY ((int)(TAPPING_TERM * 1.75)) // Time delay after a non mouse key press / release
+#    endif
 
-#ifndef PTECHINOS_AUTO_MOUSE_DEBOUNCE
-#    define PTECHINOS_AUTO_MOUSE_DEBOUNCE 40 // Time delay from last activation to next update
-#endif
+#    ifndef PTECHINOS_AUTO_MOUSE_DEBOUNCE
+#        define PTECHINOS_AUTO_MOUSE_DEBOUNCE 40 // Time delay from last activation to next update
+#    endif
 
-#ifndef PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD
-#    define PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD 4 // Minimal movement to turn on the auto mouse layer
-#endif
+#    ifndef PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD
+#        define PTECHINOS_AUTO_MOUSE_ACTIVATION_THRESHOLD 4 // Minimal movement to turn on the auto mouse layer
+#    endif
 
-#ifndef PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER
-#    define PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER 1 // Erase the mouse report if mouse layer is inactive
-#endif
+#    ifndef PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER
+#        define PTECHINOS_AUTO_MOUSE_REPORT_ONLY_ON_MOUSELAYER 1 // Erase the mouse report if mouse layer is inactive
+#    endif
 
 /**
  * @brief      Enable of disable the auto_mouse feature.
@@ -136,3 +137,5 @@ bool auto_mouse_should_exit(uint16_t keycode, keyrecord_t* record);
  * @return     True if keycode should turn off the auto mouse layer else false.
  */
 bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record);
+
+#endif

@@ -17,7 +17,10 @@
 #include "features/encoder.h"
 #include "features/swapper.h"
 #include "features/switcher.h"
-#include "features/auto_mouse.h"
+
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_ENABLE)
+#    include "features/auto_mouse.h"
+#endif
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -857,7 +860,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             break;
     }
 
-#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_ENABLE)
     // Auto mouse feature processing
     auto_mouse_on_process_record(keycode, record);
 #endif
@@ -954,7 +957,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
 // └─────────────────────────────────────────────────┘
 //
 
-#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_LAYER)
+#if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_ENABLE)
 void pointing_device_init_user(void) {
     auto_mouse_set_layer(L_MOUSE);
     auto_mouse_set_enabled(true);
