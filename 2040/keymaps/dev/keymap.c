@@ -693,17 +693,49 @@ void clear_keyboard_state(void) {
 #endif
 }
 
+void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
+    update_oneshot(&switcher_shift_state, KC_LSFT, LT_SWITCH_SFT, keycode, record);
+
+    // Layer off is delayed to let QMK handle the keycode before leaving the layer
+    // However the layer will still be active when the next process_record_user will be called
+    // resulting in incorrect layer state for custom keycode handling
+    // fg:
+    // Without custom post_process_record_user
+    //  - layer off --> tap(LT_SWITCH_DIA)       --> layer active
+    //  - layer on  --> tap(m)                   --> layer active --> é
+    //  - layer on  --> tap(e)                   --> layer off    --> è
+    //  - layer off --> tap(e)                   --> layer off    --> e
+    // Handle any pending layer_off in post_process_record_user
+    //  - layer off --> tap(LT_SWITCH_DIA)       --> layer active
+    //  - layer on  --> post_process_record_user --> layer off
+    //  - layer on  --> tap(m)                   --> layer active --> é
+    //  - layer off --> tap(e)                   --> layer off    --> e
+    update_oneshot_layer(&switcher_sym_state, L_SYM, LT_SWITCH_SYM, keycode, record);
+    update_oneshot_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // dprintf("Keycode %d --> Is Tap: %d\n", keycode,  record->tap.count);
 
     // Swapper on one key (no timer)
-    update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, LSFT_T(SW_ATAB), keycode, record);
-    // update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, RALT_T(SW_CTAB), keycode, record);
+    update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, SW_ATAB, keycode, record);
+    update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, SW_CTAB, keycode, record);
+
+    //     // Custom keycodesc
+    // bool    let_qmk_handle_it = true;
+    // uint8_t mods              = get_mods() | get_weak_mods() | get_oneshot_mods();
+    // // uint8_t mods              = get_mods();
+    // // bool    shiftPressed      = is_caps_word_on() ^ is_mod_active(mods, MOD_MASK_SHIFT);
+    // bool    shiftPressed      = is_mod_active(mods, MOD_LSFT);
+    // dprintf("Keycode: 0x%04X | Mods: 0x%02X | ShiftPressed: %s\n", keycode, mods, shiftPressed ? "true" : "false");
+
+    // Custom mods (no timer)
+    update_oneshot(&switcher_shift_state, KC_LSFT, LT_SWITCH_SFT, keycode, record);
 
     // Custom layer change (no timer)
     update_oneshot_layer(&switcher_sym_state, L_SYM, LT_SWITCH_SYM, keycode, record);
-    // update_oneshot_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record);
-    update_move_hold_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record, &switcher_layer_backup);
+    update_oneshot_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record);
+
     update_move_hold_layer(&switcher_nav_state, L_NAV, LT_SWITCH_NAV, keycode, record, &switcher_layer_backup);
 
     // Custom keycodes
