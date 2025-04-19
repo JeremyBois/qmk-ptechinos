@@ -1,40 +1,60 @@
 // TOP ROW
 // Left
 COMB(escape_l, KC_ESC, KC_D, KC_W)
+// COMB(comment, C(KC_SLSH), KC_L, KC_D)
+// COMB(curly_l, KC_LCBR, KC_W, KC_B)
+
 // Right
-COMB(launcher, A(KC_F2), KC_F, KC_O, KC_U)
-// COMB(back, KC_BSPC, KC_F, KC_O)
-// COMB(del, KC_DEL, KC_O, KC_U)
+COMB(reset, ML_BASE, KC_F, KC_O)
+// COMB(caps, CW_TOGG, KC_O, KC_U)
+// COMB(curly_r, KC_RCBR, KC_Y, KC_F)
+
+
 
 // HOME ROW
 // Left
 COMB(tab, KC_TAB, KC_T, KC_S)
+// COMB(round_l, KC_LPRN, KC_S, KC_G)
+COMB(comment, C(KC_SLSH), KC_S, KC_G)
+
 // Right
 COMB(back, KC_BSPC, KC_M, KC_E)
-COMB(del, KC_DEL, KC_E, KC_A)
+COMB(del, KC_DEL, KC_E, KC_I)
+//COMB(round_r, KC_RPRN, KC_K, KC_M)
+COMB(caps, CW_TOGG, KC_K, KC_M)
+
+
 
 // BOTTOM ROW
 // Left
-COMB(gui_l, KC_LGUI, LALT_T(KC_J), KC_P)
-COMB(comment, C(KC_SLSH), KC_P, KC_C)
+COMB(gui_l, KC_LGUI, LALT_T(KC_J), LSFT_T(KC_P))
+// COMB(comment, C(KC_SLSH), LSFT_T(KC_P), LCTL_T(KC_C))
+// COMB(square_l, KC_LBRC, LCTL_T(KC_C), KC_V)
 
 // Right
-COMB(gui_r, KC_LGUI, KC_COMM, LALT_T(KC_DOT))
-COMB(caps, CW_TOGG, KC_H, KC_COMM)
+COMB(gui_r, KC_LGUI, RSFT_T(KC_COMM), LALT_T(KC_DOT))
+// COMB(caps, CW_TOGG, KC_H, KC_COMM)
+// COMB(caps, CW_TOGG, RCTL_T(KC_H), RSFT_T(KC_COMM))
+// COMB(square_r, KC_RBRC, KC_Z, RCTL_T(KC_H))
 
-// Thumbs
+
+
+// THUMBS ROW
 // Left
 // Right
+// Two hands
+// COMB(adjust, ML_ADJUST, SWITCH_SYM, SWITCH_NUM)
+COMB(adjust, ML_ADJUST, LT_SWITCH_SYM, LT_SWITCH_NUM)
 
-// TWO HANDS
-COMB(adjust, ML_ADJUST, SWITCH_SYM, SWITCH_NUM)
 
-// Vertical HOME/TOP
+
+// HOME/TOP ROW (vertical)
 // Left
-COMB(square_l, KC_LBRC, KC_R, KC_L)
-COMB(round_l,  KC_LPRN, KC_T, KC_D)
-COMB(curly_l,  KC_LCBR, KC_S, KC_W)
+// COMB(square_lb, KC_LBRC, KC_R, KC_L)
+// COMB(round_lb,  KC_LPRN, KC_T, KC_D)
+// COMB(curly_lb,  KC_LCBR, KC_S, KC_W)
 // Right
-COMB(square_r, KC_RBRC, KC_A, KC_U)
-COMB(round_r,  KC_RPRN, KC_E, KC_O)
-COMB(curly_r,  KC_RCBR, KC_M, KC_F)
+// COMB(square_rb, KC_RBRC, KC_I, KC_U)
+// COMB(round_rb,  KC_RPRN, KC_E, KC_O)
+// COMB(curly_rb,  KC_RCBR, KC_M, KC_F)
+

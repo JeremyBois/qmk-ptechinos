@@ -18,32 +18,50 @@ enum custom_layers { L_BASE = 0, L_COLEMAK_DH, L_QWERTY, L_NAV, L_NUM, L_MATH, L
 // └─────────────────────────────────────────────────┘
 //
 enum custom_keycodes {
-// Leader
 #ifdef VIA_ENABLE
     C_CHORD = USER00,
 #else
     C_CHORD = SAFE_RANGE,
 #endif
-    // Repeat
-    REPEAT,
+    // // Repeat
+    // REPEAT,
+    // Avoid conflicting mode tap
+    C_PLUS, // KC_EQUAL and  KC_PLUS --> S(KC_EQUAL)
+    C_PERC, // KC_5     and  KC_PERC --> S(KC_5)
+    C_AT,   // KC_2     and  KC_AT   --> S(KC_2)
+    C_LABK, // KC_COMMA and  KC_LABK --> S(KC_COMMA)
+    C_RABK, // KC_DOT   and  KC_RABK --> S(KC_DOT)
     // Symbols requiring a dead key
     C_TILD,
     C_QUOT,
     C_DQUOT,
+    C_FLQUOT,
+    C_FRQUOT,
     C_GRV,
     // Wrapper for mod tap interception
-    C_AU,
     C_EURO,
     C_POUND,
+    C_DEGREE,
+    C_Y,
+    C_Z,
+    C_C,
     C_X,
     C_V,
     C_LDESK,
     C_RDESK,
-    C_GN,
-    C_GI,
-    // Symbols requiring a shift
-    C_UNDS,
+    C_GP,
+    C_CW,
+    // Ligatures
+    C_AE_LIG,
+    C_OE_LIG,
     // Diacritics
+    C_E_ACUTE,
+    C_E_TRE,
+    C_A_CIR,
+    C_E_CIR,
+    C_I_CIR,
+    C_O_CIR,
+    C_U_CIR,
     C_A_GRV,
     C_E_GRV,
     C_U_GRV,
@@ -51,14 +69,21 @@ enum custom_keycodes {
     // Sequences
     S_CENTER,
     S_CLIP_HISTORY,
+    S_EQ_EQ,
+    S_EXLM_EQ,
+    S_LESS_EQ,
+    S_GREATER_EQ,
+    S_RIGHT_ARROW,
     // Swappers
     SW_CTAB,
     SW_ATAB,
-    // Simple layers
+    // Layers
     ML_BASE,
+    ML_NUM,
     ML_ADJUST,
     ML_MOUSE,
-    // Complex layers (hold/one shot but not timer)
+    SWITCH_SFT,
+    SWITCH_DIA,
     SWITCH_SYM,
     SWITCH_NUM,
     SWITCH_NAV
@@ -73,6 +98,9 @@ enum custom_keycodes {
 #define KCU_COMMENT C(KC_SLSH)
 #define KCU_LEFT_DESK C(A(KC_LEFT))
 #define KCU_RIGHT_DESK C(A(KC_RIGHT))
+// Ligatures
+#define KCU_AE_LIG RALT(KC_Z) // æ
+#define KCU_OE_LIG RALT(KC_K) // œ
 // Diacritics
 #define KCU_C_CEDILLA RALT(KC_COMM) // ç
 #define KCU_E_ACUTE RALT(KC_E)      // é
@@ -80,29 +108,20 @@ enum custom_keycodes {
 #define KCU_COPYRIGHT RALT(KC_C)    // ©
 #define KCU_EURO RALT(KC_5)         // €
 #define KCU_POUND RALT(KC_DLR)      // £
+#define KCU_FLQUOT RALT(KC_LBRC)    // « “
+#define KCU_FRQUOT RALT(KC_RBRC)    // » ”
 #define KCU_DEGREE S(RALT(KC_SCLN)) // °
-
-
-// Trick to detect tap vs hold on custom layer handling
+// Trick to detect tap vs hold on custom layer/mod handling
+#define LT_SWITCH_SFT LT(0, SWITCH_SFT)
 #define LT_SWITCH_NUM LT(0, SWITCH_NUM)
 #define LT_SWITCH_NAV LT(0, SWITCH_NAV)
 #define LT_SWITCH_SYM LT(0, SWITCH_SYM)
+#define LT_SWITCH_DIA LT(0, SWITCH_DIA)
 
 //
 // ┌─────────────────────────────────────────────────┐
 // │ TAP ALIAS                                           │
 // └─────────────────────────────────────────────────┘
-//
-// Diacritics
-#define TAP_E_GRAVE                \
-    tap_key_with_mods(KC_GRV, 0U); \
-    tap_code16(KC_E); // è
-#define TAP_U_GRAVE                \
-    tap_key_with_mods(KC_GRV, 0U); \
-    tap_code16(KC_U); // ù
-#define TAP_A_GRAVE                \
-    tap_key_with_mods(KC_GRV, 0U); \
-    tap_code16(KC_A); // à
 
 // Symbols
 #define TAP_GRAVE_ACCENT tap_undead_key(KC_GRV);  // `
