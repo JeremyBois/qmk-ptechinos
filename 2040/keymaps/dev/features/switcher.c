@@ -1,7 +1,9 @@
+#include "action.h"
 #include "action_layer.h"
 #include "action_tapping.h"
 #include "action_util.h"
 
+#include "features/utility.h"
 #include "quantum.h"
 #include "switcher.h"
 
@@ -35,24 +37,58 @@ __attribute__((weak)) bool is_oneshot_layer_ignored_press(uint16_t keycode, keyr
 void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
     if (keycode == trigger) {
         if (record->event.pressed) {
-            // Trigger keydown
-            if (*state == os_up_unqueued) {
-                register_code(mod);
+            if (*state == os_up_queued) {
+                // Allow to trigger a double mod tap
+                *state = os_up_unqueued;
+
+                // unregister_code(mod);
+                // if (is_weak_mod_active(mod))
+                // {
+                //     del_weak_mods(mod);
+                //     tap_code(KC_LSFT);
+                //     tap_code(KC_LSFT);
+                //     return;
+                // }
             }
-            *state = os_down_unused;
+
+            if (*state == os_up_unqueued) {
+                // register_code16(mod);
+                // add_weak_mods(mod);
+            }
+
+            // Handle tap vs hold
+            if (record->tap.count) {
+                // Make mod active on tap
+                *state = os_up_queued;
+                // Wait for key to activate the wek mod
+                dprintf("OSM - Trigger key down (tap) (on), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_up_queued\n", mod, get_mods(), get_weak_mods(), *state);
+            } else {
+                // Wait for keyup event to decide if we must make mod permanent or not
+                *state = os_down_unused;
+                register_code16(mod);
+                dprintf("OSM - Trigger key down (hold) (on?), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_down_unused\n", mod, get_mods(), get_weak_mods(), *state);
+            }
         } else {
             // Trigger keyup
             switch (*state) {
+                case os_up_queued:
+                    dprintf("OSM - Trigger key up (tap) (on), mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_queued\n", mod, get_mods(), get_weak_mods());
+                    break;
                 case os_down_unused:
-                    // If we didn't use the mod while trigger was held, queue it.
-                    *state = os_up_queued;
+                    // If we didn't use the layer while trigger was held
+                    // we assume user want to cancel the mod
+                    *state = os_up_unqueued;
+                    unregister_code16(mod);
+                    dprintf("OSM - Trigger key up (off), mod: %d, mods: %d, weak_mods: %d, os_down_unused -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
                     break;
                 case os_down_used:
-                    // If we did use the mod while trigger was held, unregister it.
+                    // If we did use the layer while trigger was held, turn it off.
                     *state = os_up_unqueued;
-                    unregister_code(mod);
+                    unregister_code16(mod);
+                    dprintf("OSM - Trigger key up (off), mod: %d, mods: %d, weak_mods: %d, os_down_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
                     break;
                 default:
+                    dprintf("OSM - Trigger key up, mod: %d, mods: %d, weak_mods: %d\n", mod, get_mods(), get_weak_mods());
                     break;
             }
         }
@@ -61,22 +97,59 @@ void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint1
             if (is_oneshot_cancel_key(keycode, record) && *state != os_up_unqueued) {
                 // Cancel oneshot on designated cancel keydown.
                 *state = os_up_unqueued;
-                unregister_code(mod);
+                unregister_code16(mod);
+                unregister_weak_mods(MOD_BIT(mod));
+                dprintf("OSM - Other key down. Cancel (off), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_up_unqueued\n", mod, get_mods(), get_weak_mods(), *state);
+                return;
+            }
+
+            if (is_oneshot_ignored_key(keycode, record) && *state != os_up_unqueued) {
+                dprintf("OSM - Other key down. Ignored key press, mod: %d, mods: %d, weak_mods: %d, os_%d, \n", mod, get_mods(), get_weak_mods(), *state);
+                return;
+            }
+
+            switch (*state) {
+                case os_down_unused:
+                    *state = os_down_used;
+                    dprintf("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_down_unused -> os_down_used\n", mod, get_mods(), get_weak_mods());
+                    break;
+                case os_up_queued:
+                    *state = os_up_queued_used;
+                    // Use weak mod as lazy mod
+                    set_weak_mods(get_weak_mods() | MOD_BIT(mod));
+                    dprintf("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_queued_used\n", mod, get_mods(), get_weak_mods());
+                    break;
+                case os_up_queued_used:
+                    *state = os_up_unqueued;
+                    // Use weak mod as lazy mod
+                    set_weak_mods(get_weak_mods() | MOD_BIT(mod));
+                    dprintf("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_up_queued_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    break;
+                default:
+                    break;
             }
         } else {
-            if (!is_oneshot_ignored_key(keycode, record)) {
-                // On non-ignored keyup, consider the oneshot used.
-                switch (*state) {
-                    case os_down_unused:
-                        *state = os_down_used;
-                        break;
-                    case os_up_queued:
-                        *state = os_up_unqueued;
-                        unregister_code(mod);
-                        break;
-                    default:
-                        break;
-                }
+            if (is_oneshot_ignored_key(keycode, record) && *state != os_up_unqueued) {
+                dprintf("OSM - Other key up. Ignored key release, mod: %d, mods: %d, weak_mods: %d, os_%d, \n", mod, get_mods(), get_weak_mods(), *state);
+                return;
+            }
+
+            // On non-ignored keyup, consider the oneshot used.
+            switch (*state) {
+                case os_up_queued:
+                    *state = os_up_unqueued;
+                    // Release weak mod
+                    unregister_weak_mods(MOD_BIT(mod));
+                    dprintf("OSM - Other key up (off), mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    break;
+                case os_up_queued_used:
+                    *state = os_up_unqueued;
+                    // Release weak mod
+                    unregister_weak_mods(MOD_BIT(mod));
+                    dprintf("OSM - Other key up (off), mod: %d, mods: %d, weak_mods: %d, os_up_queued_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    break;
+                default:
+                    break;
             }
         }
     }
