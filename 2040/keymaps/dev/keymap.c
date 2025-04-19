@@ -1154,6 +1154,26 @@ void auto_mouse_on_layer_inactive(auto_mouse_data_t* context) {
 
 //
 // ┌─────────────────────────────────────────────────┐
+// │ KEY OVERRIDES                                               │
+// └─────────────────────────────────────────────────┘
+//
+#if defined(KEY_OVERRIDE_ENABLE)
+// {}
+const key_override_t seven_key_override  = ko_make_basic(MOD_MASK_SHIFT, KC_7, KC_LCBR);
+const key_override_t height_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_8, KC_RCBR);
+// ()
+const key_override_t one_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_LPRN);
+const key_override_t two_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_2, KC_RPRN);
+// []
+const key_override_t four_key_override = ko_make_basic(MOD_MASK_SHIFT, RCTL_T(KC_4), RCTL_T(KC_LBRC));
+const key_override_t five_key_override = ko_make_basic(MOD_MASK_SHIFT, RSFT_T(KC_5), RSFT_T(KC_RBRC));
+
+// This globally defines all key overrides to be used
+const key_override_t* key_overrides[] = {&seven_key_override, &height_key_override, &one_key_override, &two_key_override, &four_key_override, &five_key_override};
+#endif
+
+//
+// ┌─────────────────────────────────────────────────┐
 // │ DEBUG                                               │
 // └─────────────────────────────────────────────────┘
 //
