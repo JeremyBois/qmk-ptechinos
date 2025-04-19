@@ -25,17 +25,17 @@ typedef enum {
 void update_oneshot(switcher_state *state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
 // Oneshot implementation for layers
-bool update_oneshot_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
+void update_oneshot_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
 // Custom move / hold layer implementation that doesn't rely on timers.
 // If the trigger is tapped then we move to the @layer layer (layer_move).
 // If the trigger is held down then the @layer layer is activated (layer_move).
 //    - If the trigger is released before any other key then @layer activation is deactivated
 //    - If the trigger is still held while another key is pressed then @layer remains active until the trigger key is released (layer_off)
-bool update_move_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record, layer_state_t* layer_memory);
+void update_move_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record, layer_state_t* layer_memory);
 
 // Same as update_move_hold_layer but using layer_on not layer_move
-bool update_active_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
+void update_active_hold_layer(switcher_state *state, uint16_t layer, uint16_t trigger, uint16_t keycode, keyrecord_t *record);
 
 // To be implemented by the consumer.
 // Layers one shot implementation needs to know which keys are used as oneshot mods
@@ -50,7 +50,7 @@ bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record);
 bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record);
 
 // To be implemented by the consumer.
-// Defines keys to ignore when determining whether a oneshot mod has been used.
+// Defines keys for which pressed event is ignore but the release event is handled
 // Setting this to modifiers and layer change keys allows stacking multiple oneshot modifiers
 // and carrying them between layers.
 // True to ignore, False to handle
