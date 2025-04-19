@@ -590,9 +590,12 @@ bool get_combo_must_tap(uint16_t index, combo_t* combo) {
 //
 // Custom swappers
 bool swapper_atab_active = false;
-// bool swapper_ctab_active = false;
+bool swapper_ctab_active = false;
+
 // Custom layer switchers
+switcher_state switcher_shift_state  = os_up_unqueued;
 switcher_state switcher_sym_state    = os_up_unqueued;
+switcher_state switcher_dia_state    = os_up_unqueued;
 switcher_state switcher_num_state    = os_up_unqueued;
 switcher_state switcher_nav_state    = os_up_unqueued;
 layer_state_t  switcher_layer_backup = 0;
@@ -619,14 +622,17 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case TO(0):
         case ML_BASE:
+        case ML_NUM:
         case ML_ADJUST:
         case ML_MOUSE:
         case SWITCH_NAV:
-        case LT_SWITCH_NAV:
         case SWITCH_SYM:
-        case LT_SWITCH_SYM:
         case SWITCH_NUM:
+        case SWITCH_DIA:
+        case LT_SWITCH_NAV:
+        case LT_SWITCH_SYM:
         case LT_SWITCH_NUM:
+        case LT_SWITCH_DIA:
         case KC_ESC:
             return true;
         case RSFT_T(ML_BASE):
@@ -645,15 +651,18 @@ bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
         case QK_MODS ... QK_MODS_MAX:
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-            return true;
+            // Holds
+            return !record->tap.count;
 
         // Layers
         case SWITCH_NAV:
-        case LT_SWITCH_NAV:
         case SWITCH_SYM:
-        case LT_SWITCH_SYM:
         case SWITCH_NUM:
+        case SWITCH_DIA:
+        case LT_SWITCH_NAV:
+        case LT_SWITCH_SYM:
         case LT_SWITCH_NUM:
+        case LT_SWITCH_DIA:
             return true;
         default:
             return false;
@@ -711,6 +720,7 @@ void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
     //  - layer on  --> tap(m)                   --> layer active --> é
     //  - layer off --> tap(e)                   --> layer off    --> e
     update_oneshot_layer(&switcher_sym_state, L_SYM, LT_SWITCH_SYM, keycode, record);
+    update_oneshot_layer(&switcher_dia_state, L_DIA, LT_SWITCH_DIA, keycode, record);
     update_oneshot_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record);
 }
 
@@ -734,6 +744,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     // Custom layer change (no timer)
     update_oneshot_layer(&switcher_sym_state, L_SYM, LT_SWITCH_SYM, keycode, record);
+    update_oneshot_layer(&switcher_dia_state, L_DIA, LT_SWITCH_DIA, keycode, record);
     update_oneshot_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record);
 
     update_move_hold_layer(&switcher_nav_state, L_NAV, LT_SWITCH_NAV, keycode, record, &switcher_layer_backup);
@@ -1084,9 +1095,14 @@ bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
     bool should_exit = false;
     switch (keycode) {
         // Switching a layer should terminate the auto mouse layer
+        case SWITCH_NAV:
+        case SWITCH_SYM:
+        case SWITCH_NUM:
+        case SWITCH_DIA:
+        case LT_SWITCH_NAV:
         case LT_SWITCH_SYM:
         case LT_SWITCH_NUM:
-        case LT_SWITCH_NAV:
+        case LT_SWITCH_DIA:
             should_exit = true;
             break;
         default:
