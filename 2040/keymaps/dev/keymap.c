@@ -232,21 +232,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *        ,-----------------------------------.                    ,-----------------------------------.
      *        |   Q   |   L  |   D  |   W  |   B  |                    |   Y  |   F  |   O  |   U  | Mouse |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * |      |   N   |   R  |   T  |   S  |   G  |                    |   K  |   M  |   E  |   I  |   A   |       |
+     * | LSFT |   N   |   R  |   T  |   S  |   G  |                    |   K  |   M  |   E  |   I  |   A   |  RSFT |
      * |      |       |      |      |      |      |-------.    ,-------|      |      |      |      |       |       |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |   X   |   J  |   P  |   C  |   V  |-------|    |-------|   Z  |   H  |   ,  |   .  |       |
      *        |       | LAlt |LShift| LCtrl|      |       |    |       |      |RCtrl |RShift| LAlt | RAlt  |
      *        `-----------------------------------/       /     \       \----------------------------------'
-     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |   SFT  |  DIA  |
-     *                       |   NAV  |        |/  NUM  /         \ SYM   \|        |  DEF  |
+     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DIA  |
+     *                       |   NAV  |        |/  NUM  /         \ SYM   \|   SFT  |  DEF  |
      *                       `--------'--------'-------'           '-------'--------'-------'
      */
     [L_BASE] = LAYOUT(
                         KC_Q, KC_L, KC_D, KC_W, KC_B,                      KC_Y, KC_F, KC_O, KC_U, ML_MOUSE,
-               XXXXXXX, KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_I, KC_A, XXXXXXX,
-KC_X, LALT_T(KC_J), LSFT_T(KC_P), LCTL_T(KC_C), KC_V, XXXXXXX,    XXXXXXX, KC_Z, RCTL_T(KC_H), RSFT_T(KC_COMM), LALT_T(KC_DOT), KC_RALT,
-                         LT_SWITCH_NAV, KC_SPC, LT_SWITCH_NUM,    LT_SWITCH_SYM, LT_SWITCH_SFT, LT_SWITCH_DIA
+               KC_LSFT, KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_K, KC_M, KC_E, KC_I, KC_A, KC_RSFT,
+RALT_T(KC_X), LALT_T(KC_J), LSFT_T(KC_P), LCTL_T(KC_C), KC_V, XXXXXXX,    XXXXXXX, KC_Z, RCTL_T(KC_H), RSFT_T(KC_COMM), LALT_T(KC_DOT), CW_LOCK_TOGG,
+                         LT_SWITCH_NAV, KC_SPC, LT_SWITCH_NUM,    LT_SWITCH_SYM, LSFT_T(KC_ENT), LT_SWITCH_DIA
     ),
     /*
      * QWERTY
@@ -402,7 +402,10 @@ SW_CTAB, LALT_T(C_LDESK), LSFT_T(S_CENTER), LCTL_T(C_RDESK), KC_PSCR, _______,  
                                                            _______, _______, _______,   _______, _______, _______
     ),
     /* DIA
-     * This layer contains text related symbols and french diacritics
+     * This layer contains
+     *   - text related symbols and french diacritics
+     *   - greek letters
+     *   - unicode symbols
      * ^… `… '… "…   → left  → Easy to combine with vowels on the right
      * '             → left  → Most common pattern is `Consonant->'->Vowel`
      * " `           → left  → Below and above ' for memonic
@@ -413,12 +416,12 @@ SW_CTAB, LALT_T(C_LDESK), LSFT_T(S_CENTER), LCTL_T(C_RDESK), KC_PSCR, _______,  
      * â û ô         → right → Under respective letters for memonic
      * à             → right → Easy to combine with `l` to get "là" in french
      *        ,------------------------------------.                    ,------------------------------------.
-     *        | GREEK |   î  |   `  |   ~  |  `…   |                    |       |   û  |   ô  |   ù  |  MATH |
+     *        | GREEK |   â  |   `  |   ~  |  `…   |                    |   œ   |   û  |   ô  |   ù  |  MATH |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
-     * |      |   ^…  |   ê  |   '  |   _  |  "…   |                    |       |   é  |   è  |   à  |   â   |      |
+     * |      |   ^…  |   _  |   '  |   "  |  "…   |                    |       |   é  |   è  |   ê  |   à   |      |
      * |      |       |      |      |      |       |-------.    ,-------|       |      |      |      |       |      |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |       |   -  |   "  |   ç  |  '…   |-------|    |-------|   æ   |      |  « “ |  » ” |   œ   |
+     *        |       |   -  |      |   ç  |  '…   |-------|    |-------|   æ   |   î  |  « “ |  » ” |       |
      *        |       |      |LShift| LCtrl|       |       |    |       |       | RCtrl|RShift|      |       |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |   SFT  |  DIA    |
@@ -426,15 +429,16 @@ SW_CTAB, LALT_T(C_LDESK), LSFT_T(S_CENTER), LCTL_T(C_RDESK), KC_PSCR, _______,  
      *                       `---------'--------'------'            '------'--------'---------'
      */
     [L_DIA] = LAYOUT(
-                   TO(L_GREEK), C_I_CIR, C_GRV, C_TILD, KC_GRV,                     XXXXXXX, C_U_CIR, C_O_CIR, C_U_GRV, TO(L_MATH),
-           XXXXXXX, KC_CIRC, C_E_CIR, C_QUOT, KC_UNDS, KC_DQUO,                     XXXXXXX, C_E_ACUTE, C_E_GRV, C_A_GRV, C_A_CIR, XXXXXXX,
-  XXXXXXX, KC_MINUS, LSFT_T(C_DQUOT), LCTL_T(C_C_CED), KC_QUOT, _______,   _______, KCU_AE_LIG, KC_RCTL, RSFT_T(C_FLQUOT), KCU_FRQUOT, KCU_OE_LIG,
-                                              _______, _______, _______,   _______, _______, _______
+                  TO(L_GREEK), C_A_CIR, C_GRV, C_TILD, KC_GRV,                     KCU_OE_LIG, C_U_CIR, C_O_CIR, C_U_GRV, TO(L_MATH),
+          XXXXXXX, KC_CIRC, KC_UNDS, C_QUOT, C_DQUOT, KC_DQUO,                     XXXXXXX, C_E_ACUTE, C_E_GRV, C_E_CIR, C_A_GRV, XXXXXXX,
+ XXXXXXX, KC_MINUS, KC_LSFT, LCTL_T(C_C_CED), KC_QUOT, _______,   _______, KCU_AE_LIG, RCTL_T(C_I_CIR), RSFT_T(C_FLQUOT), KCU_FRQUOT, XXXXXXX,
+                                             _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
      * This layer contains
      *   - symbols with a layout optimize for programming
-     *   - access to rarely used symbols (greek letters and unicode symbols)
+     *   - greek letters
+     *   - unicode symbols
      * | + - =     → Easy rollin += -= |=, easy repeat for ++ -- == ||, combine with numbers on the right side
      * / \         → Facing each other on each side (/\ memonic)
      * { ( [ ] ) } → Facing each other, easy to roll and repeat
@@ -448,7 +452,7 @@ SW_CTAB, LALT_T(C_LDESK), LSFT_T(S_CENTER), LCTL_T(C_RDESK), KC_PSCR, _______,  
      * |      |   {   |   (  |  )   |  }   |   /   |                    |   \   |  :   |   ;  |   !  |   ?   |      |
      * |      |       |      |      |      |       |-------.    ,-------|       |      |      |      |       |      |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |   |   |   -  |  + ÷ |  = × |  ==   |-------|    |-------|       |  @   |   <  |   >  |       |
+     *        |   |   |   -  |  + ÷ |  = × |  -->  |-------|    |-------|       |  @   |   <  |   >  |       |
      *        |       |      |LShift| LCtrl|       |       |    |       |       |RCtrl |RShift|      |       |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |   SFT  |  DIA    |
@@ -458,7 +462,7 @@ SW_CTAB, LALT_T(C_LDESK), LSFT_T(S_CENTER), LCTL_T(C_RDESK), KC_PSCR, _______,  
     [L_SYM] = LAYOUT(
                     TO(L_GREEK), KC_LBRC, KC_RBRC, KC_HASH, XXXXXXX,                     KC_PERC, KC_AMPR, KC_ASTR, KC_DLR, TO(L_MATH),
                XXXXXXX, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_SLSH,                     KC_BSLS, KC_COLN, KC_SCLN, KC_EXLM, KC_QUES, XXXXXXX,
-          KC_PIPE, KC_MINS, LSFT_T(C_PLUS), LCTL_T(KC_EQL), S_EQ_EQ, _______,   _______, XXXXXXX, RCTL_T(C_AT), RSFT_T(C_LABK), KC_RABK, XXXXXXX,
+     KC_PIPE, KC_MINS, LSFT_T(C_PLUS), LCTL_T(KC_EQL), S_RIGHT_ARROW, _______,   _______, XXXXXXX, RCTL_T(C_AT), RSFT_T(C_LABK), KC_RABK, XXXXXXX,
                                                    _______, _______, _______,   _______, _______, _______
     ),
 #if defined(UNICODEMAP_ENABLE)
@@ -616,7 +620,7 @@ bool swapper_atab_active = false;
 bool swapper_ctab_active = false;
 
 // Custom layer switchers
-switcher_state switcher_shift_state  = os_up_unqueued;
+// switcher_state switcher_shift_state  = os_up_unqueued;
 switcher_state switcher_sym_state    = os_up_unqueued;
 switcher_state switcher_dia_state    = os_up_unqueued;
 switcher_state switcher_num_state    = os_up_unqueued;
@@ -728,7 +732,7 @@ void clear_keyboard_state(void) {
 }
 
 void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
-    update_oneshot(&switcher_shift_state, KC_LSFT, LT_SWITCH_SFT, keycode, record);
+    // update_oneshot(&switcher_shift_state, KC_LSFT, LT_SWITCH_SFT, keycode, record);
 
     // Layer off is delayed to let QMK handle the keycode before leaving the layer
     // However the layer will still be active when the next process_record_user will be called
@@ -756,8 +760,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, SW_ATAB, keycode, record);
     update_swapper(&swapper_ctab_active, KC_LCTL, KC_TAB, SW_CTAB, keycode, record);
 
-    // Custom mods (no timer)
-    update_oneshot(&switcher_shift_state, KC_LSFT, LT_SWITCH_SFT, keycode, record);
+    // // Custom mods (no timer)
+    // update_oneshot(&switcher_shift_state, KC_LSFT, LT_SWITCH_SFT, keycode, record);
 
     // Custom layer change (no timer)
     update_oneshot_layer(&switcher_sym_state, L_SYM, LT_SWITCH_SYM, keycode, record);
@@ -1260,6 +1264,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t* record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case MT(MOD_RCTL, KC_ENT):
+        case MT(MOD_LSFT, KC_ENT):
         case LCTL_T(C_RDESK):
         case RSFT_T(ML_BASE):
         case LSFT_T(ML_BASE):
