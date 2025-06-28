@@ -9,10 +9,6 @@
 #include "quantum.h"
 #include "quantum_keycodes.h"
 
-#if defined(CAPS_WORD_ENABLE)
-#    include "caps_word.h"
-#endif
-
 #if defined(UNICODEMAP_ENABLE)
 #    include "process_keycode/process_unicodemap.h"
 #endif
@@ -767,9 +763,7 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
 
 void clear_keyboard_state(void) {
 // Reset caps word
-#if defined(CAPS_WORD_ENABLE)
-    caps_word_off();
-#elif defined(CAPS_WORD_LOCK_ENABLE)
+#if defined(CAPS_WORD_LOCK_ENABLE)
     caps_word_lock_disable();
 #endif
 
@@ -941,14 +935,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_RIGHT, MOD_BIT_LCTRL | MOD_BIT_LALT);
             break;
             // Caps word
-#if defined(CAPS_WORD_ENABLE)
-        case RALT_T(C_CW):
-            if (record->tap.count && record->event.pressed) {
-                caps_word_on();
-                let_qmk_handle_it = false;
-            }
-            break;
-#elif defined(CAPS_WORD_LOCK_ENABLE)
+#if defined(CAPS_WORD_LOCK_ENABLE)
         case CW_LOCK_TOGG:
             if (record->event.pressed) {
                 // dprintf("Capslock - CW_LOCK_TOGG (enter) - Status : %s\n", is_caps_word_lock_on() ? "on" : "off");
@@ -1067,47 +1054,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 // │ CAPS WORD                                           │
 // └─────────────────────────────────────────────────┘
 //
-#if defined(CAPS_WORD_ENABLE)
-bool caps_word_press_user(uint16_t keycode) {
-    switch (keycode) {
-        // Keycodes that continue Caps Word, with shift applied.
-        case KC_A ... KC_Z:
-        // Diacritics
-        case RALT(KC_Z):
-        case RALT(KC_K):
-        case RALT(KC_COMM):
-            add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
-            return true;
-
-        // Keycodes that continue Caps Word, without shifting.
-        case KC_1 ... KC_0:
-        case KC_BSPC:
-        case KC_DEL:
-        case KC_UNDS:
-        case KC_MINS:
-        case KC_CIRC:
-        // Diacritics
-        case KC_GRV:
-        case KC_DQUO:
-        case KC_QUOT:
-            return true;
-
-        // Changing layers continue Caps Word, without shifting.
-        // Except when moving back to default layer
-        case SWITCH_NAV:
-        case SWITCH_SYM:
-        case SWITCH_NUM:
-        case SWITCH_DIA:
-        case LT_SWITCH_NAV:
-        case LT_SWITCH_SYM:
-        case LT_SWITCH_NUM:
-        case LT_SWITCH_DIA:
-            return true;
-        default:
-            return false; // Deactivate Caps Word.
-    }
-}
-#elif defined(CAPS_WORD_LOCK_ENABLE)
+#if defined(CAPS_WORD_LOCK_ENABLE)
 void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
     sync_caps_word_lock_on();
 
@@ -1185,7 +1132,6 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
         }
     }
 }
-
 #endif
 
 //
