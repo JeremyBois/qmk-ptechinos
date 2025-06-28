@@ -712,6 +712,44 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
     }
 }
 
+bool is_oneshot_delayed_deactivation(uint16_t keycode) {
+    switch (keycode) {
+        // Get true keycode out of a mod tap
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+        case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
+        case QK_MODS ... QK_MODS_MAX:
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+            // Get the base tapping keycode of a mod- or layer-tap key
+            keycode = get_tap_key(keycode);
+        default:
+            break;
+    }
+
+    switch (keycode) {
+        // No delay when we handle the key manually
+        case C_E_ACUTE:
+        case C_E_GRV:
+        case C_E_CIR:
+        case C_E_TRE:
+        case C_A_GRV:
+        case C_A_CIR:
+        case C_U_GRV:
+        case C_U_CIR:
+        case C_I_CIR:
+        case C_O_CIR:
+        case C_C_CED:
+            return false;
+        // Delaying the layer off when QMK is responsible for key handling
+        // to make sure OSL is used as reference
+        case KC_GRV:
+        case KC_CIRC:
+        case KC_DQUO:
+        case KC_QUOT:
+        default:
+            return true;
+    }
+}
+
 //
 // ┌─────────────────────────────────────────────────┐
 // │ CUSTOM KEYCODE HANDLING                             │

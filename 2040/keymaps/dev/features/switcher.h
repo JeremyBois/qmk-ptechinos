@@ -64,6 +64,15 @@ bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record);
 // True to ignore, False to handle
 bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record);
 
+// To be implemented by the consumer.
+// This is required to avoid the following issues with OSL:
+// Case 1: OSL + key --> key processed without the layer information
+//      --> Layer deactivation must be delayed (return true)
+// Case 2: OSL + key + key --> both keys processed within the layer
+//      --> Layer deactivation must not be delayed (return false)
+bool is_oneshot_delayed_deactivation(uint16_t keycode);
+
+
 // Represents the three states a tap_mod key can be in
 typedef enum {
     mm_held_unused,

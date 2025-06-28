@@ -11,6 +11,10 @@ __attribute__((weak)) bool is_oneshot_mod_key(uint16_t keycode) {
     return false;
 }
 
+__attribute__((weak)) bool is_oneshot_delayed_deactivation(uint16_t keycode) {
+    return false;
+}
+
 __attribute__((weak)) bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record) {
     return false;
 }
@@ -32,6 +36,18 @@ __attribute__((weak)) bool is_oneshot_layer_ignored_press(uint16_t keycode, keyr
         default:
             return false;
     }
+}
+
+static bool is_key_event_from_layer(keyrecord_t *record, uint8_t layer)
+{
+#if defined (STRICT_LAYER_RELEASE) || defined (SEMI_STRICT_LAYER_RELEASE)
+    // No layer cache so use current layer
+    return layer_state_is(layer);
+#else
+    // Use layer cache for key
+    uint8_t key_layer = read_source_layers_cache(record->event.key);
+    return key_layer == layer;
+#endif
 }
 
 void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint16_t keycode, keyrecord_t* record) {
@@ -164,14 +180,14 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
             }
             if (record->tap.count) {
                 // Make layer permanent on tap
-                dprintf("OSL - Trigger key down (tap) (on?), layer: %d, os_%d -> os_up_queued\n", layer, *state);
+                dprintf("OSL (%d) - Trigger key down (tap) (on?), layer: %d, os_%d -> os_up_queued\n", trigger, layer, *state);
                 *state = os_up_queued;
             } else {
                 // Wait for keyup event to decide if we must make layer permanent or not
-                dprintf("OSL - Trigger key down (hold) (on?), layer: %d, os_%d -> os_down_unused\n", layer, *state);
+                dprintf("OSL (%d) - Trigger key down (hold) (on?), layer: %d, os_%d -> os_down_unused\n", trigger, layer, *state);
                 *state = os_down_unused;
             }
-            dprintf("OSL - Trigger key down (on?), layer active: %d\n", layer_state_is(layer));
+            dprintf("OSL (%d) - Trigger key down (on?), layer active: %d\n", trigger, layer_state_is(layer));
         } else {
             // Trigger keyup
             switch (*state) {
@@ -180,16 +196,16 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                     // we assume user want to cancel the layer switch
                     *state = os_up_unqueued;
                     layer_off(layer);
-                    dprintf("OSL - Trigger key up (off), layer: %d, os_down_unused -> os_up_unqueued\n", layer);
+                    dprintf("OSL (%d) - Trigger key up (off), layer: %d, os_down_unused -> os_up_unqueued\n", trigger, layer);
                     break;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.
                     *state = os_up_unqueued;
                     layer_off(layer);
-                    dprintf("OSL - Trigger key up (off), layer: %d, os_down_used -> os_up_unqueued\n", layer);
+                    dprintf("OSL (%d) - Trigger key up (off), layer: %d, os_down_used -> os_up_unqueued\n", trigger, layer);
                     break;
                 default:
-                    dprintf("OSL - Trigger key up, layer: %d\n", layer);
+                    dprintf("OSL (%d) - Trigger key up, layer: %d\n", trigger, layer);
                     break;
             }
         }
@@ -197,39 +213,43 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
         if (record->event.pressed) {
             if (is_oneshot_layer_cancel_key(keycode, record) && *state != os_up_unqueued) {
                 // Cancel oneshot layer on designated cancel keydown.
-                dprintf("OSL - Other key down. Cancel (off), layer: %d, os_%d -> os_up_unqueued\n", layer, *state);
+                dprintf("OSL (%d) - Other key down. Cancel (off), layer: %d, os_%d -> os_up_unqueued\n", trigger, layer, *state);
                 *state = os_up_unqueued;
                 layer_off(layer);
                 return;
             }
             if (is_oneshot_layer_ignored_press(keycode, record) && *state != os_up_unqueued) {
-                dprintf("OSL - Other key down. Ignored key press, layer: %d, \n", layer);
+                dprintf("OSL (%d) - Other key down. Ignored key press, layer: %d, \n", trigger, layer);
                 return;
             }
-            uint8_t key_layer = read_source_layers_cache(record->event.key);
-            if (key_layer == layer) {
+            // Ignore key ups from other layers
+            if (is_key_event_from_layer(record, layer)) {
                 // On non-ignored keydown, consider the oneshot used.
                 switch (*state) {
                     case os_down_unused:
                         *state = os_down_used;
-                        dprintf("OSL - Other key down, layer: %d, os_down_unused -> os_down_used\n", layer);
+                        dprintf("OSL (%d) - Other key down. Layer: %d, os_down_unused -> os_down_used\n", trigger, layer);
                         break;
                     case os_up_queued:
                         if (is_oneshot_mod_key(keycode)) {
                             *state = os_up_unqueued;
                             layer_off(layer);
-                            dprintf("OSL - Other key down. Oneshot mod key (off), layer: %d, os_up_queued -> os_up_unqueued\n", layer);
-                        } else {
+                            dprintf("OSL (%d) - Other key down. Oneshot mod key (off), layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
+                        } else if (is_oneshot_delayed_deactivation(keycode)) {
                             // layer_off is delayed to let QMK handle the key
                             // layer_off(layer);
                             *state = os_up_queued_used;
-                            dprintf("OSL - Other key down, layer: %d, os_up_queued -> os_up_queued_used\n", layer);
+                            dprintf("OSL (%d) - Other key down. Delayed key. Layer: %d, os_up_queued -> os_up_queued_used\n", trigger, layer);
+                        } else {
+                            layer_off(layer);
+                            *state = os_up_unqueued;
+                            dprintf("OSL (%d) - Other key down. Layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
                         }
                         break;
                     case os_up_queued_used:
                         *state = os_up_unqueued;
                         layer_off(layer);
-                        dprintf("OSL - Other key down (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", layer);
+                        dprintf("OSL (%d) - Other key down (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", trigger, layer);
                         break;
                     default:
                         break;
@@ -237,19 +257,18 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
             }
         } else {
             // Ignore key ups from other layers
-            uint8_t key_layer = read_source_layers_cache(record->event.key);
-            if (key_layer == layer) {
+            if (is_key_event_from_layer(record, layer)) {
                 // On non-ignored keyup, consider the oneshot used.
                 switch (*state) {
                     case os_up_queued:
                         *state = os_up_unqueued;
                         layer_off(layer);
-                        dprintf("OSL - Other key up (off), layer: %d, os_up_queued -> os_up_unqueued\n", layer);
+                        dprintf("OSL (%d) - Other key up (off), layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
                         break;
                     case os_up_queued_used:
                         *state = os_up_unqueued;
                         layer_off(layer);
-                        dprintf("OSL - Other key up (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", layer);
+                        dprintf("OSL (%d) - Other key up (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", trigger, layer);
                         break;
                     default:
                         break;
@@ -312,9 +331,8 @@ void update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
             }
         }
     } else {
-        uint8_t key_layer = read_source_layers_cache(record->event.key);
-        dprintf("MHL - Other key, layer: %d, key_layer: %d\n", layer, key_layer);
-        if (key_layer == layer) {
+        // Ignore key ups from other layers
+        if (is_key_event_from_layer(record, layer)) {
             if (record->event.pressed) {
                 // Reset state to make it work if we use another key to change layer
                 switch (*state) {
@@ -384,8 +402,16 @@ void update_active_hold_layer(switcher_state* state, uint16_t layer, uint16_t tr
             }
         }
     } else {
+        // Ignore key ups from other layers
+#if defined (STRICT_LAYER_RELEASE) || defined (SEMI_STRICT_LAYER_RELEASE)
+        // No layer cache so use current layer
+        if (layer_state_is(layer)) {
+#else
+        // Use layer cache for key
         uint8_t key_layer = read_source_layers_cache(record->event.key);
+        dprintf("OSL - Other key, layer: %d, key_layer: %d\n", layer, key_layer);
         if (key_layer == layer) {
+#endif
             if (record->event.pressed) {
                 // Reset state to make it work if we use another key to change layer
                 switch (*state) {
