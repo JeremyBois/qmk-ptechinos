@@ -74,9 +74,13 @@ UNICODEMAP_ENABLE = yes
 # # Key overrides
 # KEY_OVERRIDE_ENABLE = yes
 
+# Custom caps word
+OPT_DEFS += -DCAPS_WORD_LOCK_ENABLE=yes
+
 # Sources
-SRC += features/encoder.c
 SRC += features/key_utility.c
+SRC += features/encoder.c
 SRC += features/swapper.c
 SRC += features/switcher.c
+SRC += features/capsword.c
 

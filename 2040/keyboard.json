@@ -82,7 +82,7 @@
         // Allow to write combo
         "combo": true,
         // Make easier to write Caps words
-        "caps_word": true,
+        "caps_word": false,
         // 6KRO by default. NKRO works if enabled (+328)
         // Device can be not recognize by Windows
         "nkro": false,

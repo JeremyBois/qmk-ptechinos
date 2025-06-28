@@ -2,13 +2,16 @@
 #include "action.h"
 #include "action_layer.h"
 #include "action_util.h"
-#include "caps_word.h"
 #include "keymap_us.h"
 #include "modifiers.h"
 #include QMK_KEYBOARD_H
 #include "keycodes.h"
 #include "quantum.h"
 #include "quantum_keycodes.h"
+
+#if defined(CAPS_WORD_ENABLE)
+#    include "caps_word.h"
+#endif
 
 #if defined(UNICODEMAP_ENABLE)
 #    include "process_keycode/process_unicodemap.h"
@@ -24,6 +27,10 @@
 #include "features/encoder.h"
 #include "features/swapper.h"
 #include "features/switcher.h"
+
+#if defined(CAPS_WORD_LOCK_ENABLE)
+#    include "features/capsword.h"
+#endif
 
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_ENABLE)
 #    include "features/auto_mouse.h"
@@ -759,10 +766,6 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
 //
 
 void clear_keyboard_state(void) {
-    // Force modifiers to cancel (should not be neccessary but just to be safe)
-    clear_mods_state();
-    sync_mods_state();
-
 // Reset caps word
 #if defined(CAPS_WORD_ENABLE)
     caps_word_off();
@@ -774,6 +777,10 @@ void clear_keyboard_state(void) {
     // Force end of mouse layer
     auto_mouse_set_inactive();
 #endif
+
+    // Force modifiers to cancel (should not be neccessary but just to be safe)
+    clear_mods_state();
+    sync_mods_state();
 }
 
 void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
@@ -800,6 +807,10 @@ void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // dprintf("Keycode %d --> Is Tap: %d\n", keycode,  record->tap.count);
+
+#if defined(CAPS_WORD_LOCK_ENABLE)
+    process_caps_word_lock(keycode, record);
+#endif
 
     // Swapper on one key (no timer)
     update_swapper(&swapper_atab_active, KC_LALT, KC_TAB, SW_ATAB, keycode, record);
@@ -937,6 +948,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
+#elif defined(CAPS_WORD_LOCK_ENABLE)
+        case CW_LOCK_TOGG:
+            if (record->event.pressed) {
+                // dprintf("Capslock - CW_LOCK_TOGG (enter) - Status : %s\n", is_caps_word_lock_on() ? "on" : "off");
+                caps_word_lock_enable();
+                // dprintf("Capslock - CW_LOCK_TOGG (exit) - Status : %s\n", is_caps_word_lock_on() ? "on" : "off");
                 let_qmk_handle_it = false;
             }
             break;
@@ -1090,6 +1107,85 @@ bool caps_word_press_user(uint16_t keycode) {
             return false; // Deactivate Caps Word.
     }
 }
+#elif defined(CAPS_WORD_LOCK_ENABLE)
+void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
+    sync_caps_word_lock_on();
+
+    // Update caps word state
+    if (is_caps_word_lock_on()) {
+        switch (keycode) {
+            // Layers
+            case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+                return;
+            // Get true keycode out of a mod tap
+            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+            case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
+                // Earlier return if this has not been considered tapped yet
+                if (record->tap.count == 0) {
+                    return;
+                }
+                // Get the base tapping keycode of a mod- or layer-tap key
+                keycode = get_tap_key(keycode);
+                break;
+            default:
+                break;
+        }
+
+        switch (keycode) {
+            // Keycodes to shift
+            // Custom keycodes
+            case C_E_ACUTE:
+            case C_E_GRV:
+            case C_E_CIR:
+            case C_E_TRE:
+            case C_A_GRV:
+            case C_A_CIR:
+            case C_U_GRV:
+            case C_U_CIR:
+            case C_I_CIR:
+            case C_O_CIR:
+            case C_C_CED:
+            // Letters
+            case KC_A ... KC_Z:
+                if (record->event.pressed) {
+                    if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+                        caps_word_lock_disable();
+                        add_oneshot_mods(MOD_MASK_SHIFT);
+                    }
+                }
+            // Keycodes that enable caps word but shouldn't get shifted
+            case CW_LOCK_TOGG:
+            // Movements
+            case KC_BSPC:
+            case KC_DEL:
+            // Numbers
+            case KC_1 ... KC_0:
+            // Symbols
+            case KC_LPRN:
+            case KC_RPRN:
+            case KC_MINS:
+            case KC_PIPE:
+            case KC_UNDS:
+            // Dead keys for diacritics
+            case KC_GRV:
+            case KC_CIRCUMFLEX:
+            case KC_DQUO:
+            case KC_QUOT:
+                // If chording mods, disable caps word
+                if (record->event.pressed && (get_mods() != MOD_LSFT) && (get_mods() != 0)) {
+                    caps_word_lock_disable();
+                }
+                break;
+            // Any other keycode should automatically disable caps
+            default:
+                if (record->event.pressed && !(get_oneshot_mods() & MOD_MASK_SHIFT)) {
+                    caps_word_lock_disable();
+                }
+                break;
+        }
+    }
+}
+
 #endif
 
 //

@@ -166,7 +166,6 @@
 #define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX, UNICODE_MODE_WINCOMPOSE, UNICODE_MODE_MACOS
 #define UNICODE_CYCLE_PERSIST false
 
-
 // ┌─────────────────────────────────────────────────┐
 // │ LAYERS                                         │
 // └─────────────────────────────────────────────────┘
@@ -178,3 +177,4 @@
 // Custom delay to wait for before pressing the next key in a sequence of keys
 // Required by some OS and/or tools like Remote Desktop
 #define KEY_SEQ_DELAY 5
+#define KEY_CAPS_LOCK_DELAY 10

@@ -21,7 +21,8 @@ COMB(comment, C(KC_SLSH), KC_S, KC_G)
 COMB(back, KC_BSPC, KC_M, KC_E)
 COMB(del, KC_DEL, KC_E, KC_I)
 //COMB(round_r, KC_RPRN, KC_K, KC_M)
-COMB(caps, CW_TOGG, KC_K, KC_M)
+// COMB(caps, CW_TOGG, KC_K, KC_M)
+COMB(caps, CW_LOCK_TOGG, KC_K, KC_M)
 
 
 
