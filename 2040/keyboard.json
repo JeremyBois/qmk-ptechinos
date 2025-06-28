@@ -106,7 +106,8 @@
         "console": false,
     },
     "qmk": {
-        "tap_keycode_delay": 0
+        // Add as little delay as possible while still pleasing Windows laggy OS
+        "tap_keycode_delay": 5
     },
     "tapping": {
         "term": 180,
