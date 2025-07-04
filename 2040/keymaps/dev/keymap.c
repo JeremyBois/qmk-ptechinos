@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include "features/customCodes.h"
+#include "features/key_utility.h"
 #include "g/keymap_combo.h"
 
 #include "features/encoder.h"
@@ -755,13 +756,19 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
 // │ CUSTOM KEYCODE HANDLING                             │
 // └─────────────────────────────────────────────────┘
 //
+//
 
 void clear_keyboard_state(void) {
-    // Reset caps word
-    caps_word_off();
     // Force modifiers to cancel (should not be neccessary but just to be safe)
-    clear_mods();
-    clear_weak_mods();
+    clear_mods_state();
+    sync_mods_state();
+
+// Reset caps word
+#if defined(CAPS_WORD_ENABLE)
+    caps_word_off();
+#elif defined(CAPS_WORD_LOCK_ENABLE)
+    caps_word_lock_disable();
+#endif
 
 #if defined(POINTING_DEVICE_ENABLE) && defined(PTECHINOS_AUTO_MOUSE_ENABLE)
     // Force end of mouse layer
@@ -808,262 +815,132 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     update_move_hold_layer(&switcher_nav_state, L_NAV, LT_SWITCH_NAV, keycode, record, &switcher_layer_backup);
 
-    // Custom keycodes
-    bool    let_qmk_handle_it = true;
-    uint8_t mods              = get_mods() | get_weak_mods() | get_oneshot_mods();
-    bool    shiftPressed      = is_caps_word_on() ^ (is_mod_active(mods, MOD_LSFT) || is_mod_active(mods, MOD_LSFT));
-    // dprintf("Keycode: 0x%04X | Mods: 0x%02X | ShiftPressed: %s\n", keycode, mods, shiftPressed ? "true" : "false");
+    // Backup for modifiers
+    sync_mods_state();
 
+    // Custom keycodes
+    bool let_qmk_handle_it = true;
     switch (keycode) {
-        // Handle dead keys sequences
+        // Non latin letters
         case C_GRV:
-            if (record->event.pressed) {
-                TAP_GRAVE_ACCENT
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_GRV, KC_SPC, MOD_MASK_SHIFT);
             break;
         case C_TILD:
-            if (record->event.pressed) {
-                TAP_TILD
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_TILD, KC_SPC, MOD_MASK_SHIFT);
             break;
         case C_QUOT:
-            if (record->event.pressed) {
-                TAP_SIMPLE_QUOTE
-                let_qmk_handle_it = false;
-            }
+        case RALT_T(C_QUOT):
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_QUOT, KC_SPC, MOD_MASK_SHIFT);
             break;
         case C_DQUOT:
-            if (record->event.pressed) {
-                TAP_DOUBLE_QUOTE
-                let_qmk_handle_it = false;
-            }
+        case LSFT_T(C_DQUOT):
+        case RSFT_T(C_DQUOT):
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_DQUO, KC_SPC, MOD_MASK_SHIFT);
             break;
-        case C_E_ACUTE: // é
-            if (record->event.pressed) {
-                if (shiftPressed)
-                    tap_code16(S(RALT(KC_E)));
-                else
-                    tap_code16(RALT(KC_E));
-                let_qmk_handle_it = false;
-            }
-            break;
-        case C_A_GRV: // à
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_GRV, KC_A, 0U, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+        case C_A_GRV:         // à
+        case LCTL_T(C_A_GRV): // à
+        case RCTL_T(C_A_GRV): // à
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_GRV, KC_A, MOD_MASK_SHIFT);
             break;
         case C_E_GRV: // è
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_GRV, KC_E, 0U, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_GRV, KC_E, MOD_MASK_SHIFT);
             break;
         case C_U_GRV: // ù
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_GRV, KC_U, 0U, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_GRV, KC_U, MOD_MASK_SHIFT);
             break;
         case C_A_CIR: // â
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_CIRC, KC_A, MOD_MASK_SHIFT, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_CIRCUMFLEX, KC_A, MOD_MASK_SHIFT);
             break;
         case C_E_CIR: // ê
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_CIRC, KC_E, MOD_MASK_SHIFT, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_CIRCUMFLEX, KC_E, MOD_MASK_SHIFT);
             break;
-        case C_I_CIR: // î
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_CIRC, KC_I, MOD_MASK_SHIFT, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+        case C_I_CIR:         // î
+        case LCTL_T(C_I_CIR): // î
+        case RCTL_T(C_I_CIR): // î
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_CIRCUMFLEX, KC_I, MOD_MASK_SHIFT);
             break;
         case C_O_CIR: // ô
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_CIRC, KC_O, MOD_MASK_SHIFT, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_CIRCUMFLEX, KC_O, MOD_MASK_SHIFT);
             break;
         case C_U_CIR: // û
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_CIRC, KC_U, MOD_MASK_SHIFT, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_CIRCUMFLEX, KC_U, MOD_MASK_SHIFT);
             break;
         case C_E_TRE: // ë
-            if (record->event.pressed) {
-                tap_with_dead_key_with_mods(KC_DQUO, KC_E, MOD_MASK_SHIFT, shiftPressed);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_DQUO, KC_E, MOD_MASK_SHIFT);
             break;
-        // Handle normal sequences
+        case C_E_ACUTE: // é
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_E, MOD_BIT_RALT);
+            break;
+        case C_C_CED:         // ç
+        case LSFT_T(C_C_CED): // ç
+        case RSFT_T(C_C_CED): // ç
+        case LCTL_T(C_C_CED): // ç
+        case RCTL_T(C_C_CED): // ç
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_COMM, MOD_BIT_RALT);
+            break;
+        // Sequences
         case S_CENTER:
-            if (record->event.pressed) {
-                // Press Ctrl(K, C) to center the window arround the cursor
-                register_code16(KC_LCTL);
-                tap_code16(KC_K);
-                wait_ms(1);
-                tap_code16(KC_C);
-                unregister_code16(KC_LCTL);
-                let_qmk_handle_it = false;
-            }
+        case LSFT_T(S_CENTER):
+            // Press Ctrl(K, C) to center the window arround the cursor
+            let_qmk_handle_it = !tap_two_key_sequence(record, keycode, KC_K, KC_C, MOD_BIT_LCTRL);
             break;
         case S_CLIP_HISTORY:
-            if (record->event.pressed) {
-                // Press Ctrl(K, V), Down to show copy history and select first row
-                register_code16(KC_LCTL);
-                tap_code16(KC_K);
-                wait_ms(1);
-                tap_code16(KC_V);
-                unregister_code16(KC_LCTL);
-                tap_code16(KC_DOWN);
-                let_qmk_handle_it = false;
-            }
+            // Press Ctrl(K, V) to show copy history
+            let_qmk_handle_it = !tap_two_key_sequence(record, keycode, KC_K, KC_V, MOD_BIT_LCTRL);
             break;
         case S_EQ_EQ:
-            if (record->event.pressed) {
-                tap_code16(KC_EQUAL);
-                tap_code16(KC_EQUAL);
-                let_qmk_handle_it = false;
-            }
+            // ==
+            let_qmk_handle_it = !tap_two_key_sequence(record, keycode, KC_EQUAL, KC_EQUAL, 0U);
             break;
         case S_EXLM_EQ:
-            if (record->event.pressed) {
-                tap_code16(KC_EXLM);
-                tap_code16(KC_EQUAL);
-                let_qmk_handle_it = false;
-            }
+            // !=
+            let_qmk_handle_it = !tap_two_key_sequence(record, keycode, KC_EXLM, KC_EQUAL, 0U);
             break;
         case S_LESS_EQ:
-            if (record->event.pressed) {
-                tap_code16(S(KC_COMMA));
-                tap_code16(KC_EQUAL);
-                let_qmk_handle_it = false;
-            }
+            // <=
+            let_qmk_handle_it = !tap_two_key_sequence(record, keycode, S(KC_COMMA), KC_EQUAL, 0U);
             break;
         case S_GREATER_EQ:
-            if (record->event.pressed) {
-                tap_code16(S(KC_DOT));
-                tap_code16(KC_EQUAL);
-                let_qmk_handle_it = false;
-            }
+            // >=
+            let_qmk_handle_it = !tap_two_key_sequence(record, keycode, S(KC_DOT), KC_EQUAL, 0U);
             break;
         case S_RIGHT_ARROW:
-            if (record->event.pressed) {
-                tap_code16(KC_MINS);
-                tap_code16(S(KC_DOT));
-                let_qmk_handle_it = false;
-            }
+            // -->
+            let_qmk_handle_it = !tap_three_key_sequence(record, keycode, KC_MINS, KC_MINS, S(KC_DOT), 0U);
             break;
-        // https://docs.qmk.fm/#/mod_tap?id=intercepting-mod-taps
-        // Intercept to send key with modifier on tap
         // Shortcuts
         case RCTL_T(C_Z):
         case LCTL_T(C_Z):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(C(KC_Z));
-                } else {
-                    unregister_code16(C(KC_Z));
-                }
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_Z, MOD_BIT_LCTRL);
             break;
         case RALT_T(C_X):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(C(KC_X));
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_X, MOD_BIT_LCTRL);
             break;
         case LALT_T(C_V):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(C(KC_V));
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_V, MOD_BIT_LCTRL);
             break;
         case RSFT_T(C_C):
         case LSFT_T(C_C):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(C(KC_C));
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_C, MOD_BIT_LCTRL);
             break;
         case LALT_T(C_LDESK):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KCU_LEFT_DESK);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_LEFT, MOD_BIT_LCTRL | MOD_BIT_LALT);
             break;
         case LCTL_T(C_RDESK):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KCU_RIGHT_DESK);
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_RIGHT, MOD_BIT_LCTRL | MOD_BIT_LALT);
             break;
-        case LSFT_T(S_CENTER):
-            if (record->tap.count && record->event.pressed) {
-                // Press Ctrl(K, C) to center the window arround the cursor
-                register_code16(KC_LCTL);
-                tap_code16(KC_K);
-                wait_ms(1);
-                tap_code16(KC_C);
-                unregister_code16(KC_LCTL);
-                let_qmk_handle_it = false;
-            }
-            break;
-        // Caps word
+            // Caps word
+#if defined(CAPS_WORD_ENABLE)
         case RALT_T(C_CW):
             if (record->tap.count && record->event.pressed) {
                 caps_word_on();
                 let_qmk_handle_it = false;
             }
             break;
-#if defined(KEY_OVERRIDE_ENABLE)
-        // Overrides
-        case RCTL_T(KC_LBRC):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KC_LBRC);
-                } else {
-                    unregister_code16(KC_LBRC);
-                }
-                let_qmk_handle_it = false;
-            }
-            break;
-        case RSFT_T(KC_RBRC):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KC_RBRC);
-                } else {
-                    unregister_code16(KC_RBRC);
-                }
                 let_qmk_handle_it = false;
             }
             break;
 #endif
-        // Non latin letters
-        case LCTL_T(C_C_CED):
-        case RCTL_T(C_C_CED):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KCU_C_CEDILLA);
-                } else {
-                    unregister_code16(KCU_C_CEDILLA);
-                }
-                let_qmk_handle_it = false;
-            }
-            break;
 #if defined(UNICODEMAP_ENABLE)
         case LSFT_T(C_GP):
         case RSFT_T(C_GP):
@@ -1075,85 +952,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #endif
         // Symbols
         case RSFT_T(C_LABK):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KC_LABK);
-                } else {
-                    unregister_code16(KC_LABK);
-                }
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_COMMA, MOD_BIT_LSHIFT);
             break;
         case RCTL_T(C_AT):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KC_AT);
-                } else {
-                    unregister_code16(KC_AT);
-                }
-                let_qmk_handle_it = false;
-            }
-            break;
-        case RSFT_T(C_FLQUOT):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KCU_FLQUOT);
-                } else {
-                    unregister_code16(KCU_FLQUOT);
-                }
-                let_qmk_handle_it = false;
-            }
-            break;
-        case LSFT_T(C_DQUOT):
-        case RSFT_T(C_DQUOT):
-            if (record->tap.count && record->event.pressed) {
-                TAP_DOUBLE_QUOTE
-                let_qmk_handle_it = false;
-            }
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_2, MOD_BIT_LSHIFT);
             break;
         case LSFT_T(C_PLUS):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KC_PLUS);
-                } else {
-                    unregister_code16(KC_PLUS);
-                }
-                let_qmk_handle_it = false;
-            }
-            break;
-        case RALT_T(C_QUOT):
-            if (record->tap.count && record->event.pressed) {
-                TAP_SIMPLE_QUOTE;
-                let_qmk_handle_it = false;
-            }
-            break;
-        case RALT_T(C_EURO):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KCU_EURO);
-                let_qmk_handle_it = false;
-            }
-            break;
-        case RALT_T(C_POUND):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KCU_POUND);
-                let_qmk_handle_it = false;
-            }
+            // KC_PLUS
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_EQUAL, MOD_BIT_LSHIFT);
             break;
         case RALT_T(KC_PIPE):
-            // Allow repeat action on OS
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    register_code16(KC_PIPE);
-                } else {
-                    unregister_code16(KC_PIPE);
-                }
-                let_qmk_handle_it = false;
-            }
+            // KC_PIPE
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_BACKSLASH, MOD_BIT_LSHIFT);
             break;
+        case RSFT_T(C_FLQUOT):
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_LBRC, MOD_BIT_RALT);
+            break;
+        case RSFT_T(C_FRQUOT):
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_RBRC, MOD_BIT_RALT);
+            break;
+        case RALT_T(C_EURO):
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_5, MOD_BIT_RALT);
+            break;
+        case RALT_T(C_POUND):
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_DLR, MOD_BIT_RALT);
             break;
         // Custom layer handling (hold and tap)
         case SWITCH_NAV:

@@ -76,7 +76,7 @@ UNICODEMAP_ENABLE = yes
 
 # Sources
 SRC += features/encoder.c
-SRC += features/utility.c
+SRC += features/key_utility.c
 SRC += features/swapper.c
 SRC += features/switcher.c
 

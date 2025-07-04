@@ -1,7 +1,6 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
-
 #include "action.h"
 #include "report.h"
 

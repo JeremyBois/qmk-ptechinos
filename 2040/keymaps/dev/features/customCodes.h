@@ -2,7 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #include "quantum_keycodes.h"
-#include "features/utility.h"
+#include "features/key_utility.h"
 
 //
 // ┌─────────────────────────────────────────────────┐
@@ -86,7 +86,9 @@ enum custom_keycodes {
     SWITCH_DIA,
     SWITCH_SYM,
     SWITCH_NUM,
-    SWITCH_NAV
+    SWITCH_NAV,
+    // Caps word lock
+    CW_LOCK_TOGG,
 };
 
 //
@@ -96,14 +98,9 @@ enum custom_keycodes {
 //
 // Shortcuts
 #define KCU_COMMENT C(KC_SLSH)
-#define KCU_LEFT_DESK C(A(KC_LEFT))
-#define KCU_RIGHT_DESK C(A(KC_RIGHT))
-// Ligatures
+// Non latin
 #define KCU_AE_LIG RALT(KC_Z) // æ
 #define KCU_OE_LIG RALT(KC_K) // œ
-// Diacritics
-#define KCU_C_CEDILLA RALT(KC_COMM) // ç
-#define KCU_E_ACUTE RALT(KC_E)      // é
 // Symbols
 #define KCU_COPYRIGHT RALT(KC_C)    // ©
 #define KCU_EURO RALT(KC_5)         // €
@@ -122,9 +119,3 @@ enum custom_keycodes {
 // ┌─────────────────────────────────────────────────┐
 // │ TAP ALIAS                                           │
 // └─────────────────────────────────────────────────┘
-
-// Symbols
-#define TAP_GRAVE_ACCENT tap_undead_key(KC_GRV);  // `
-#define TAP_TILD tap_undead_key(S(KC_GRV));       // ~
-#define TAP_SIMPLE_QUOTE tap_undead_key(KC_QUOT); // '
-#define TAP_DOUBLE_QUOTE tap_undead_key(KC_DQUO); // "
