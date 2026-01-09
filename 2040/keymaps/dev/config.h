@@ -19,8 +19,13 @@
 // │ Hold tap                                        │
 // └─────────────────────────────────────────────────┘
 #define QUICK_TAP_TERM (TAPPING_TERM - 50)
+// #define PERMISSIVE_HOLD
 #define PERMISSIVE_HOLD_PER_KEY
+// #define HOLD_ON_OTHER_KEY_PRESS
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+// Reduce accidental holds by desactivating the hold for LT MT keys on fast typing
+#define FLOW_TAP_TERM 120
 
 // ┌─────────────────────────────────────────────────┐
 // │ Combo                                           │

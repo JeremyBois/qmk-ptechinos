@@ -1171,37 +1171,125 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
 
 #if defined(PERMISSIVE_HOLD_PER_KEY)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t* record) {
-    if (record->event.key.row == 3) {
-        // Bottom row mods
-        return true;
-    }
+    // Immediately select the hold action when another key is tapped (pressed and released)
+    // while mod tap key is still pressed down or marked as hold
+    // Avoid waiting for tapping term to perform an hold
+    // Allow to favor hold earlier than default behavior but not hold_on_other_key_press
     switch (keycode) {
-        case MT(MOD_RSFT, KC_ENT):
+        // Fast mod on thumb
         case MT(MOD_LSFT, KC_ENT):
-            // Immediately select the hold action when another key is tapped.
-            return true;
-        default:
-            // Do not select the hold action when another key is tapped.
+        case MT(MOD_LGUI, KC_ENT):
+        // Avoid side effect if not sure
+        case LCTL_T(C_RDESK):
+        case LALT_T(C_LDESK):
+        case LALT_T(ML_NUM):
+        case LGUI_T(ML_NUM):
             return false;
+        // Make it possible to quickly tap shortcut with OSL
+        case LT_SWITCH_NUM:
+        case LT_SWITCH_NAV:
+        case LT_SWITCH_SYM:
+        case LT_SWITCH_DIA:
+            return false;
+        // Prefer tap
+        case LALT_T(MS_ACL0):
+        case LSFT_T(MS_ACL1):
+        case LCTL_T(MS_ACL2):
+        default:
+            break;
     }
+
+    int column = record->event.key.col;
+    int row    = record->event.key.row;
+
+    // Bottom row (Left == 2  Right == 6)
+    if (row == 2 || row == 6) {
+        if (column == 2) {
+            // Active permissive hold only for shift
+            return true;
+        }
+    }
+
+    // Do not select the hold action until another key is tapped.
+    return false;
 }
 #endif
 
 #if defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
+    // Immediately select the hold action when another key is pressed down (not waiting for release)
+    // while mod tap key is still pressed down or marked as hold
+    // Avoid waiting for tapping term to perform an hold
+    // Allow to favor hold earlier than permissive hold or default behavior
     switch (keycode) {
-        case MT(MOD_RCTL, KC_ENT):
-        case MT(MOD_LSFT, KC_ENT):
+        // Avoid side effect if not sure
         case LCTL_T(C_RDESK):
-        case RSFT_T(ML_BASE):
-        case LSFT_T(ML_BASE):
-        case LALT_T(ML_BASE):
-            // Hold
-            return true;
-        default:
-            // Do not select the hold action until another key is tapped.
+        case LALT_T(C_LDESK):
+        case LALT_T(ML_NUM):
+        case LGUI_T(ML_NUM):
+        // Make it possible to quickly tap shortcut with OSL
+        case LT_SWITCH_NUM:
+        case LT_SWITCH_NAV:
+        case LT_SWITCH_SYM:
+        case LT_SWITCH_DIA:
             return false;
+        // Prefer tap
+        case LALT_T(MS_ACL0):
+        case LSFT_T(MS_ACL1):
+        case LCTL_T(MS_ACL2):
+        default:
+            break;
     }
+
+    // Do not select the hold action when another key is tapped.
+    return false;
+}
+#endif
+
+
+#if defined(FLOW_TAP_TERM)
+bool is_flow_tap_key(uint16_t keycode) {
+    // Disable Flow Tap on hotkeys
+    // if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
+    if (get_mods() != 0) {
+        return false;
+    }
+
+    // Allow shifting keys during flow
+    if ((QK_MOD_TAP_GET_MODS(keycode) & (MOD_LSFT | MOD_RSFT)) != 0)
+    {
+        return false;
+    }
+
+    switch (get_tap_keycode(keycode)) {
+        // Default
+        case KC_A ... KC_Z:
+        case KC_SPC:
+        case KC_DOT:
+        case KC_COMM:
+        case KC_SCLN:
+        case KC_SLSH:
+            return true;
+            break;
+        // Diacritics (french)
+        case C_E_ACUTE:
+        case C_E_GRV:
+        case C_E_CIR:
+        case C_E_TRE:
+        case C_A_GRV:
+        case C_A_CIR:
+        case C_U_GRV:
+        case C_U_CIR:
+        case C_I_CIR:
+        case C_O_CIR:
+        case C_C_CED:
+            return true;
+            break;
+        default:
+            break;
+    }
+
+    return false;
 }
 #endif
 
