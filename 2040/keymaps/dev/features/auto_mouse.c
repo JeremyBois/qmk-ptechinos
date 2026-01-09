@@ -10,6 +10,15 @@
 #        include "print.h"
 #    endif // CONSOLE_ENABLE
 
+#if defined(LOG_AUTO_MOUSE)
+#    define log_auto_mouse(fmt, ...)       \
+        do {                             \
+            dprintf(fmt, ##__VA_ARGS__); \
+        } while (0)
+#else
+#    define log_auto_mouse(fmt, ...)
+#endif
+
 static auto_mouse_data_t auto_mouse_context = {.active_timer      = (uint16_t)0,
                                                .key_timer         = (uint16_t)0,
                                                .mouse_key_tracker = (uint16_t)0,
@@ -25,7 +34,7 @@ static auto_mouse_data_t auto_mouse_context = {.active_timer      = (uint16_t)0,
 static void auto_mouse_debug(const char* location)
 {
     #    ifdef CONSOLE_ENABLE
-    dprintf("[Auto Mouse (%s)] \n"
+    log_auto_mouse("[Auto Mouse (%s)] \n"
             "  Status {\n"
             "\tis_enabled=%d\n"
             "\tis_active=%d \tis_layer_on=%d\n"
@@ -101,8 +110,8 @@ void auto_mouse_set_inactive(void) {
     auto_mouse_context.mouse_key_tracker = 0;
 
     if (layer_state_is(auto_mouse_context.config.layer)) {
-        layer_off(auto_mouse_context.config.layer);
         auto_mouse_on_layer_inactive(&auto_mouse_context);
+        layer_off(auto_mouse_context.config.layer);
     }
 }
 
@@ -151,7 +160,7 @@ void auto_mouse_on_process_record(uint16_t keycode, keyrecord_t* record) {
     // Sanity check
     if (auto_mouse_context.mouse_key_tracker < 0) {
         auto_mouse_context.mouse_key_tracker = 0;
-        dprintf("[Auto Mouse (auto_mouse_on_process_record)]: key tracker error (<0) \n");
+        log_auto_mouse("[Auto Mouse (auto_mouse_on_process_record)]: key tracker error (<0) \n");
     }
 }
 

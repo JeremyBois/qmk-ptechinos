@@ -9,6 +9,15 @@
 
 #include "capsword.h"
 
+#if defined(LOG_CAPS_WORDS)
+#    define log_caps_word(fmt, ...)      \
+        do {                             \
+            dprintf(fmt, ##__VA_ARGS__); \
+        } while (0)
+#else
+#    define log_caps_word(fmt, ...)
+#endif
+
 static bool caps_word_lock_on;
 
 bool is_caps_word_lock_on(void) { return caps_word_lock_on; }
@@ -18,7 +27,7 @@ void sync_caps_word_lock_on(void)
     if (host_keyboard_led_state().caps_lock) {
         caps_word_lock_on = true;
     }
-    dprintf("Capslock - sync_caps_word_lock_on - Status : %s\n", caps_word_lock_on ? "on" : "off");
+    log_caps_word("Capslock - sync_caps_word_lock_on - Status : %s\n", caps_word_lock_on ? "on" : "off");
 }
 
 void caps_word_lock_enable(void) {
@@ -26,7 +35,7 @@ void caps_word_lock_enable(void) {
     if (!(host_keyboard_led_state().caps_lock)) {
         tap_code(KC_CAPS);
     }
-    dprintf("Capslock - caps_word_lock_enable - Status : %s\n", caps_word_lock_on ? "on" : "off");
+    log_caps_word("Capslock - caps_word_lock_enable - Status : %s\n", caps_word_lock_on ? "on" : "off");
 }
 
 void caps_word_lock_disable(void) {
@@ -37,7 +46,7 @@ void caps_word_lock_disable(void) {
     if (host_keyboard_led_state().caps_lock) {
         tap_code(KC_CAPS);
     }
-    dprintf("Capslock - caps_word_lock_disable - Status : %s\n", caps_word_lock_on ? "on" : "off");
+    log_caps_word("Capslock - caps_word_lock_disable - Status : %s\n", caps_word_lock_on ? "on" : "off");
 }
 
 __attribute__((weak)) void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {

@@ -4,6 +4,15 @@
 
 #include "switcher.h"
 
+#if defined(LOG_SWITCHER)
+#    define log_switcher(fmt, ...)       \
+        do {                             \
+            dprintf(fmt, ##__VA_ARGS__); \
+        } while (0)
+#else
+#    define log_switcher(fmt, ...)
+#endif
+
 
 __attribute__((weak)) bool is_oneshot_mod_key(uint16_t keycode) {
     return false;
@@ -75,34 +84,34 @@ void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint1
                 // Make mod active on tap
                 *state = os_up_queued;
                 // Wait for key to activate the wek mod
-                dprintf("OSM - Trigger key down (tap) (on), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_up_queued\n", mod, get_mods(), get_weak_mods(), *state);
+                log_switcher("OSM - Trigger key down (tap) (on), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_up_queued\n", mod, get_mods(), get_weak_mods(), *state);
             } else {
                 // Wait for keyup event to decide if we must make mod permanent or not
                 *state = os_down_unused;
                 register_code16(mod);
-                dprintf("OSM - Trigger key down (hold) (on?), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_down_unused\n", mod, get_mods(), get_weak_mods(), *state);
+                log_switcher("OSM - Trigger key down (hold) (on?), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_down_unused\n", mod, get_mods(), get_weak_mods(), *state);
             }
         } else {
             // Trigger keyup
             switch (*state) {
                 case os_up_queued:
-                    dprintf("OSM - Trigger key up (tap) (on), mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_queued\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Trigger key up (tap) (on), mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_queued\n", mod, get_mods(), get_weak_mods());
                     break;
                 case os_down_unused:
                     // If we didn't use the layer while trigger was held
                     // we assume user want to cancel the mod
                     *state = os_up_unqueued;
                     unregister_code16(mod);
-                    dprintf("OSM - Trigger key up (off), mod: %d, mods: %d, weak_mods: %d, os_down_unused -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Trigger key up (off), mod: %d, mods: %d, weak_mods: %d, os_down_unused -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
                     break;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.
                     *state = os_up_unqueued;
                     unregister_code16(mod);
-                    dprintf("OSM - Trigger key up (off), mod: %d, mods: %d, weak_mods: %d, os_down_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Trigger key up (off), mod: %d, mods: %d, weak_mods: %d, os_down_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
                     break;
                 default:
-                    dprintf("OSM - Trigger key up, mod: %d, mods: %d, weak_mods: %d\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Trigger key up, mod: %d, mods: %d, weak_mods: %d\n", mod, get_mods(), get_weak_mods());
                     break;
             }
         }
@@ -113,38 +122,38 @@ void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint1
                 *state = os_up_unqueued;
                 unregister_code16(mod);
                 unregister_weak_mods(MOD_BIT(mod));
-                dprintf("OSM - Other key down. Cancel (off), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_up_unqueued\n", mod, get_mods(), get_weak_mods(), *state);
+                log_switcher("OSM - Other key down. Cancel (off), mod: %d, mods: %d, weak_mods: %d, os_%d -> os_up_unqueued\n", mod, get_mods(), get_weak_mods(), *state);
                 return;
             }
 
             if (is_oneshot_ignored_key(keycode, record) && *state != os_up_unqueued) {
-                dprintf("OSM - Other key down. Ignored key press, mod: %d, mods: %d, weak_mods: %d, os_%d, \n", mod, get_mods(), get_weak_mods(), *state);
+                log_switcher("OSM - Other key down. Ignored key press, mod: %d, mods: %d, weak_mods: %d, os_%d, \n", mod, get_mods(), get_weak_mods(), *state);
                 return;
             }
 
             switch (*state) {
                 case os_down_unused:
                     *state = os_down_used;
-                    dprintf("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_down_unused -> os_down_used\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_down_unused -> os_down_used\n", mod, get_mods(), get_weak_mods());
                     break;
                 case os_up_queued:
                     *state = os_up_queued_used;
                     // Use weak mod as lazy mod
                     set_weak_mods(get_weak_mods() | MOD_BIT(mod));
-                    dprintf("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_queued_used\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_queued_used\n", mod, get_mods(), get_weak_mods());
                     break;
                 case os_up_queued_used:
                     *state = os_up_unqueued;
                     // Use weak mod as lazy mod
                     set_weak_mods(get_weak_mods() | MOD_BIT(mod));
-                    dprintf("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_up_queued_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Other key down, mod: %d, mods: %d, weak_mods: %d, os_up_queued_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
                     break;
                 default:
                     break;
             }
         } else {
             if (is_oneshot_ignored_key(keycode, record) && *state != os_up_unqueued) {
-                dprintf("OSM - Other key up. Ignored key release, mod: %d, mods: %d, weak_mods: %d, os_%d, \n", mod, get_mods(), get_weak_mods(), *state);
+                log_switcher("OSM - Other key up. Ignored key release, mod: %d, mods: %d, weak_mods: %d, os_%d, \n", mod, get_mods(), get_weak_mods(), *state);
                 return;
             }
 
@@ -154,13 +163,13 @@ void update_oneshot(switcher_state* state, uint16_t mod, uint16_t trigger, uint1
                     *state = os_up_unqueued;
                     // Release weak mod
                     unregister_weak_mods(MOD_BIT(mod));
-                    dprintf("OSM - Other key up (off), mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Other key up (off), mod: %d, mods: %d, weak_mods: %d, os_up_queued -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
                     break;
                 case os_up_queued_used:
                     *state = os_up_unqueued;
                     // Release weak mod
                     unregister_weak_mods(MOD_BIT(mod));
-                    dprintf("OSM - Other key up (off), mod: %d, mods: %d, weak_mods: %d, os_up_queued_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
+                    log_switcher("OSM - Other key up (off), mod: %d, mods: %d, weak_mods: %d, os_up_queued_used -> os_up_unqueued\n", mod, get_mods(), get_weak_mods());
                     break;
                 default:
                     break;
@@ -178,14 +187,14 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
             }
             if (record->tap.count) {
                 // Make layer permanent on tap
-                dprintf("OSL (%d) - Trigger key down (tap) (on?), layer: %d, os_%d -> os_up_queued\n", trigger, layer, *state);
+                log_switcher("OSL (%d) - Trigger key down (tap) (on?), layer: %d, os_%d -> os_up_queued\n", trigger, layer, *state);
                 *state = os_up_queued;
             } else {
                 // Wait for keyup event to decide if we must make layer permanent or not
-                dprintf("OSL (%d) - Trigger key down (hold) (on?), layer: %d, os_%d -> os_down_unused\n", trigger, layer, *state);
+                log_switcher("OSL (%d) - Trigger key down (hold) (on?), layer: %d, os_%d -> os_down_unused\n", trigger, layer, *state);
                 *state = os_down_unused;
             }
-            dprintf("OSL (%d) - Trigger key down (on?), layer active: %d\n", trigger, layer_state_is(layer));
+            log_switcher("OSL (%d) - Trigger key down (on?), layer active: %d\n", trigger, layer_state_is(layer));
         } else {
             // Trigger keyup
             switch (*state) {
@@ -194,16 +203,16 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                     // we assume user want to cancel the layer switch
                     *state = os_up_unqueued;
                     layer_off(layer);
-                    dprintf("OSL (%d) - Trigger key up (off), layer: %d, os_down_unused -> os_up_unqueued\n", trigger, layer);
+                    log_switcher("OSL (%d) - Trigger key up (off), layer: %d, os_down_unused -> os_up_unqueued\n", trigger, layer);
                     break;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.
                     *state = os_up_unqueued;
                     layer_off(layer);
-                    dprintf("OSL (%d) - Trigger key up (off), layer: %d, os_down_used -> os_up_unqueued\n", trigger, layer);
+                    log_switcher("OSL (%d) - Trigger key up (off), layer: %d, os_down_used -> os_up_unqueued\n", trigger, layer);
                     break;
                 default:
-                    dprintf("OSL (%d) - Trigger key up, layer: %d\n", trigger, layer);
+                    log_switcher("OSL (%d) - Trigger key up, layer: %d\n", trigger, layer);
                     break;
             }
         }
@@ -211,13 +220,13 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
         if (record->event.pressed) {
             if (is_oneshot_layer_cancel_key(keycode, record) && *state != os_up_unqueued) {
                 // Cancel oneshot layer on designated cancel keydown.
-                dprintf("OSL (%d) - Other key down. Cancel (off), layer: %d, os_%d -> os_up_unqueued\n", trigger, layer, *state);
+                log_switcher("OSL (%d) - Other key down. Cancel (off), layer: %d, os_%d -> os_up_unqueued\n", trigger, layer, *state);
                 *state = os_up_unqueued;
                 layer_off(layer);
                 return;
             }
             if (is_oneshot_layer_ignored_press(keycode, record) && *state != os_up_unqueued) {
-                dprintf("OSL (%d) - Other key down. Ignored key press, layer: %d, \n", trigger, layer);
+                log_switcher("OSL (%d) - Other key down. Ignored key press, layer: %d, \n", trigger, layer);
                 return;
             }
             // Ignore key ups from other layers
@@ -226,28 +235,28 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                 switch (*state) {
                     case os_down_unused:
                         *state = os_down_used;
-                        dprintf("OSL (%d) - Other key down. Layer: %d, os_down_unused -> os_down_used\n", trigger, layer);
+                        log_switcher("OSL (%d) - Other key down. Layer: %d, os_down_unused -> os_down_used\n", trigger, layer);
                         break;
                     case os_up_queued:
                         if (is_oneshot_mod_key(keycode)) {
                             *state = os_up_unqueued;
                             layer_off(layer);
-                            dprintf("OSL (%d) - Other key down. Oneshot mod key (off), layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
+                            log_switcher("OSL (%d) - Other key down. Oneshot mod key (off), layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
                         } else if (is_oneshot_delayed_deactivation(keycode)) {
                             // layer_off is delayed to let QMK handle the key
                             // layer_off(layer);
                             *state = os_up_queued_used;
-                            dprintf("OSL (%d) - Other key down. Delayed key. Layer: %d, os_up_queued -> os_up_queued_used\n", trigger, layer);
+                            log_switcher("OSL (%d) - Other key down. Delayed key. Layer: %d, os_up_queued -> os_up_queued_used\n", trigger, layer);
                         } else {
                             layer_off(layer);
                             *state = os_up_unqueued;
-                            dprintf("OSL (%d) - Other key down. Layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
+                            log_switcher("OSL (%d) - Other key down. Layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
                         }
                         break;
                     case os_up_queued_used:
                         *state = os_up_unqueued;
                         layer_off(layer);
-                        dprintf("OSL (%d) - Other key down (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", trigger, layer);
+                        log_switcher("OSL (%d) - Other key down (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", trigger, layer);
                         break;
                     default:
                         break;
@@ -261,12 +270,12 @@ void update_oneshot_layer(switcher_state* state, uint16_t layer, uint16_t trigge
                     case os_up_queued:
                         *state = os_up_unqueued;
                         layer_off(layer);
-                        dprintf("OSL (%d) - Other key up (off), layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
+                        log_switcher("OSL (%d) - Other key up (off), layer: %d, os_up_queued -> os_up_unqueued\n", trigger, layer);
                         break;
                     case os_up_queued_used:
                         *state = os_up_unqueued;
                         layer_off(layer);
-                        dprintf("OSL (%d) - Other key up (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", trigger, layer);
+                        log_switcher("OSL (%d) - Other key up (off), layer: %d, os_up_queued_used -> os_up_unqueued\n", trigger, layer);
                         break;
                     default:
                         break;
@@ -291,14 +300,14 @@ void update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
             // Force move to layer to avoid beeing layer order dependent
             layer_move(layer);
 
-            // dprintf("Trigger keyup --> Is Tap: %d\n", record->tap.count);
+            // log_switcher("Trigger keyup --> Is Tap: %d\n", record->tap.count);
             if (record->tap.count) {
                 // Make layer permanent on tap
-                dprintf("MHL - Trigger key down (tap) (on), layer: %d, os_%d -> os_up_queued\n", *state, layer);
+                log_switcher("MHL - Trigger key down (tap) (on), layer: %d, os_%d -> os_up_queued\n", *state, layer);
                 *state = os_up_queued;
             } else {
                 // Wait for keyup event to decide if we must make layer permanent or not
-                dprintf("MHL - Trigger key down (hold) (on?), layer: %d, os_%d -> os_down_unused\n", *state, layer);
+                log_switcher("MHL - Trigger key down (hold) (on?), layer: %d, os_%d -> os_down_unused\n", *state, layer);
                 *state = os_down_unused;
             }
         } else {
@@ -312,7 +321,7 @@ void update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
                     // Then erase switcher layer before setting the new state
                     // layer_state_set((*layer_memory) & ~((layer_state_t)1 << layer));
                     layer_state_set((layer_state | (*layer_memory)) & ~((layer_state_t)1 << layer));
-                    dprintf("MHL - Trigger key up (off), layer: %d, os_down_unused -> os_up_unqueued\n", layer);
+                    log_switcher("MHL - Trigger key up (off), layer: %d, os_down_unused -> os_up_unqueued\n", layer);
                     break;
                 case os_down_used:
                     // If we did use the layer while trigger was held, turn it off.
@@ -321,10 +330,10 @@ void update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
                     // Then erase switcher layer before setting the new state
                     // layer_state_set((*layer_memory) & ~((layer_state_t)1 << layer));
                     layer_state_set((layer_state | (*layer_memory)) & ~((layer_state_t)1 << layer));
-                    dprintf("MHL - Trigger key up (off), layer: %d, os_down_used -> os_up_unqueued\n", layer);
+                    log_switcher("MHL - Trigger key up (off), layer: %d, os_down_used -> os_up_unqueued\n", layer);
                     break;
                 default:
-                    dprintf("MHL - Trigger key up, layer: %d\n", layer);
+                    log_switcher("MHL - Trigger key up, layer: %d\n", layer);
                     break;
             }
         }
@@ -337,17 +346,17 @@ void update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
                     case os_down_unused:
                         // Handle hold case
                         *state = os_down_used;
-                        dprintf("MHL - Other key down, layer: %d, os_down_unused -> os_down_used\n", layer);
+                        log_switcher("MHL - Other key down, layer: %d, os_down_unused -> os_down_used\n", layer);
                         break;
                     case os_up_queued:
                         // Handle tap case
                         *state = os_up_queued_used;
-                        dprintf("MHL - Other key down, layer: %d, os_up_queued -> os_up_queued_used\n", layer);
+                        log_switcher("MHL - Other key down, layer: %d, os_up_queued -> os_up_queued_used\n", layer);
                         break;
                     case os_up_queued_used:
                         // Handle tap case
                         *state = os_up_unqueued;
-                        dprintf("MHL - Other key down, layer: %d, os_up_queued_used -> os_up_unqueued\n", layer);
+                        log_switcher("MHL - Other key down, layer: %d, os_up_queued_used -> os_up_unqueued\n", layer);
                         break;
                     default:
                         break;
@@ -358,17 +367,17 @@ void update_move_hold_layer(switcher_state* state, uint16_t layer, uint16_t trig
                     case os_down_unused:
                         // Handle hold case
                         *state = os_down_used;
-                        dprintf("MHL - Other key up, layer: %d, os_down_unused -> os_down_used\n", layer);
+                        log_switcher("MHL - Other key up, layer: %d, os_down_unused -> os_down_used\n", layer);
                         break;
                     case os_up_queued:
                         // Force reset of layer state
                         *state = os_up_unqueued;
-                        dprintf("MHL - Other key up, layer: %d, os_up_queued -> os_up_unqueued\n", layer);
+                        log_switcher("MHL - Other key up, layer: %d, os_up_queued -> os_up_unqueued\n", layer);
                         break;
                     case os_up_queued_used:
                         // Force reset of layer state
                         *state = os_up_unqueued;
-                        dprintf("MHL - Other key up, layer: %d, os_up_queued_used -> os_up_unqueued\n", layer);
+                        log_switcher("MHL - Other key up, layer: %d, os_up_queued_used -> os_up_unqueued\n", layer);
                     default:
                         break;
                 }
@@ -407,7 +416,7 @@ void update_active_hold_layer(switcher_state* state, uint16_t layer, uint16_t tr
 #else
         // Use layer cache for key
         uint8_t key_layer = read_source_layers_cache(record->event.key);
-        dprintf("OSL - Other key, layer: %d, key_layer: %d\n", layer, key_layer);
+        log_switcher("OSL - Other key, layer: %d, key_layer: %d\n", layer, key_layer);
         if (key_layer == layer) {
 #endif
             if (record->event.pressed) {

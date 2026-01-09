@@ -50,7 +50,7 @@ bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record);
 bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record);
 
 // To be implemented by the consumer.
-// Defines keys for which pressed event is ignore but the release event is handled
+// Defines keys for which pressed and released events are ignored
 // Setting this to modifiers and layer change keys allows stacking multiple oneshot modifiers
 // and carrying them between layers.
 // True to ignore, False to handle
