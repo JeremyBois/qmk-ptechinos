@@ -84,12 +84,12 @@
 #    define MK_C_INTERVAL_0 16
 #    define MK_C_OFFSET_2 28
 #    define MK_C_INTERVAL_2 16
-#    ifdef MOUSEKEY_CONSTANT_HOLD
+#    if defined(MOUSEKEY_CONSTANT_HOLD)
 #        define MK_C_OFFSET_1 8
 #        define MK_C_INTERVAL_1 16
 #        define MK_C_OFFSET_UNMOD 15
 #        define MK_C_INTERVAL_UNMOD 16
-#    else
+#    elif defined(MOUSEKEY_CONSTANT_TAP)
 #        define MK_C_OFFSET_1 14
 #        define MK_C_INTERVAL_1 16
 #    endif
@@ -98,19 +98,28 @@
 #    define MK_W_INTERVAL_0 100
 #    define MK_W_OFFSET_2 1
 #    define MK_W_INTERVAL_2 20
-#    ifdef MOUSEKEY_CONSTANT_HOLD
+#    if defined(MOUSEKEY_CONSTANT_HOLD)
 #        define MK_W_OFFSET_1 1
 #        define MK_W_INTERVAL_1 70
 #        define MK_W_OFFSET_UNMOD 1
 #        define MK_W_INTERVAL_UNMOD 40
-#    else
+#    elif defined(MOUSEKEY_CONSTANT_TAP)
 #        define MK_W_OFFSET_1 1
 #        define MK_W_INTERVAL_1 40
 #    endif
 #endif
 
-#ifdef POINTING_DEVICE_ENABLE
+// ┌─────────────────────────────────────────────────┐
+// │ Auto mouse                                      │
+// └─────────────────────────────────────────────────┘
+#ifdef PTECHINOS_AUTO_MOUSE_ENABLE
 
+// Keep mousing on at least 2 secondes
+#define PTECHINOS_AUTO_MOUSE_TIMEOUT 2000
+
+#endif
+
+#ifdef POINTING_DEVICE_ENABLE
 // ┌─────────────────────────────────────────────────┐
 // │ Pointing devices                                │
 // └─────────────────────────────────────────────────┘

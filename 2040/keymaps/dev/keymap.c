@@ -1190,12 +1190,22 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
 void pointing_device_init_user(void) {
     auto_mouse_set_layer(L_POINTER);
     auto_mouse_set_enabled(true);
+
+    // Default to mousing mode on right
+    ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
+
+    // Default to scrolling mode on left
+    ptechinos_set_pointer_as_dragscroll(PTECHINOS_LEFT);
 }
 
 bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
     bool should_exit = false;
     switch (keycode) {
         // Switching a layer should terminate the auto mouse layer
+        case TO(0):
+        case ML_BASE:
+        case ML_ADJUST:
+        case ML_MOUSE:
         case SWITCH_NAV:
         case SWITCH_SYM:
         case SWITCH_NUM:
@@ -1206,6 +1216,11 @@ bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
         case LT_SWITCH_DIA:
             should_exit = true;
             break;
+        case RSFT_T(ML_BASE):
+        case LSFT_T(ML_BASE):
+        case LALT_T(ML_BASE):
+            // Pressed and tap
+            return record->tap.count;
         default:
             break;
     }
@@ -1243,12 +1258,13 @@ report_mouse_t pointing_device_task_user(report_mouse_t report) {
 #    endif
 
 void auto_mouse_on_layer_inactive(auto_mouse_data_t* context) {
-    // Switch to mousing mode
+    // Switch to mousing mode on right
     if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
         ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
     }
-    if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_LEFT)) {
-        ptechinos_set_pointer_as_mousing(PTECHINOS_LEFT);
+    // Switch to scroll mode on left
+    if (ptechinos_is_pointer_mousing_enabled(PTECHINOS_LEFT)) {
+        ptechinos_set_pointer_as_dragscroll(PTECHINOS_LEFT);
     }
 }
 #endif
