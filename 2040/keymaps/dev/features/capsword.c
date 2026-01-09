@@ -55,15 +55,29 @@ __attribute__((weak)) void process_caps_word_lock(uint16_t keycode, const keyrec
     // Update caps word state
     if (is_caps_word_lock_on()) {
         switch (keycode) {
-            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+            // Extract base keycode out of modified keycode
+            // fg: LCTL(KC_2) --> KC_2
+            case QK_MODS ... QK_MODS_MAX:
+                keycode = QK_MODS_GET_BASIC_KEYCODE(keycode);
+                break;
+            // Get the base tapping keycode out layer-tap key
+            // fg: LT(0, KC_2) --> KC_2
             case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
             case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
                 // Earlier return if this has not been considered tapped yet
                 if (record->tap.count == 0) {
                     return;
                 }
-                // Get the base tapping keycode of a mod- or layer-tap key
-                keycode = get_tap_key(keycode);
+                keycode = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
+                break;
+            // Get the base tapping keycode out mod-tap key
+            // fg: MT(MOD_LSFT, KC_2) --> KC_2
+            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+                // Earlier return if this has not been considered tapped yet
+                if (record->tap.count == 0) {
+                    return;
+                }
+                keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
                 break;
             default:
                 break;

@@ -678,8 +678,6 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
 
 bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
-        // Modifiers
-        case QK_MODS ... QK_MODS_MAX:
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
             // Holds
@@ -702,9 +700,15 @@ bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
 
 bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
-        // Some modifiers
-        case KC_RIGHT_ALT:
+        // Modifiers can be used inside the layer if held
+        case KC_LEFT_CTRL:
+        case KC_LEFT_SHIFT:
         case KC_LEFT_ALT:
+        case KC_LEFT_GUI:
+        case KC_RIGHT_CTRL:
+        case KC_RIGHT_SHIFT:
+        case KC_RIGHT_ALT:
+        case KC_RIGHT_GUI:
             // Holds
             return !record->tap.count;
         // Mod taps
@@ -718,13 +722,22 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
 
 bool is_oneshot_delayed_deactivation(uint16_t keycode) {
     switch (keycode) {
-        // Get true keycode out of a mod tap
+        // Extract base keycode out of modified keycode
+        // fg: LCTL(KC_2) --> KC_2
+        case QK_MODS ... QK_MODS_MAX:
+            keycode = QK_MODS_GET_BASIC_KEYCODE(keycode);
+            break;
+        // Get the base tapping keycode out layer-tap key
+        // fg: LT(0, KC_2) --> KC_2
         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
         case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
-        case QK_MODS ... QK_MODS_MAX:
+            keycode = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
+            break;
+        // Get the base tapping keycode out mod-tap key
+        // fg: MT(MOD_LSFT, KC_2) --> KC_2
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-            // Get the base tapping keycode of a mod- or layer-tap key
-            keycode = get_tap_key(keycode);
+            keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
+            break;
         default:
             break;
     }
@@ -742,13 +755,14 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
         case C_I_CIR:
         case C_O_CIR:
         case C_C_CED:
+        case C_TILD:
             return false;
         // Delaying the layer off when QMK is responsible for key handling
         // to make sure OSL is used as reference
-        case KC_GRV:
-        case KC_CIRC:
-        case KC_DQUO:
-        case KC_QUOT:
+        // case KC_GRV:
+        // case KC_CIRC:
+        // case KC_DQUO:
+        // case KC_QUOT:
         default:
             return true;
     }
@@ -1061,18 +1075,30 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
     // Update caps word state
     if (is_caps_word_lock_on()) {
         switch (keycode) {
-            // Layers
+            // Layers can be held or tapped
             case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
                 return;
-            // Get true keycode out of a mod tap
-            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+            // Allow to filter modified keycode from its base keycode
+            // fg: LCTL(KC_2) --> KC_2
+            case QK_MODS ... QK_MODS_MAX:
+                break;
+            // Get the base tapping keycode out layer-tap key
+            // fg: LT(0, KC_2) --> KC_2
             case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
                 // Earlier return if this has not been considered tapped yet
                 if (record->tap.count == 0) {
                     return;
                 }
-                // Get the base tapping keycode of a mod- or layer-tap key
-                keycode = get_tap_key(keycode);
+                keycode = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
+                break;
+            // Get the base tapping keycode out mod-tap key
+            // fg: MT(MOD_LSFT, KC_2) --> KC_2
+            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+                // Earlier return if this has not been considered tapped yet
+                if (record->tap.count == 0) {
+                    return;
+                }
+                keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
                 break;
             default:
                 break;
@@ -1100,7 +1126,7 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
                         add_oneshot_mods(MOD_MASK_SHIFT);
                     }
                 }
-            // Keycodes that enable caps word but shouldn't get shifted
+            // Keycodes that continue caps word but shouldn't get shifted
             case CW_LOCK_TOGG:
             // Movements
             case KC_BSPC:
@@ -1108,11 +1134,10 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
             // Numbers
             case KC_1 ... KC_0:
             // Symbols
-            case KC_LPRN:
-            case KC_RPRN:
             case KC_MINS:
             case KC_PIPE:
             case KC_UNDS:
+            case C_UNDS:
             // Dead keys for diacritics
             case KC_GRV:
             case KC_CIRCUMFLEX:

@@ -177,7 +177,3 @@ bool is_oneshot_mod_active(uint8_t mods, uint8_t mod) {
 bool is_mod_active(uint8_t mods, uint8_t mod) {
     return (mods & mod) == mod;
 }
-
-uint8_t get_tap_key(uint16_t dual_role_key) {
-    return dual_role_key & 0xFF;
-}
