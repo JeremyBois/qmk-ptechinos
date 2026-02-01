@@ -249,16 +249,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *  - Good J on home row for JE J'A
      *  - Good , is fast to type with ring
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |   Q   |   L  |   D  |   F  |   B  |                    |  K œ |   U  |   O  |   J  |   ,   |
+     *        |   Q ä |  L ø |  D ð |  F ë |  B b |                    |  K œ |  U ú |  O ó |  J ï |   ,   |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * | LSft |   N   |   R  |   T  |   S  |   G  |                    |   Y  |   M  |   E  |   I  |   A   |  RSft |
+     * | LSft |   N ñ |  R ® |  T þ |  S ß |  G ̣g |                    |  Y ü |  M µ |  E é |  I í |  A á  |  RSft |
      * | LSft |       |      |      |      |      |-------.    ,-------|      |      |      |      |       |  RSft |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   X   |   W  |   P  |   C  |   V  |-------|    |-------|  Z æ |   H  |   '  |   .  |   _   |
+     *        |   X · |  W å |  P ö |  C © |  V v |-------|    |-------|  Z æ |  H ḣ |   '  |   .  |   _   |
      *        |  LGui | LAlt |LShift| LCtrl| RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
      *        `-----------------------------------/       /     \       \----------------------------------'
-     *                       |   NAV  | Space  | /  DIA  /       \ SYM   \ |  Enter |  NUM  |
-     *                       |   NAV  |        |/  DIA  /         \ SYM   \|   GUI  |  NUM  |
+     *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DIA  |
+     *                       |   NAV  |        |/  NUM  /         \ SYM   \|   GUI  |  DIA  |
      *                       `--------'--------'-------'           '-------'--------'-------'
      *
      */
@@ -266,7 +266,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         KC_Q, KC_L, KC_D, KC_F, KC_B,                      KC_K, KC_U, KC_O, KC_J, KC_COMM,
                                KC_LSFT, KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_M, KC_E, KC_I, KC_A, KC_RSFT,
 LGUI_T(KC_X), LALT_T(KC_W), LSFT_T(KC_P), LCTL_T(KC_C), RALT_T(KC_V), XXXXXXX,    XXXXXXX, RALT_T(KC_Z), RCTL_T(KC_H), RSFT_T(C_QUOT), LALT_T(KC_DOT), LGUI_T(C_UNDS),
-                                         LT_SWITCH_NAV, KC_SPC, LT_SWITCH_DIA,    LT_SWITCH_SYM, LGUI_T(KC_ENT), LT_SWITCH_NUM
+                                         LT_SWITCH_NAV, KC_SPC, LT_SWITCH_NUM,    LT_SWITCH_SYM, LGUI_T(KC_ENT), LT_SWITCH_DIA
     ),
     /*
      * QWERTY
@@ -279,8 +279,8 @@ LGUI_T(KC_X), LALT_T(KC_W), LSFT_T(KC_P), LCTL_T(KC_C), RALT_T(KC_V), XXXXXXX,  
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   _   |
      *        | LGui  | LAlt |LShift| LCtrl| RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV  | Space  | /  DIA /        \ SYM  \ |  Enter |   NUM  |
-     *                       |   NAV  |        |/  DIA /          \ SYM  \|   GUI  |   NUM  |
+     *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |   DIA  |
+     *                       |   NAV  |        |/  NUM /          \ SYM  \|   GUI  |   DIA  |
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_QWERTY] = LAYOUT(
@@ -308,8 +308,8 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      *        | LGui  | LDesk|Center| RDesk | PSCR |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
      *        | LGui  | LAlt |LShift| LCtrl | RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
      *        `------------------------------------/      /      \      \-----------------------------------'
-     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | NUM    |
-     *                      |   NAV   |        |/  NUM  /          \ SYM  \|   GUI  |        |
+     *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | DIA    |
+     *                      |   NAV   |        |/  NUM  /          \ SYM  \|   GUI  | DIA    |
      *                      `---------'--------'-------'            '------'--------'--------'
      *
      */
@@ -335,8 +335,8 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
        *         | Cut   | Paste| Copy | Undo  | Redo |-------|    |-------|  Redo | Undo | Copy | Paste| Cut   |
        *         | LGui  | LAlt |LShift| LCtrl | RAlt |       |    |       |  RAlt |RCtrl |RShift| LAlt | LGui  |
        *         `------------------------------------/       /     \      \------------------------------------'
-       *                        |   NAV   | Space  | /  NUM  /       \ SYM  \ |  Enter | NUM    |
-       *                        |   NAV   |        |/  NUM  /         \ SYM  \|   GUI  | NUM    |
+       *                        |   NAV   | Space  | /  NUM  /       \ SYM  \ |  Enter | DIA    |
+       *                        |   NAV   |        |/  NUM  /         \ SYM  \|   GUI  | DIA    |
        *                        `---------'--------'-------'           '------'--------'--------'
        */
       [L_POINTER] = LAYOUT(
@@ -365,8 +365,8 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
        *        | LGui  | Acc0 | Acc1 | Acc2  | RAlt |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
        *        | LGui  | LAlt |LShift| LCtrl | RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
        *        `------------------------------------/      /      \      \-----------------------------------'
-       *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | NUM    |
-       *                      |   NAV   |        |/  NUM  /          \ SYM  \|   GUI  | NUM    |
+       *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | DIA    |
+       *                      |   NAV   |        |/  NUM  /          \ SYM  \|   GUI  | DIA    |
        *                      `---------'--------'-------'            '------'--------'--------'
        */
 
@@ -385,24 +385,25 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      * 1 2 3 0     → Most used digits on the home row
      * £ €         → Generic currencies on the same layer
      * F U         → Common number suffix in programming
+     *
      *        ,------------------------------------.                    ,-----------------------------------.
-     *        |   ,   |  7 ½ |  8 ¾ |  9 ‘ |   F   |                    |   F1 |  F2  |  F3  |  F4  |  F5   |
+     *        |   F1  |  F2  |  F3  |  F4  |  F5   |                    |   F  |  7 ½ |  8 ¾ |  9   |   ,   |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * | LSft |   .   |  4 ¤ |  5 € |  6 ¼ |   0   |                    |      |  F10 |  F11 |  F12 | C_NUM | RSft |
+     * | LSft | NUM_P | F10  |  F11 |  F12 | NUM_P |                    |   0  |  4 £ |  5 € |  6 ¼ |   .   | RSft |
      * | LSft |       |      |      |      |       |-------.    ,-------|      |      |      |      |       | RSft |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
-     *        |       |  1 ¡ |  2 ² |  3 ³ |   U   |-------|    |-------|  F6  |  F7  |  F8  |  F9  |   _   |
+     *        |       |  F6  |  F7  |  F8  |  F9   |-------|    |-------|   U  |  1 ¡ |  2 ² |  3 ³ |   _   |
      *        | LGui  | LAlt |LShift| LCtrl|  RAlt |       |    |       | RAlt | RCtrl|RShift| LAlt | LGui  |
      *        `------------------------------------/      /      \      \-----------------------------------'
-     *                       |   NAV   | Space  | /  DIA /        \ SYM  \ |  Enter |  NUM   |
-     *                       |   NAV   |        |/  DIA /          \ SYM  \|   GUI  |  NUM   |
+     *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter | DIA    |
+     *                       |   NAV   |        |/  NUM /          \ SYM  \|   GUI  | DIA    |
      *                       `---------'--------'------'            '------'--------'--------'
      */
        [L_NUM] = LAYOUT(
-                                 KC_COMM, KC_7, KC_8, KC_9, KC_F,                     KC_F1,  KC_F2, KC_F3, KC_F4, KC_F5,
-                         _______, KC_DOT, KC_4, KC_5, KC_6, KC_0,                     XXXXXXX, KC_F10, KC_F11, KC_F12, ML_NUM, _______,
- KC_LGUI, LALT_T(KC_1), LSFT_T(KC_2), LCTL_T(KC_3), RALT_T(KC_U), _______,   _______, RALT_T(KC_F6), RCTL_T(KC_F7), RSFT_T(KC_F8), LALT_T(KC_F9), LGUI_T(C_UNDS),
-                                                _______, _______, _______,   _______, _______, _______
+                                  KC_F1,  KC_F2, KC_F3, KC_F4, KC_F5,                     KC_F, KC_7, KC_8, KC_9, KC_COMM,
+                     _______, ML_NUM, KC_F10, KC_F11, KC_F12, ML_NUM,                     KC_0, KC_4, KC_5, KC_6, KC_DOT, _______,
+ KC_LGUI, LALT_T(KC_F6), LSFT_T(KC_F7), LCTL_T(KC_F8), RALT_T(KC_F9), _______,   _______, RALT_T(KC_U), RCTL_T(KC_1), RSFT_T(KC_2), LALT_T(KC_3), LGUI_T(C_UNDS),
+                                                    _______, _______, _______,   _______, _______, _______
     ),
     /* DIA
      * This layer contains
@@ -416,29 +417,28 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      * ç             → left  → Easy to combine with `a` to get "ça" in french
      * é è           → right → Follow /\ orientation for memonic
      * â             → left  → Avoid `t`, `h`, `m` columns
-     * û             → right → Avoid `o` column
      * î             → right → Avoid `t`, `g` columns
-     * ô             → right → Increase alternation
+     * ô             → left  → Increase alternation
      * ù             → right → Only in `où` in french --> Roll
-     * à             → right → Combine well with `l` or space
+     * à             → left  → Combine well with `l` or space
      *        ,------------------------------------.                    ,------------------------------------.
-     *        |       |   ~  |   `  |   ç  |  `…   |                    | GREEK |   ù  |   à  |   $  |   ,   |
+     *        |       |   ~  |   `  |   ç  |  `…   |                    | GREEK |   ù  |   ô  |   $  |   î  |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
      * | LSft |       |  ^…  |   "  |   #  |  "…   |                    |       |   é  |   è  |   ê  |   â   | RSft |
      * | LSft |       |      |      |      |       |-------.    ,-------|       |      |      |      |       | RSft |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |       |  « “ |  » ” |   à  |  '…   |-------|    |-------| MATH  |      |   '  |   .  |   _   |
+     *        |       |  -   |   '  |   à  |  '…   |-------|    |-------| MATH  |      |  « “ |  » ” |   _   |
      *        |  LGui | LAlt |LShift| LCtrl|       |       |    |       |       | RCtrl|RShift| LAlt |  LGui |
      *        `------------------------------------/      /      \      \------------------------------------'
-     *                       |   NAV   | Space  | /  DIA /        \ SYM  \ |  Enter |  DIA    |
-     *                       |   NAV   |        |/  DIA /          \ SYM  \|   GUI  |  DIA    |
+     *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DIA    |
+     *                       |   NAV   |        |/  NUM /          \ SYM  \|   GUI  |  DIA    |
      *                       `---------'--------'------'            '------'--------'---------'
      *
      */
     [L_DIA] = LAYOUT(
-                             XXXXXXX, C_TILD, C_GRV, C_C_CED, KC_GRV,                     TO(L_GREEK), C_U_GRV, C_A_GRV, KC_DLR, KC_COMM,
-                  _______, XXXXXXX, KC_CIRC, C_DQUOT, KC_HASH, KC_DQUO,                     XXXXXXX, C_E_ACUTE, C_E_GRV, C_E_CIR, C_A_CIR, _______,
-   KC_LGUI, LALT_T(C_FLQUOT), LSFT_T(C_FRQUOT), LCTL_T(C_A_GRV), KC_QUOT, _______,   _______, TO(L_MATH), KC_RCTL, RSFT_T(C_QUOT), LALT_T(KC_DOT), LGUI_T(C_UNDS),
+                             XXXXXXX, C_TILD, C_GRV, C_C_CED, KC_GRV,                     TO(L_GREEK), C_U_GRV, C_O_CIR, KC_DLR, C_I_CIR,
+                _______, XXXXXXX, KC_CIRC, C_DQUOT, KC_HASH, KC_DQUO,                     XXXXXXX, C_E_ACUTE, C_E_GRV, C_E_CIR, C_A_CIR, _______,
+  KC_LGUI, LALT_T(KC_MINS), LSFT_T(C_QUOT), LCTL_T(C_A_GRV), KC_QUOT, _______,   _______, TO(L_MATH), KC_RCTL, RSFT_T(C_FLQUOT), LALT_T(C_FRQUOT), LGUI_T(C_UNDS),
                                                     _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
@@ -454,13 +454,13 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      *             → Move to advanced layers (MATH and GREEK)
      *
      *        ,------------------------------------.                    ,------------------------------------.
-     *        |   [   |   {  |   }  |  ]   |   :   |                    | GREEK |   %  |   <  |   >  |  MATH |
+     *        |   [   |   {  |   }  |  ]   |   :   |                    | GREEK |   %  |   <  |   >  |   ,   |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
      * | LSft |   @   |   (  |  )   |  ;   |   /   |                    |   \   |   &  |   *  |   !  |   ?   | RSft |
      * | LSft |       |      |      |      |       |-------.    ,-------|       |      |      |      |       | RSft |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |   |   |   -  |  + ÷ | = ×  |   °   |-------|    |-------|       |   @  |      |      |   _   |
-     *        | LGui  | LAlt |LShift| LCtrl|  RAlt |       |    |       |  RAlt |RCtrl |RShift| LAlt |  LGui |
+     *        |   |   |   -  |  + ÷ | = ×  |   °   |-------|    |-------|  MATH |   @  |      |   .  |   _   |
+     *        | LGui  | LAlt |LShift| LCtrl|  RAlt |       |    |       |       |RCtrl |RShift| LAlt |  LGui |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  DIA /        \ SYM  \ |  Enter |  DIA    |
      *                       |   NAV   |        |/  DIA /          \ SYM  \|   GUI  |  DIA    |
@@ -468,9 +468,9 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      *
      */
     [L_SYM] = LAYOUT(
-                                KC_LBRC, KC_LCBR, KC_RCBR, KC_RBRC, KC_COLON,                     TO(L_GREEK), KC_PERC, C_LABK, C_RABK, TO(L_MATH),
-                               _______, C_AT, KC_LPRN, KC_RPRN, KC_SCLN, KC_SLSH,                     KC_BSLS, KC_AMPR, KC_ASTR, KC_EXLM, KC_QUES, _______,
-LGUI_T(KC_PIPE), LALT_T(KC_MINS), LSFT_T(C_PLUS), LCTL_T(KC_EQL), RALT_T(C_DEGREE), _______,   _______, KC_RALT, LCTL_T(C_AT), KC_RSFT, KC_LALT, LGUI_T(C_UNDS),
+                                      KC_LBRC, KC_LCBR, KC_RCBR, KC_RBRC, KC_COLON,                     TO(L_GREEK), KC_PERC, C_LABK, C_RABK, KC_COMM,
+                                 _______, C_AT, KC_LPRN, KC_RPRN, KC_SCLN, KC_SLSH,                     KC_BSLS, KC_AMPR, KC_ASTR, KC_EXLM, KC_QUES, _______,
+LGUI_T(KC_PIPE), LALT_T(KC_MINS), LSFT_T(C_PLUS), LCTL_T(KC_EQL), RALT_T(C_DEGREE), _______,   _______, TO(L_MATH), LCTL_T(C_AT), KC_RSFT, LALT_T(KC_DOT), LGUI_T(C_UNDS),
                                                                   _______, _______, _______,   _______, _______, _______
     ),
 #if defined(UNICODEMAP_ENABLE)
@@ -991,6 +991,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LALT_T(C_RABK):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_DOT, MOD_BIT_LSHIFT);
             break;
+        case C_AT:
         case LALT_T(C_AT):
         case LCTL_T(C_AT):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_2, MOD_BIT_LSHIFT);
