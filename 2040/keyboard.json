@@ -150,7 +150,7 @@
         "timeout": 4000
     },
     "caps_word": {
-        "enabled": true,
+        "enabled": false,
         "both_shifts_turns_on": false,
         "invert_on_shift": true
     },

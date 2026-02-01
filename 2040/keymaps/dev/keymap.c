@@ -329,7 +329,7 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
        *         ,------------------------------------.                    ,------------------------------------.
        *         |COMMENT|  MB4 |  MB3 |  MB5  |RCPI_U|                    | LCPI_U|  MB5 |  MB3 |  MB4 |       |
        * ,-------|-------+------+------+-------+------+                    |-------+------+------+------+--------------.
-       * | LSft  | ATab  |  MB2 |RScrol|  MB1  |RCPI_D|                    | LCPI_D|  MB1 | LScro|  MB2 | ATab  | RSft |
+       * | LSft  | ATab  |  MB2 |RScrol|  MB1  |RCPI_D|                    | LCPI_D|  MB1 |LScrol|  MB2 | ATab  | RSft |
        * | LSft  |       |      |      |       |      |-------.    ,-------|       |      |      |      |       | RSft |
        * `-------+-------+------+------+-------+------|       |    |       |-------+------+------+------+--------------'
        *         | Cut   | Paste| Copy | Undo  | Redo |-------|    |-------|  Redo | Undo | Copy | Paste| Cut   |
@@ -704,7 +704,6 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
         // Extract base keycode out of modified keycode
         // fg: LCTL(KC_2) --> KC_2
         case QK_MODS ... QK_MODS_MAX:
-            keycode = QK_MODS_GET_BASIC_KEYCODE(keycode);
             break;
         // Get the base tapping keycode out layer-tap key
         // fg: LT(0, KC_2) --> KC_2
@@ -1110,9 +1109,10 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
             // Layers can be held or tapped
             case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
                 return;
-            // Allow to filter modified keycode from its base keycode
-            // fg: LCTL(KC_2) --> KC_2
+            // Should not extract base keycode because we want the modified one
+            // fg: KC_UNDS = S(KC_MINUS) != KC_MINUS
             case QK_MODS ... QK_MODS_MAX:
+                // This is not a mod tap (tap.count is always 0)
                 break;
             // Get the base tapping keycode out layer-tap key
             // fg: LT(0, KC_2) --> KC_2
@@ -1130,6 +1130,18 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
                 if (record->tap.count == 0) {
                     return;
                 }
+                // Handle special cases where keycode extraction
+                // cannot extract the true keycode due to size limitation
+                if (keycode == LGUI_T(C_UNDS)  ||
+                    keycode == LSFT_T(C_QUOT) ||
+                    keycode == RSFT_T(C_QUOT))
+                {
+                    // Intercept a press
+                    if (record->event.pressed)
+                    {
+                        return;
+                    }
+                }
                 keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
                 break;
             default:
@@ -1137,6 +1149,9 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
         }
 
         switch (keycode) {
+            // Activation keycode should be ignored
+            case CW_LOCK_TOGG:
+                break;
             // Keycodes to shift
             // Custom keycodes
             case C_E_ACUTE:
@@ -1154,35 +1169,42 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
             case KC_A ... KC_Z:
                 if (record->event.pressed) {
                     if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+                        // Special case when using sticky shift
                         caps_word_lock_disable();
                         add_oneshot_mods(MOD_MASK_SHIFT);
                     }
                 }
+                break;
             // Keycodes that continue caps word but shouldn't get shifted
-            case CW_LOCK_TOGG:
             // Movements
+            case KC_LEFT:
+            case KC_RIGHT:
+            case KC_UP:
+            case KC_DOWN:
             case KC_BSPC:
             case KC_DEL:
             // Numbers
             case KC_1 ... KC_0:
             // Symbols
             case KC_MINS:
-            case KC_PIPE:
             case KC_UNDS:
             case C_UNDS:
+            case C_DQUOT:
+            case C_QUOT:
             // Dead keys for diacritics
             case KC_GRV:
             case KC_CIRCUMFLEX:
             case KC_DQUO:
             case KC_QUOT:
-                // If chording mods, disable caps word
-                if (record->event.pressed && (get_mods() != MOD_LSFT) && (get_mods() != 0)) {
-                    caps_word_lock_disable();
-                }
+                // // If chording mods, disable caps word
+                // if (record->event.pressed && (get_mods() != MOD_LSFT) && (get_mods() != 0)) {
+                //     caps_word_lock_disable();
+                // }
                 break;
             // Any other keycode should automatically disable caps
             default:
                 if (record->event.pressed && !(get_oneshot_mods() & MOD_MASK_SHIFT)) {
+                    // Account only for pressed events if shift is not chorded
                     caps_word_lock_disable();
                 }
                 break;
