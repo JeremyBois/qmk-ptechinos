@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "info_config.h"
 #include "keymap_us.h"
 #include "modifiers.h"
 #include "quantum_keycodes_legacy.h"
@@ -38,7 +39,7 @@
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ UNICODE                                             │
+// │ UNICODE                                         │
 // └─────────────────────────────────────────────────┘
 //
 
@@ -221,7 +222,7 @@ const uint32_t PROGMEM unicode_map[] = {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ LAYOUTS                                             │
+// │ LAYOUTS                                         │
 // └─────────────────────────────────────────────────┘
 //
 // clang-format off
@@ -248,25 +249,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *  - Good Y above for YOU and MY without alternate typing
      *  - Good J on home row for JE J'A
      *  - Good , is fast to type with ring
+     * v10(custom) https://cyanophage.github.io/playground.html?layout=qldfbkuoj%2C-nrtsgymeia%3Bxwpcvzh%27.%2F%5C%5E
+     *  - Good Only one bad pinky scissor (WN)
+     *  - Bad Some SFS --> W_L | F_C | H_U | U_H | H_É | H_(DIA)_
+     *  - Good F on right side feels good for FAI FAU
+     *  - Good Left/Right equilibrium
+     * v11(custom) https://cyanophage.github.io/playground.html?layout=qldfbkuoj%2C-nrtsgymeia%3Bxhpcvzw%27.%2F%5C%5E
+     *  - Good No bad pinky scissor
+     *  - Good Few SFS --> H_L F_C
+     *  - Good F on right side feels good for FAI FAU
+     *  - Good Left/Right equilibrium
+     *  - Good Right movement increased (compensate for accented character on left)
+     *  - Bad Too much redirection on the left hand (especially TH)
+     * v12(custom) https://cyanophage.github.io/playground.html?layout=qldfbkuoj%2C-nrtsgymeia%3Bxhpcvzw%27.%2F%5C%5E
+     *  - Good LP is a roll instead of a scissor
+     *  - Bad F seems weird (maybe just an habit to take)
+     *  - Bad SFB is higher (WH bigram is only weird for WHY)
+     *
+     * v10
      *        ,-----------------------------------.                    ,-----------------------------------.
      *        |   Q ä |  L ø |  D ð |  F ë |  B b |                    |  K œ |  U ú |  O ó |  J ï |   ,   |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
      * | LSft |   N ñ |  R ® |  T þ |  S ß |  G ̣g |                    |  Y ü |  M µ |  E é |  I í |  A á  |  RSft |
-     * | LSft |       |      |      |      |      |-------.    ,-------|      |      |      |      |       |  RSft |
+     * | NAV  |   NAV |      |      |      |      |-------.    ,-------|      |      |      |      |  NUM  |  NUM  |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |   X · |  W å |  P ö |  C © |  V v |-------|    |-------|  Z æ |  H ḣ |   '  |   .  |   _   |
-     *        |  LGui | LAlt |LShift| LCtrl| RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
+     *        |   X · |  W å |  P ö |  C © |  V v |-------|    |-------|  Z æ |  H ḣ |   '  |   .  |  LEAD |
+     *        | RAlt  | LAlt |LShift| LCtrl| LGui |       |    |       | LGui |RCtrl |RShift| LAlt |       |
      *        `-----------------------------------/       /     \       \----------------------------------'
      *                       |   NAV  | Space  | /  NUM  /       \ SYM   \ |  Enter |  DIA  |
-     *                       |   NAV  |        |/  NUM  /         \ SYM   \|   GUI  |  DIA  |
+     *                       |   NAV  |        |/  NUM  /         \ SYM   \|        |  DIA  |
      *                       `--------'--------'-------'           '-------'--------'-------'
      *
      */
     [L_BASE] = LAYOUT(
                                         KC_Q, KC_L, KC_D, KC_F, KC_B,                      KC_K, KC_U, KC_O, KC_J, KC_COMM,
-                               KC_LSFT, KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_M, KC_E, KC_I, KC_A, KC_RSFT,
-LGUI_T(KC_X), LALT_T(KC_W), LSFT_T(KC_P), LCTL_T(KC_C), RALT_T(KC_V), XXXXXXX,    XXXXXXX, RALT_T(KC_Z), RCTL_T(KC_H), RSFT_T(C_QUOT), LALT_T(KC_DOT), LGUI_T(C_UNDS),
-                                         LT_SWITCH_NAV, KC_SPC, LT_SWITCH_NUM,    LT_SWITCH_SYM, LGUI_T(KC_ENT), LT_SWITCH_DIA
+   LSFT_T(ML_NAV), LT(L_NAV, KC_N), KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_M, KC_E, KC_I, LT(L_NUM, KC_A), RSFT_T(ML_NUM),
+RALT_T(KC_X), LALT_T(KC_W), LSFT_T(KC_P), LCTL_T(KC_C), LGUI_T(KC_V), XXXXXXX,    XXXXXXX, LGUI_T(KC_Z), RCTL_T(KC_H), RSFT_T(C_QUOT), LALT_T(KC_DOT), QK_LEAD,
+                                         LT_SWITCH_NAV, KC_SPC, LT_SWITCH_NUM,    LT_SWITCH_SYM, KC_ENT, LT_SWITCH_DIA
+    ),
+    // v12
+    [L_ALT] = LAYOUT(
+                                        KC_Q, KC_L, KC_P, KC_D, KC_B,                      KC_K, KC_U, KC_O, KC_Y, KC_COMM,
+                               KC_LSFT, KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_W, KC_M, KC_E, KC_I, KC_A, KC_RSFT,
+RALT_T(KC_X), LALT_T(KC_J), LSFT_T(KC_F), LCTL_T(KC_C), LGUI_T(KC_V), XXXXXXX,    XXXXXXX, LGUI_T(KC_Z), RCTL_T(KC_H), RSFT_T(C_QUOT), LALT_T(KC_DOT), QK_LEAD,
+                                         LT_SWITCH_NAV, KC_SPC, LT_SWITCH_NUM,    LT_SWITCH_SYM, KC_ENT, LT_SWITCH_DIA
     ),
     /*
      * QWERTY
@@ -277,16 +303,16 @@ LGUI_T(KC_X), LALT_T(KC_W), LSFT_T(KC_P), LCTL_T(KC_C), RALT_T(KC_V), XXXXXXX,  
      * | LSft |       |      |      |      |      |-------.    ,-------|      |      |      |      |       | RSft  |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
      *        |   Z   |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   _   |
-     *        | LGui  | LAlt |LShift| LCtrl| RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
+     *        | RAlt  | LAlt |LShift| LCtrl| LGui |       |    |       | LGui |RCtrl |RShift| LAlt | RAlt  |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  NUM /        \ SYM  \ |  Enter |   DIA  |
-     *                       |   NAV  |        |/  NUM /          \ SYM  \|   GUI  |   DIA  |
+     *                       |   NAV  |        |/  NUM /          \ SYM  \|        |   DIA  |
      *                       `--------'--------'------'            '------'--------'--------'
      */
     [L_QWERTY] = LAYOUT(
                                         KC_Q, KC_W, KC_E, KC_R, KC_T,                       KC_Y, KC_U, KC_I, KC_O, KC_UNDS,
                                _______, KC_A, KC_S, KC_D, KC_F, KC_G,                       KC_H, KC_J, KC_K, KC_L, KC_P, _______,
-LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,     _______, RALT_T(KC_N), RCTL_T(KC_M), RSFT_T(KC_COMM), LALT_T(KC_DOT), LGUI_T(C_UNDS),
+RALT_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), LGUI_T(KC_B), _______,     _______, LGUI_T(KC_N), RCTL_T(KC_M), RSFT_T(KC_COMM), LALT_T(KC_DOT), RALT_T(C_UNDS),
                                                     _______, _______, _______,     _______, _______, _______
     ),
     /*
@@ -305,18 +331,18 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      * | LSft | ATab  |  Tab | WH_D | Enter | PgDo |                    |  MB4 | Left | Down | Right|  MB5  | RSft  |
      * | LSft |       |      |      |       |      |-------.    ,-------|      |      |      |      |       | RSft  |
      * `------+-------+------+------+------ +------|       |    |       |------+------+------+------+-------+-------'
-     *        | LGui  | LDesk|Center| RDesk | PSCR |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
-     *        | LGui  | LAlt |LShift| LCtrl | RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
+     *        | RAlt  | LDesk|Center| RDesk | PSCR |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
+     *        | RAlt  | LAlt |LShift| LCtrl | LGui |       |    |       | LGui |RCtrl |RShift| LAlt | RAlt  |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | DIA    |
-     *                      |   NAV   |        |/  NUM  /          \ SYM  \|   GUI  | DIA    |
+     *                      |   NAV   |        |/  NUM  /          \ SYM  \|        | DIA    |
      *                      `---------'--------'-------'            '------'--------'--------'
-     *
+     *,
      */
     [L_NAV] = LAYOUT(
                               KCU_COMMENT, MS_WHLL, MS_WHLU, MS_WHLR, KC_PGUP,                      S_CLIP_HISTORY, KC_HOME, KC_UP, KC_END, ML_MOUSE,
                            _______, SW_ATAB, KC_TAB, MS_WHLD, KC_ENT, KC_PGDN,                      MS_BTN4, KC_LEFT, KC_DOWN, KC_RGHT, MS_BTN5, _______,
-  KC_LGUI, LALT_T(C_LDESK), LSFT_T(S_CENTER), LCTL_T(C_RDESK), RALT_T(C_PSCR), _______,    _______, RALT_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), LGUI_T(C_X),
+  KC_RALT, LALT_T(C_LDESK), LSFT_T(S_CENTER), LCTL_T(C_RDESK), LGUI_T(C_PSCR), _______,    _______, LGUI_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), RALT_T(C_X),
                                                              _______, _______, _______,    _______, _______, _______
     ),
 
@@ -333,23 +359,23 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
        * | LSft  |       |      |      |       |      |-------.    ,-------|       |      |      |      |       | RSft |
        * `-------+-------+------+------+-------+------|       |    |       |-------+------+------+------+--------------'
        *         | Cut   | Paste| Copy | Undo  | Redo |-------|    |-------|  Redo | Undo | Copy | Paste| Cut   |
-       *         | LGui  | LAlt |LShift| LCtrl | RAlt |       |    |       |  RAlt |RCtrl |RShift| LAlt | LGui  |
+       *         | RAlt  | LAlt |LShift| LCtrl | LGui |       |    |       |  LGui |RCtrl |RShift| LAlt | RAlt  |
        *         `------------------------------------/       /     \      \------------------------------------'
        *                        |   NAV   | Space  | /  NUM  /       \ SYM  \ |  Enter | DIA    |
-       *                        |   NAV   |        |/  NUM  /         \ SYM  \|   GUI  | DIA    |
+       *                        |   NAV   |        |/  NUM  /         \ SYM  \|        | DIA    |
        *                        `---------'--------'-------'           '------'--------'--------'
        */
       [L_POINTER] = LAYOUT(
                         KCU_COMMENT, MS_BTN4, MS_BTN3, MS_BTN5, PR_CPI_UP,                      PL_CPI_UP, MS_BTN5, MS_BTN3, MS_BTN4, XXXXXXX,
             _______, SW_ATAB, MS_BTN2, PR_DS_TOOGLE, MS_BTN1, PR_CPI_DOWN,                      PL_CPI_DOWN, MS_BTN1, PL_DS_TOOGLE, MS_BTN2, SW_ATAB, _______,
-          LGUI_T(C_X), LALT_T(C_V), LSFT_T(C_C), LCTL_T(C_Z), RALT_T(C_Y), _______,    _______, RALT_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), LGUI_T(C_X),
+          RALT_T(C_X), LALT_T(C_V), LSFT_T(C_C), LCTL_T(C_Z), LGUI_T(C_Y), _______,    _______, LGUI_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), RALT_T(C_X),
                                                          _______, _______, _______,    _______, _______, _______
     ),
       #else
       [L_POINTER] = LAYOUT(
                  KCU_COMMENT, MS_BTN4, MS_BTN3, MS_BTN5, XXXXXXX,                      XXXXXXX, MS_BTN5, MS_BTN3, MS_BTN4, XXXXXXX,
             _______, SW_ATAB, MS_BTN2, XXXXXXX, MS_BTN1, XXXXXXX,                      XXXXXXX, MS_BTN1, XXXXXXX, MS_BTN2, SW_ATAB, _______,
- LGUI_T(C_X), LALT_T(C_V), LSFT_T(C_C), LCTL_T(C_Z), RALT_T(C_Y), _______,    _______, RALT_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), LGUI_T(C_X),
+ RALT_T(C_X), LALT_T(C_V), LSFT_T(C_C), LCTL_T(C_Z), LGUI_T(C_Y), _______,    _______, LGUI_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), RALT_T(C_X),
                                                 _______, _______, _______,    _______, _______, _______
     ),
       #endif
@@ -362,25 +388,25 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
        * | LSft | ATab  |  MB2 | WH_D |  MB1  | PgDo |                    |  MB4 | MS_L | MS_D | MS_R |  MB5  | RSft  |
        * | LSft |       |      |      |       |      |-------.    ,-------|      |      |      |      |       | RSft  |
        * `------+-------+------+------+------ +------|       |    |       |------+------+------+------+-------+-------'
-       *        | LGui  | Acc0 | Acc1 | Acc2  | RAlt |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
-       *        | LGui  | LAlt |LShift| LCtrl | RAlt |       |    |       | RAlt |RCtrl |RShift| LAlt | LGui  |
+       *        | RAlt  | Acc0 | Acc1 | Acc2  | LGui |-------|    |-------| Redo | Undo | Copy | Paste| Cut   |
+       *        | RAlt  | LAlt |LShift| LCtrl | LGui |       |    |       | LGui |RCtrl |RShift| LAlt | RAlt  |
        *        `------------------------------------/      /      \      \-----------------------------------'
        *                      |   NAV   | Space  | /  NUM  /        \ SYM  \ |  Enter | DIA    |
-       *                      |   NAV   |        |/  NUM  /          \ SYM  \|   GUI  | DIA    |
+       *                      |   NAV   |        |/  NUM  /          \ SYM  \|        | DIA    |
        *                      `---------'--------'-------'            '------'--------'--------'
        */
 
       [L_MOUSE] = LAYOUT(
                      KCU_COMMENT, MS_WHLL, MS_WHLU, MS_WHLR, KC_PGUP,                     S_CLIP_HISTORY, KC_HOME, MS_UP, KC_END, XXXXXXX,
                 _______, SW_ATAB, MS_BTN2, MS_WHLD, MS_BTN1, KC_PGDN,                     MS_BTN4, MS_LEFT, MS_DOWN, MS_RGHT, MS_BTN5, _______,
- KC_LGUI, LALT_T(MS_ACL0), LSFT_T(MS_ACL1), LCTL_T(MS_ACL2), KC_RALT, _______,   _______, RALT_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), LGUI_T(C_X),
+ KC_RALT, LALT_T(MS_ACL0), LSFT_T(MS_ACL1), LCTL_T(MS_ACL2), KC_LGUI, _______,   _______, LGUI_T(C_Y), RCTL_T(C_Z), RSFT_T(C_C), LALT_T(C_V), RALT_T(C_X),
                                                     _______, _______, _______,   _______, _______, _______
     ),
     /* NUM
      * This layer contains
      *   - numbers as a numpad
      *   - F keys with a layout optimize for programming
-     * . ,         → Commons symbols at the same place in both BASE and NUM layer
+     * ,           → Same place in both BASE and NUM layer
      * F10 F11 F12 → Debugging keys
      * 1 2 3 0     → Most used digits on the home row
      * £ €         → Generic currencies on the same layer
@@ -389,56 +415,57 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      *        ,------------------------------------.                    ,-----------------------------------.
      *        |   F1  |  F2  |  F3  |  F4  |  F5   |                    |   F  |  7 ½ |  8 ¾ |  9   |   ,   |
      * ,------+-------+------+------+------+-------|                    |------+------+------+------+-------+------.
-     * | LSft | NUM_P | F10  |  F11 |  F12 | NUM_P |                    |   0  |  4 £ |  5 € |  6 ¼ |   .   | RSft |
+     * | LSft | NUM_P | F10  |  F11 |  F12 | RESET |                    |   0’ |  4 £ |  5 € |  6 ¼ |   .̣   | RSft |
      * | LSft |       |      |      |      |       |-------.    ,-------|      |      |      |      |       | RSft |
      * `------+-------+------+------+------+-------|       |    |       |------+------+------+------+-------+------'
-     *        |       |  F6  |  F7  |  F8  |  F9   |-------|    |-------|   U  |  1 ¡ |  2 ² |  3 ³ |   _   |
-     *        | LGui  | LAlt |LShift| LCtrl|  RAlt |       |    |       | RAlt | RCtrl|RShift| LAlt | LGui  |
+     *        | RAlt  |  F6  |  F7  |  F8  |  F9   |-------|    |-------|   U  |  1 ¡ |  2 ² |  3 ³ |   _   |
+     *        | RAlt  | LAlt |LShift| LCtrl|  LGui |       |    |       | LGui | RCtrl|RShift| LAlt | RAlt  |
      *        `------------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter | DIA    |
-     *                       |   NAV   |        |/  NUM /          \ SYM  \|   GUI  | DIA    |
+     *                       |   NAV   |        |/  NUM /          \ SYM  \|        | DIA    |
      *                       `---------'--------'------'            '------'--------'--------'
      */
        [L_NUM] = LAYOUT(
                                   KC_F1,  KC_F2, KC_F3, KC_F4, KC_F5,                     KC_F, KC_7, KC_8, KC_9, KC_COMM,
-                     _______, ML_NUM, KC_F10, KC_F11, KC_F12, ML_NUM,                     KC_0, KC_4, KC_5, KC_6, KC_DOT, _______,
- KC_LGUI, LALT_T(KC_F6), LSFT_T(KC_F7), LCTL_T(KC_F8), RALT_T(KC_F9), _______,   _______, RALT_T(KC_U), RCTL_T(KC_1), RSFT_T(KC_2), LALT_T(KC_3), LGUI_T(C_UNDS),
+                     _______, ML_NUM, KC_F10, KC_F11, KC_F12, ML_BASE,                     KC_0, KC_4, KC_5, KC_6, KC_DOT, _______,
+ KC_RALT, LALT_T(KC_F6), LSFT_T(KC_F7), LCTL_T(KC_F8), LGUI_T(KC_F9), _______,   _______, LGUI_T(KC_U), RCTL_T(KC_1), RSFT_T(KC_2), LALT_T(KC_3), RALT_T(C_UNDS),
                                                     _______, _______, _______,   _______, _______, _______
     ),
     /* DIA
      * This layer contains
      *   - text related symbols and french diacritics
-     *   - greek letters
-     *   - unicode symbols
+     *   - access to greek letters
+     *   - access to unicode symbols
+     * General notes
+     *   - Avoid mappings (frequent) on the left of the right side (harder to reached)
+     *   - Avoid using dead keys for most of accented characters (kill the flow while typing)
      * ^… `… '… "…   → left  → Easy to combine with vowels on the right
-     * `             → left  → Easier to reach above than below
-     * _             → left  → Used a lot with snake_case naming
      * -             → left  → Same place as in SYM layer
      * ç             → left  → Easy to combine with `a` to get "ça" in french
      * é è           → right → Follow /\ orientation for memonic
-     * â             → left  → Avoid `t`, `h`, `m` columns
-     * î             → right → Avoid `t`, `g` columns
-     * ô             → left  → Increase alternation
-     * ù             → right → Only in `où` in french --> Roll
+     * â, û          → right → On top of the normal letter
+     * î             → right → Easy to combine with `l`, `t`, `n`
+     * ô             → left  → Increase alternation and rolls and avoid `h` column
+     * ù             → right → Easy roll (only word using it is `où`)
      * à             → left  → Combine well with `l` or space
      *        ,------------------------------------.                    ,------------------------------------.
-     *        |       |   ~  |   `  |   ç  |  `…   |                    | GREEK |   ù  |   ô  |   $  |   î  |
+     *        | GREEK |   ~  |   `  |   ç  |  `…   |                    |       |   û  |   ô  |   î  |   ù   |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
-     * | LSft |       |  ^…  |   "  |   #  |  "…   |                    |       |   é  |   è  |   ê  |   â   | RSft |
+     * | LSft |   ^   |   _  |   "  |   #  |  "…   |                    |       |   é  |   è  |   ê  |   â   | RSft |
      * | LSft |       |      |      |      |       |-------.    ,-------|       |      |      |      |       | RSft |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |       |  -   |   '  |   à  |  '…   |-------|    |-------| MATH  |      |  « “ |  » ” |   _   |
-     *        |  LGui | LAlt |LShift| LCtrl|       |       |    |       |       | RCtrl|RShift| LAlt |  LGui |
+     *        |   ^…  |   -  |   '  |   à  |  '…   |-------|    |-------|  LGui |      |  « “ |  » ” |   _   |
+     *        |  RAlt | LAlt |LShift| LCtrl|       |       |    |       |  LGui | RCtrl|RShift| LAlt |  RAlt |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  NUM /        \ SYM  \ |  Enter |  DIA    |
-     *                       |   NAV   |        |/  NUM /          \ SYM  \|   GUI  |  DIA    |
+     *                       |   NAV   |        |/  NUM /          \ SYM  \|        |  DIA    |
      *                       `---------'--------'------'            '------'--------'---------'
      *
      */
     [L_DIA] = LAYOUT(
-                             XXXXXXX, C_TILD, C_GRV, C_C_CED, KC_GRV,                     TO(L_GREEK), C_U_GRV, C_O_CIR, KC_DLR, C_I_CIR,
-                _______, XXXXXXX, KC_CIRC, C_DQUOT, KC_HASH, KC_DQUO,                     XXXXXXX, C_E_ACUTE, C_E_GRV, C_E_CIR, C_A_CIR, _______,
-  KC_LGUI, LALT_T(KC_MINS), LSFT_T(C_QUOT), LCTL_T(C_A_GRV), KC_QUOT, _______,   _______, TO(L_MATH), KC_RCTL, RSFT_T(C_FLQUOT), LALT_T(C_FRQUOT), LGUI_T(C_UNDS),
+                        OSL(L_GREEK), C_TILD, C_GRV, C_C_CED, KC_GRV,                     XXXXXXX, C_U_CIR, C_O_CIR, C_I_CIR, C_U_GRV,
+                _______, C_CIR, KC_UNDS, C_DQUOT, KC_HASH, KC_DQUO,                     XXXXXXX, C_E_ACUTE, C_E_GRV, C_E_CIR, C_A_CIR, _______,
+  RALT_T(KC_CIRC), LALT_T(KC_MINS), LSFT_T(C_QUOT), LCTL_T(C_A_GRV), KC_QUOT, _______,   _______, KC_LGUI, KC_RCTL, RSFT_T(C_FLQUOT), LALT_T(C_FRQUOT), RALT_T(C_UNDS),
                                                     _______, _______, _______,   _______, _______, _______
     ),
     /* SYM
@@ -454,23 +481,23 @@ LGUI_T(KC_Z), LALT_T(KC_X), LSFT_T(KC_C), LCTL_T(KC_V), RALT_T(KC_B), _______,  
      *             → Move to advanced layers (MATH and GREEK)
      *
      *        ,------------------------------------.                    ,------------------------------------.
-     *        |   [   |   {  |   }  |  ]   |   :   |                    | GREEK |   %  |   <  |   >  |   ,   |
+     *        |   [   |   {  |   }  |  ]   |   :   |                    |  MATH |   %  |   <  |   >  |   ,   |
      * ,------+-------+------+------+------+-------|                    |-------+------+------+------+-------+------.
-     * | LSft |   @   |   (  |  )   |  ;   |   /   |                    |   \   |   &  |   *  |   !  |   ?   | RSft |
+     * | LSft |   $   |   (  |  )   |  ;   |   /   |                    |   \   |   &  |   *  |   !  |   ?   | RSft |
      * | LSft |       |      |      |      |       |-------.    ,-------|       |      |      |      |       | RSft |
      * `------+-------+------+------+------+-------|       |    |       |-------+------+------+------+-------+------'
-     *        |   |   |   -  |  + ÷ | = ×  |   °   |-------|    |-------|  MATH |   @  |      |   .  |   _   |
-     *        | LGui  | LAlt |LShift| LCtrl|  RAlt |       |    |       |       |RCtrl |RShift| LAlt |  LGui |
+     *        |   |   |   -  |  + ÷ | = ×  |   °   |-------|    |-------|  LGui |   @  |      |   .  |   _   |
+     *        | RAlt  | LAlt |LShift| LCtrl|  LGui |       |    |       |  LGui |RCtrl |RShift| LAlt |  RAlt |
      *        `------------------------------------/      /      \      \------------------------------------'
      *                       |   NAV   | Space  | /  DIA /        \ SYM  \ |  Enter |  DIA    |
-     *                       |   NAV   |        |/  DIA /          \ SYM  \|   GUI  |  DIA    |
+     *                       |   NAV   |        |/  DIA /          \ SYM  \|        |  DIA    |
      *                       `---------'--------'------'            '------'--------'---------'
      *
      */
     [L_SYM] = LAYOUT(
-                                      KC_LBRC, KC_LCBR, KC_RCBR, KC_RBRC, KC_COLON,                     TO(L_GREEK), KC_PERC, C_LABK, C_RABK, KC_COMM,
-                                 _______, C_AT, KC_LPRN, KC_RPRN, KC_SCLN, KC_SLSH,                     KC_BSLS, KC_AMPR, KC_ASTR, KC_EXLM, KC_QUES, _______,
-LGUI_T(KC_PIPE), LALT_T(KC_MINS), LSFT_T(C_PLUS), LCTL_T(KC_EQL), RALT_T(C_DEGREE), _______,   _______, TO(L_MATH), LCTL_T(C_AT), KC_RSFT, LALT_T(KC_DOT), LGUI_T(C_UNDS),
+                                      KC_LBRC, KC_LCBR, KC_RCBR, KC_RBRC, KC_COLON,                     TO(L_MATH), KC_PERC, C_LABK, C_RABK, KC_COMM,
+                                 _______, KC_DLR, KC_LPRN, KC_RPRN, KC_SCLN, KC_SLSH,                     KC_BSLS, KC_AMPR, KC_ASTR, KC_EXLM, KC_QUES, _______,
+RALT_T(KC_PIPE), LALT_T(KC_MINS), LSFT_T(C_PLUS), LCTL_T(KC_EQL), LGUI_T(C_DEGREE), _______,   _______, KC_LGUI, LCTL_T(C_AT), KC_RSFT, LALT_T(KC_DOT), RALT_T(C_UNDS),
                                                                   _______, _______, _______,   _______, _______, _______
     ),
 #if defined(UNICODEMAP_ENABLE)
@@ -542,14 +569,14 @@ XXXXXXX, UG_TOGG, UG_HUED, UG_SATD, UG_VALD, KC_BRID,                         KC
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ COMBOS                                              │
+// │ COMBOS                                          │
 // └─────────────────────────────────────────────────┘
 //
 /*
  *        ,-----------------------------------.                    ,----------------------------------.
  *        |-------|      |    ESCAPE   |      |                    |      |     RESET  CAPS     |------|
  * ,------+-------+------+------+------+------|                    |------+-------+------+------+------+------.
- * |      |       |      |      |      |      |-------.    ,-------|            BACK    DEL     |      |      |
+ * |      |       |      |      |      |      |-------.    ,-------|      |     BACK    DEL     |      |      |
  * `------+-------+------+------+------+------|       |    |       |------+-------+------+------+------+------'
  *        |       |      |      |      |      |-------|    |-------|      |       |      |      |      |
  *        `-----------------------------------/      /      \      \-----------------------------------'
@@ -558,15 +585,17 @@ XXXXXXX, UG_TOGG, UG_HUED, UG_SATD, UG_VALD, KC_BRID,                         KC
  *                     `-------------------'------'            '------'-----------------'
  */
 
-uint16_t get_combo_term(uint16_t index, combo_t* combo) {
+uint16_t get_combo_term(uint16_t index, combo_t *combo) {
     switch (index) {
         // Tight combos
+        // case leader_l:
         case escape_l:
         case reset:
-        case back:
-        case del:
         case caps:
             return COMBO_TERM / 2;
+        case back:
+        case del:
+            return COMBO_TERM / 2 - 5;
         // Two hands combos
         case adjust:
             return COMBO_TERM + 20;
@@ -575,25 +604,26 @@ uint16_t get_combo_term(uint16_t index, combo_t* combo) {
     }
 }
 
-bool get_combo_must_tap(uint16_t index, combo_t* combo) {
+bool get_combo_must_tap(uint16_t index, combo_t *combo) {
     switch (index) {
-        case back:
-        case del:
+        // case leader_l:
         case caps:
-            // Quick roll is allowed
-            return false;
         case escape_l:
         case reset:
         case adjust:
-        default:
-            // Roll is part of the typing process and combo should not make it harder
+            // Only taps
             return true;
+        case back:
+        case del:
+        default:
+            // Can hold it to trigger auto repeat OS feature
+            return false;
     }
 }
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ LAYER / SWAPPER                                     │
+// │ LAYER / SWAPPER (PTECHINOS)                     │
 // └─────────────────────────────────────────────────┘
 //
 // Custom swappers
@@ -608,7 +638,7 @@ switcher_state switcher_num_state    = os_up_unqueued;
 switcher_state switcher_nav_state    = os_up_unqueued;
 layer_state_t  switcher_layer_backup = 0;
 
-bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record) {
+bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TO(0):
         case ML_BASE:
@@ -626,7 +656,7 @@ bool is_oneshot_cancel_key(uint16_t keycode, keyrecord_t* record) {
     }
 }
 
-bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
+bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_ESC:
         case TO(0):
@@ -646,8 +676,6 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
         case RSFT_T(ML_BASE):
         case LSFT_T(ML_BASE):
         case LALT_T(ML_BASE):
-        case LALT_T(ML_NUM):
-        case LGUI_T(ML_NUM):
             // Pressed and Released (tapped)
             return record->tap.count;
         default:
@@ -655,7 +683,7 @@ bool is_oneshot_layer_cancel_key(uint16_t keycode, keyrecord_t* record) {
     }
 }
 
-bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
+bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Mod taps
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
@@ -677,7 +705,7 @@ bool is_oneshot_ignored_key(uint16_t keycode, keyrecord_t* record) {
     }
 }
 
-bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
+bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Modifiers can be used inside the layer if held
         case KC_LEFT_CTRL:
@@ -701,9 +729,10 @@ bool is_oneshot_layer_ignored_press(uint16_t keycode, keyrecord_t* record) {
 
 bool is_oneshot_delayed_deactivation(uint16_t keycode) {
     switch (keycode) {
-        // Extract base keycode out of modified keycode
+        // We want to extract the true wrapped keycode not the base one
         // fg: LCTL(KC_2) --> KC_2
         case QK_MODS ... QK_MODS_MAX:
+            // Do NOT extract base keycode out of modified keycode
             break;
         // Get the base tapping keycode out layer-tap key
         // fg: LT(0, KC_2) --> KC_2
@@ -711,11 +740,34 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
         case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
             keycode = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
             break;
-        // Get the base tapping keycode out mod-tap key
+        // Mod taps
         // fg: MT(MOD_LSFT, KC_2) --> KC_2
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+        {
+            // Cannot extract custom keycode from a mod tap
+            // Handling of these cases must be done case per case
+            // Custom is either a modded keycode (S(KC_6)) or a user keycode (C_A_GRV)
+            switch (keycode) {
+                // No delay when we handle the key manually
+                // Custom
+                case LSFT_T(C_QUOT):
+                case LCTL_T(C_A_GRV):
+                case LSFT_T(C_PLUS):
+                case LGUI_T(C_DEGREE):
+                case LCTL_T(C_AT):
+                case RALT_T(C_UNDS):
+                case RSFT_T(C_FLQUOT):
+                case LALT_T(C_FRQUOT):
+                // Modded
+                case RALT_T(KC_CIRC):
+                case RALT_T(KC_PIPE):
+                    return false;
+            }
+
+            // If not a custom one just extract base keycode
             keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
             break;
+        }
         default:
             break;
     }
@@ -734,6 +786,7 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
         case C_O_CIR:
         case C_C_CED:
         case C_TILD:
+        case C_CIR:
             return false;
         // Delaying the layer off when QMK is responsible for key handling
         // to make sure OSL is used as reference
@@ -748,7 +801,7 @@ bool is_oneshot_delayed_deactivation(uint16_t keycode) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ CUSTOM KEYCODE HANDLING                             │
+// │ CUSTOM KEYCODE HANDLING                         │
 // └─────────────────────────────────────────────────┘
 //
 //
@@ -791,7 +844,7 @@ void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
     update_oneshot_layer(&switcher_num_state, L_NUM, LT_SWITCH_NUM, keycode, record);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // dprintf("Keycode %d --> Is Tap: %d\n", keycode,  record->tap.count);
 
     // // Get Row / Col indexes
@@ -829,6 +882,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             break;
         case C_TILD:
             let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_TILD, KC_SPC, MOD_MASK_SHIFT);
+            break;
+        case C_CIR:
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_CIRC, KC_SPC, MOD_MASK_SHIFT);
+            break;
+        case RALT_T(KC_CIRC):
+            // Dead ^
+            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_6, MOD_BIT_LSHIFT);
             break;
         case LSFT_T(C_QUOT):
         case RSFT_T(C_QUOT):
@@ -877,6 +937,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_COMM, MOD_BIT_RALT);
             break;
         // Sequences
+        case S_OU:
+            // où
+            tap_code16(KC_O);
+            let_qmk_handle_it = !tap_dead_key_sequence(record, keycode, KC_GRV, KC_U, MOD_MASK_SHIFT);
+            break;
         case S_CENTER:
         case LSFT_T(S_CENTER):
             // Press Ctrl(K, C) to center the window arround the cursor
@@ -906,7 +971,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             // =>
             let_qmk_handle_it = !tap_two_key_sequence(record, keycode, KC_EQUAL, S(KC_DOT), 0U);
             break;
-        case RALT_T(S_RIGHT_ARROW):
         case S_RIGHT_ARROW:
             // ->
             let_qmk_handle_it = !tap_two_key_sequence(record, keycode, KC_MINS, S(KC_DOT), 0U);
@@ -922,6 +986,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             let_qmk_handle_it = !tap_three_key_sequence(record, keycode, KC_MINS, KC_MINS, S(KC_DOT), 0U);
             break;
         // Shortcuts
+        case LGUI_T(C_Y):
         case RALT_T(C_Y):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_Y, MOD_BIT_LCTRL);
             break;
@@ -930,6 +995,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_Z, MOD_BIT_LCTRL);
             break;
         case LGUI_T(C_X):
+        case RALT_T(C_X):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_X, MOD_BIT_LCTRL);
             break;
         case LALT_T(C_V):
@@ -939,6 +1005,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LSFT_T(C_C):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_C, MOD_BIT_LCTRL);
             break;
+        case LGUI_T(C_PSCR):
         case RALT_T(C_PSCR):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_PSCR, 0u);
             break;
@@ -972,22 +1039,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LALT_T(KC_QUES): // ?
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_SLSH, MOD_BIT_LSHIFT);
             break;
-        case LALT_T(KC_DLR):  // $
+        case LALT_T(KC_DLR): // $
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_4, MOD_BIT_LSHIFT);
             break;
         case C_UNDS:
-        case LALT_T(C_UNDS):
         case LGUI_T(C_UNDS):
+        case RALT_T(C_UNDS):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_MINS, MOD_BIT_LSHIFT);
             break;
         case C_LABK:
-        case LGUI_T(C_LABK):
         case RSFT_T(C_LABK):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_COMMA, MOD_BIT_LSHIFT);
             break;
         case C_RABK:
-        case RALT_T(C_RABK):
-        case LALT_T(C_RABK):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_DOT, MOD_BIT_LSHIFT);
             break;
         case C_AT:
@@ -995,16 +1059,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LCTL_T(C_AT):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_2, MOD_BIT_LSHIFT);
             break;
-       case RALT_T(C_DEGREE):
+        case LGUI_T(C_DEGREE):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_SCLN, MOD_BIT_LSHIFT | MOD_BIT_RALT);
-            break;
-        case RALT_T(KC_PERC):
-            let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_5, MOD_BIT_LSHIFT);
             break;
         case LSFT_T(C_PLUS):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_EQUAL, MOD_BIT_LSHIFT);
             break;
         case LGUI_T(KC_PIPE):
+        case RALT_T(KC_PIPE):
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_BACKSLASH, MOD_BIT_LSHIFT);
             break;
         case RSFT_T(C_FLQUOT):
@@ -1014,9 +1076,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_RBRC, MOD_BIT_RALT);
             break;
         case C_EURO: // €
-        case RALT_T(C_EURO): // €
-        case LGUI_T(C_EURO): // €
             let_qmk_handle_it = !tap_key_with_mods(record, keycode, KC_5, MOD_BIT_RALT);
+            break;
+        case LSFT_T(SWITCH_NAV):
+            // Intercept a press
+            if (record->tap.count && record->event.pressed) {
+                layer_move(L_NAV);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RSFT_T(SWITCH_NUM):
+            // Intercept a press
+            if (record->tap.count && record->event.pressed) {
+                layer_move(L_NUM);
+                let_qmk_handle_it = false;
+            }
             break;
         // Custom layer handling (hold and tap)
         case SWITCH_NAV:
@@ -1031,14 +1105,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case LT_SWITCH_SFT:
             let_qmk_handle_it = false;
             break;
-        case LALT_T(ML_NUM):
-        case LGUI_T(ML_NUM):
-            // Intercept a press
-            if (record->tap.count && record->event.pressed) {
-                layer_move(L_NUM);
-                let_qmk_handle_it = false;
-            }
-            break;
         case LSFT_T(ML_BASE):
         case LALT_T(ML_BASE):
         case RSFT_T(ML_BASE):
@@ -1050,6 +1116,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 let_qmk_handle_it = false;
             }
             break;
+        case LSFT_T(ML_NAV):
+        case ML_NAV:
+            if (record->event.pressed) {
+                layer_move(L_NAV);
+                let_qmk_handle_it = false;
+            }
+            break;
+        case RSFT_T(ML_NUM):
         case ML_NUM:
             if (record->event.pressed) {
                 layer_move(L_NUM);
@@ -1096,11 +1170,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ CAPS WORD                                           │
+// │ CAPS WORD (PTECHINOS)                           │
 // └─────────────────────────────────────────────────┘
 //
 #if defined(CAPS_WORD_LOCK_ENABLE)
-void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
+void process_caps_word_lock(uint16_t keycode, const keyrecord_t *record) {
     sync_caps_word_lock_on();
 
     // Update caps word state
@@ -1130,18 +1204,22 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
                 if (record->tap.count == 0) {
                     return;
                 }
+
                 // Handle special cases where keycode extraction
                 // cannot extract the true keycode due to size limitation
-                if (keycode == LGUI_T(C_UNDS)  ||
-                    keycode == LSFT_T(C_QUOT) ||
-                    keycode == RSFT_T(C_QUOT))
-                {
-                    // Intercept a press
-                    if (record->event.pressed)
-                    {
-                        return;
-                    }
+                 // Custom
+                switch (keycode) {
+                    case LSFT_T(C_QUOT):
+                    case RALT_T(C_UNDS):
+                    case LCTL_T(C_A_GRV):
+                    // Modded
+                    case RALT_T(KC_CIRC):
+                        // Intercept a press
+                        if (record->event.pressed) {
+                            return;
+                        }
                 }
+
                 keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
                 break;
             default:
@@ -1192,14 +1270,11 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
             case C_DQUOT:
             case C_QUOT:
             // Dead keys for diacritics
+            case C_CIR:
             case KC_GRV:
             case KC_CIRCUMFLEX:
             case KC_DQUO:
             case KC_QUOT:
-                // // If chording mods, disable caps word
-                // if (record->event.pressed && (get_mods() != MOD_LSFT) && (get_mods() != 0)) {
-                //     caps_word_lock_disable();
-                // }
                 break;
             // Any other keycode should automatically disable caps
             default:
@@ -1215,7 +1290,7 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ MOD tap                                             │
+// │ MOD tap                                         │
 // └─────────────────────────────────────────────────┘
 //
 
@@ -1224,75 +1299,35 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t* record) {
 // false --> trigger tap
 
 #if defined(PERMISSIVE_HOLD_PER_KEY)
-bool get_permissive_hold(uint16_t keycode, keyrecord_t* record) {
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     // Immediately select the hold action when another key is tapped (pressed and released)
     // while mod tap key is still pressed down or marked as hold
     // Avoid waiting for tapping term to perform an hold
     // Allow to favor hold earlier than default behavior but not hold_on_other_key_press
     switch (keycode) {
-        // Fast mod on thumb
+        // Prefer hold only if other key tapped (pressed and released)
+        case LT_SWITCH_NUM:
+        case LT_SWITCH_NAV:
+        case LT_SWITCH_SYM:
+        case LT_SWITCH_DIA:
         case MT(MOD_LSFT, KC_ENT):
         case MT(MOD_LGUI, KC_ENT):
-        // Avoid side effect if not sure
         case LCTL_T(C_RDESK):
         case LALT_T(C_LDESK):
-        case LALT_T(ML_NUM):
-        case LGUI_T(ML_NUM):
-            return false;
-        // Make it possible to quickly tap shortcut with OSL
-        case LT_SWITCH_NUM:
-        case LT_SWITCH_NAV:
-        case LT_SWITCH_SYM:
-        case LT_SWITCH_DIA:
-            return false;
-        // Prefer tap
-        case LALT_T(MS_ACL0):
-        case LSFT_T(MS_ACL1):
-        case LCTL_T(MS_ACL2):
-        default:
-            break;
-    }
-
-    int column = record->event.key.col;
-    int row    = record->event.key.row;
-
-    // Bottom row (Left == 2  Right == 6)
-    if (row == 2 || row == 6) {
-        if (column == 2) {
-            // Active permissive hold only for shift
             return true;
-        }
-    }
-
-    // Do not select the hold action until another key is tapped.
-    return false;
-}
-#endif
-
-#if defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
-    // Immediately select the hold action when another key is pressed down (not waiting for release)
-    // while mod tap key is still pressed down or marked as hold
-    // Avoid waiting for tapping term to perform an hold
-    // Allow to favor hold earlier than permissive hold or default behavior
-    switch (keycode) {
-        // Avoid side effect if not sure
-        case LCTL_T(C_RDESK):
-        case LALT_T(C_LDESK):
-        case LALT_T(ML_NUM):
-        case LGUI_T(ML_NUM):
-        // Make it possible to quickly tap shortcut with OSL
-        case LT_SWITCH_NUM:
-        case LT_SWITCH_NAV:
-        case LT_SWITCH_SYM:
-        case LT_SWITCH_DIA:
-            return false;
         // Prefer tap
-        case LALT_T(MS_ACL0):
-        case LSFT_T(MS_ACL1):
-        case LCTL_T(MS_ACL2):
+        // case LT(L_NAV, KC_N):
+        // case LT(L_NUM, KC_A):
         default:
             break;
+    }
+
+    // Handle special case for shift
+    uint8_t mod = mod_config(QK_MOD_TAP_GET_MODS(keycode));
+
+    // Easier to trigger Lshift / Rshift
+    if ((mod & MOD_LSFT) != 0 || (mod & MOD_RSFT) != 0) {
+        return true;
     }
 
     // Do not select the hold action when another key is tapped.
@@ -1300,6 +1335,64 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t* record) {
 }
 #endif
 
+#if defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    // Immediately select the hold action when another key is pressed down (not waiting for release)
+    // while mod tap key is still pressed down or marked as hold
+    // Avoid waiting for tapping term to perform an hold
+    // Allow to favor hold earlier than permissive hold or default behavior
+    switch (keycode) {
+        // Prefer hold whenever another key is pressed
+        case LCTL_T(C_RDESK):
+        case LALT_T(C_LDESK):
+            return true;
+        // Prefer tap
+        default:
+            break;
+    }
+
+    // Do not select the hold action when another key is pressed.
+    return false;
+}
+#endif
+
+#if defined(TAPPING_TERM_PER_KEY)
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    // uprintf("*******");
+    // uprintf("\n");
+    // uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+    // uprintf("kc: %s\n", get_keycode_string(keycode));
+    // uprintf("layer: %2u, mod: %2u, base: %2u \n", QK_LAYER_TAP_GET_LAYER(keycode), mod, QK_LAYER_TAP_GET_TAP_KEYCODE(keycode));
+
+    // Handle per finger behavior
+    // rows: 0, 1, 2, 3 4, 5, 6, 7
+    // cols: 0, 1, 2, 3, 4
+    int column = record->event.key.col;
+    int row    = record->event.key.row;
+
+    // Pinky
+    if (column == 0) {
+        if (row == 1 || row == 5) {
+            // Home
+            return TAPPING_TERM + 50;
+        }
+        else {
+            // Other
+            return TAPPING_TERM + 200;
+        }
+    }
+
+    // Handle special case for shift
+    uint8_t mod = mod_config(QK_MOD_TAP_GET_MODS(keycode));
+
+    // Easier to trigger Lshift / Rshift
+    if ((mod & MOD_LSFT) != 0 || (mod & MOD_RSFT) != 0) {
+        return TAPPING_TERM - 25;
+    }
+
+    return TAPPING_TERM;
+}
+#endif
 
 #if defined(FLOW_TAP_TERM)
 bool is_flow_tap_key(uint16_t keycode) {
@@ -1310,8 +1403,7 @@ bool is_flow_tap_key(uint16_t keycode) {
     }
 
     // Allow shifting keys during flow
-    if ((QK_MOD_TAP_GET_MODS(keycode) & (MOD_LSFT | MOD_RSFT)) != 0)
-    {
+    if ((QK_MOD_TAP_GET_MODS(keycode) & (MOD_LSFT | MOD_RSFT)) != 0) {
         return false;
     }
 
@@ -1324,7 +1416,6 @@ bool is_flow_tap_key(uint16_t keycode) {
         case KC_SCLN:
         case KC_SLSH:
             return true;
-            break;
         // Diacritics (french)
         case C_E_ACUTE:
         case C_E_GRV:
@@ -1338,7 +1429,6 @@ bool is_flow_tap_key(uint16_t keycode) {
         case C_O_CIR:
         case C_C_CED:
             return true;
-            break;
         default:
             break;
     }
@@ -1349,7 +1439,7 @@ bool is_flow_tap_key(uint16_t keycode) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ AUTO MOUSE (PTECHINOS)                              │
+// │ AUTO MOUSE (PTECHINOS)                          │
 // └─────────────────────────────────────────────────┘
 //
 
@@ -1365,7 +1455,7 @@ void pointing_device_init_user(void) {
     ptechinos_set_pointer_as_dragscroll(PTECHINOS_LEFT);
 }
 
-bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t* record) {
+bool auto_mouse_should_exit_user(uint16_t keycode, keyrecord_t *record) {
     bool should_exit = false;
     switch (keycode) {
         // Switching a layer should terminate the auto mouse layer
@@ -1424,7 +1514,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t report) {
 }
 #    endif
 
-void auto_mouse_on_layer_inactive(auto_mouse_data_t* context) {
+void auto_mouse_on_layer_inactive(auto_mouse_data_t *context) {
     // Switch to mousing mode on right
     if (ptechinos_is_pointer_dragscroll_enabled(PTECHINOS_RIGHT)) {
         ptechinos_set_pointer_as_mousing(PTECHINOS_RIGHT);
@@ -1453,12 +1543,12 @@ const key_override_t four_key_override = ko_make_basic(MOD_MASK_SHIFT, RCTL_T(KC
 const key_override_t five_key_override = ko_make_basic(MOD_MASK_SHIFT, RSFT_T(KC_5), RSFT_T(KC_RBRC));
 
 // This globally defines all key overrides to be used
-const key_override_t* key_overrides[] = {&seven_key_override, &height_key_override, &one_key_override, &two_key_override, &four_key_override, &five_key_override};
+const key_override_t *key_overrides[] = {&seven_key_override, &height_key_override, &one_key_override, &two_key_override, &four_key_override, &five_key_override};
 #endif
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ DEBUG                                               │
+// │ DEBUG                                           │
 // └─────────────────────────────────────────────────┘
 //
 #if defined(CONSOLE_ENABLE)

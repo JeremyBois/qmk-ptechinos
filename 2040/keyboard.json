@@ -110,7 +110,7 @@
         "tap_keycode_delay": 5
     },
     "tapping": {
-        "term": 180,
+        "term": 220,
         // How many taps before triggering the toggle
         "toggle": 2
     },

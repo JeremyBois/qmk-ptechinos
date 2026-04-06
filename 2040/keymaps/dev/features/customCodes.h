@@ -10,7 +10,7 @@
 // └─────────────────────────────────────────────────┘
 //
 // MOUSE should be last to always be the higher active whenever the cursor is moving
-enum custom_layers { L_BASE = 0, L_QWERTY, L_NAV, L_NUM, L_MATH, L_GREEK, L_DIA, L_SYM, L_ADJUST, L_POINTER, L_MOUSE };
+enum custom_layers { L_BASE = 0, L_ALT, L_QWERTY, L_NAV, L_NUM, L_MATH, L_GREEK, L_DIA, L_SYM, L_ADJUST, L_POINTER, L_MOUSE };
 
 //
 // ┌─────────────────────────────────────────────────┐
@@ -40,6 +40,7 @@ enum custom_keycodes {
     C_FLQUOT,
     C_FRQUOT,
     C_GRV,
+    C_CIR,
     // Wrapper for mod tap interception
     C_EURO,
     C_POUND,
@@ -70,6 +71,7 @@ enum custom_keycodes {
     C_U_GRV,
     C_C_CED,
     // Sequences
+    S_OU,
     S_CENTER,
     S_CLIP_HISTORY,
     S_EQ_EQ,
@@ -85,6 +87,7 @@ enum custom_keycodes {
     SW_ATAB,
     // Layers
     ML_BASE,
+    ML_NAV,
     ML_NUM,
     ML_ADJUST,
     ML_MOUSE,

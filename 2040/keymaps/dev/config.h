@@ -17,16 +17,28 @@
 // #define LOG_CAPS_WORDS
 
 // ┌─────────────────────────────────────────────────┐
-// │ Hold tap                                        │
+// │ Tap Hold                                        │
 // └─────────────────────────────────────────────────┘
-#define QUICK_TAP_TERM (TAPPING_TERM - 50)
+// https://docs.qmk.fm/tap_hold
+// https://github.com/urob/zmk-config?tab=readme-ov-file#timeless-homerow-mods
+// https://www.reddit.com/r/ErgoMechKeyboards/comments/1q1jo3c/urobs_zmk_timeless_home_row_mods_ported_to_native/
+
+#define QUICK_TAP_TERM (TAPPING_TERM - 60)
+
 // #define PERMISSIVE_HOLD
 #define PERMISSIVE_HOLD_PER_KEY
+
 // #define HOLD_ON_OTHER_KEY_PRESS
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
+// Allow more granular control over the typing term
+#define TAPPING_TERM_PER_KEY
+
 // Reduce accidental holds by desactivating the hold for LT MT keys on fast typing
-#define FLOW_TAP_TERM 120
+#define FLOW_TAP_TERM 150
+
+// Make it easier to use mouse with mod taps
+#define SPECULATIVE_HOLD
 
 // ┌─────────────────────────────────────────────────┐
 // │ Combo                                           │
