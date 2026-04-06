@@ -99,7 +99,7 @@
         // Allow tap dance combinations. Not required with custom tapdance feature
         "tap_dance": false,
         // Combinaisons with a leader key. Not required with custom leader feature
-        "leader": false,
+        "leader": true,
         // Software way to enter boot mode
         "bootmagic": false,
         // Console for debug (+4686)
@@ -155,9 +155,9 @@
         "invert_on_shift": true
     },
     "leader_key": {
-        "timing": false,
+        "timing": true,
         // Default leader timeout is 200ms
-        "timeout": 400
+        "timeout": 250
     },
     "host_language": "us_international",
     "layout_aliases": {

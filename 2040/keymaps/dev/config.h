@@ -65,7 +65,7 @@
 #endif
 
 // ┌─────────────────────────────────────────────────┐
-// │ Layers                                         │
+// │ Layers                                          │
 // └─────────────────────────────────────────────────┘
 #define LAYER_STATE_16BIT // Max number of layers = 16
 
@@ -194,12 +194,20 @@
 #define UNICODE_CYCLE_PERSIST false
 
 // ┌─────────────────────────────────────────────────┐
-// │ LAYERS                                         │
+// │ LEADER KEY                                      │
+// └─────────────────────────────────────────────────┘
+#if defined (LEADER_ENABLE)
+    // Give plenty of time to position my hands to type the sequence
+    #define LEADER_NO_TIMEOUT
+#endif
+
+// ┌─────────────────────────────────────────────────┐
+// │ LAYERS                                          │
 // └─────────────────────────────────────────────────┘
 // #define STRICT_LAYER_RELEASE ON
 
 // ┌─────────────────────────────────────────────────┐
-// │ SEQUENCES                                         │
+// │ SEQUENCES                                       │
 // └─────────────────────────────────────────────────┘
 // Custom delay to wait for before pressing the next key in a sequence of keys
 // Required by some OS and/or tools like Remote Desktop

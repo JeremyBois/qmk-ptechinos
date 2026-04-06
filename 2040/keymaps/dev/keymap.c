@@ -103,11 +103,11 @@ enum unicode_names {
     M_UNION,
     M_NOT_IN,
     M_NOT_EXISTS,
-    M_NOT_SUCH_AT,
+    M_NOT_SUCH_THAT,
     M_LOGIC_AND,
     M_TENSOR_PRODUCT,
     M_EMPTY,
-    M_LARROW,
+    M_RARROW,
     M_INF,
     M_INTERSECTION,
     M_IN,
@@ -195,12 +195,12 @@ const uint32_t PROGMEM unicode_map[] = {
     [M_IN]             = 0x2208, // ∈
     [M_NOT_IN]         = 0x2209, // ∉
     [M_SUCH_THAT]      = 0x220B, // ∋
-    [M_NOT_SUCH_AT]    = 0x220C, // ∌
+    [M_NOT_SUCH_THAT]  = 0x220C, // ∌
     [M_LOGIC_AND]      = 0x2227, // ∧
     [M_LOGIC_OR]       = 0x2228, // ∨
     [M_TENSOR_PRODUCT] = 0x2297, // ⊗
     [M_EMPTY]          = 0x2205, // ∅
-    [M_LARROW]         = 0x2192, // →
+    [M_RARROW]         = 0x2192, // →
     [M_INF]            = 0x221E, // ∞
     [M_PARALLEL]       = 0x2225, // ∥
     [M_SUM]            = 0x2211, // ∑
@@ -518,19 +518,19 @@ RALT_T(KC_PIPE), LALT_T(KC_MINS), LSFT_T(C_PLUS), LCTL_T(KC_EQL), LGUI_T(C_DEGRE
      */
     [L_MATH] = LAYOUT(
                                   UM(M_PERP), UM(M_SIM), UM(M_PROP), UM(M_PARTIAL), UM(M_DIFF),                     UM(M_LOGIC_AND), UM(M_NOT_IN), UM(M_NOT_EXISTS), UM(M_EMPTY), UM(M_INF),
-_______, UM(M_TENSOR_PRODUCT), UM(M_LARROW), UM(M_IMPLIES), UM(M_EQUIVALENT_TO), UM(M_COMPOSE),                     UM(M_DOT), UM(M_IN), UM(M_EXISTS), UM(M_LOWER_EQ), UM(M_LARGER_EQ), _______,
+_______, UM(M_TENSOR_PRODUCT), UM(M_RARROW), UM(M_IMPLIES), UM(M_EQUIVALENT_TO), UM(M_COMPOSE),                     UM(M_DOT), UM(M_IN), UM(M_EXISTS), UM(M_LOWER_EQ), UM(M_LARGER_EQ), _______,
                                UM(M_PARALLEL), UM(M_SUM), UM(M_PRODUCT), UM(M_FORALL), XXXXXXX, _______,   _______, UM(M_NATURAL), UM(M_INTEGER), UM(M_RATIONAL), UM(M_REAL), UM(M_COMPLEXE),
                                                                               _______, _______, _______,   _______, _______, _______
     ),
     /*
      * GREEK (Base on base layer letter positions, letter pronunciation then shape)
      *        ,-----------------------------------.                    ,-----------------------------------.
-     *        |  Θ θ |  Λ λ |  Δ δ |  Ω ω |  Β β  |                    |  Ψ ψ |  Φ φ |  Ο ο |  Υ υ |       |
+     *        |  Θ θ  |  Λ λ |  Δ δ |  Φ φ |  Β β |                    |  Κ κ |  Υ υ |  Ο ο |      |       |
      * ,------+-------+------+------+------+------|                    |------+------+------+------+-------+-------.
-     * | LSft |  Ν ν  |  Ρ ρ |  Τ τ |  Σ σ |  Γ γ |                    |  Κ κ |  Μ μ |  Ε ε |  Α α |  Ι ι  | RSft  |
+     * | LSft |  Ν ν  |  Ρ ρ |  Τ τ |  Σ σ |  Γ γ |                    |  Ψ ψ |  Μ μ |  Ε ε |  Ι ι |  Α α  | RSft  |
      * | LSft |       |      |      |      |      |-------.    ,-------|      |      |      |      |       | RSft  |
      * `------+-------+------+------+------+------|       |    |       |------+------+------+------+-------+-------'
-     *        |  Ξ ξ  |  Θ θ |  Π π |  Χ χ |      |-------|    |-------|  Ζ ζ |  Η η |      |      |       |
+     *        |  Ξ ξ  |  Ω ω |  Π π |  Χ χ |      |-------|    |-------|  Ζ ζ |  Η η |      |      |       |
      *        |       |      |LShift|      |      |       |    |       |      |      |RShift|      |       |
      *        `-----------------------------------/      /      \      \-----------------------------------'
      *                       |   NAV  | Space  | /  DIA /        \ SYM  \ |  Enter | DEF    |
@@ -538,9 +538,9 @@ _______, UM(M_TENSOR_PRODUCT), UM(M_LARROW), UM(M_IMPLIES), UM(M_EQUIVALENT_TO),
      *                       `--------'--------'------'            '------'--------'--------'
      */
       [L_GREEK] = LAYOUT(
-         UP(GQ, S_GQ), UP(GL, S_GL), UP(GD, S_GD), UP(GW, S_GW), UP(GB, S_GB),                     UP(GY, S_GY), UP(GF, S_GF), UP(GO, S_GO), UP(GU, S_GU), XXXXXXX,
-_______, UP(GN, S_GN), UP(GR, S_GR), UP(GT, S_GT), UP(GS, S_GS), UP(GG, S_GG),                     UP(GK, S_GK), UP(GM, S_GM), UP(GE, S_GE), UP(GA, S_GA), UP(GI, S_GI), _______,
-              UP(GX, S_GX), UP(GQ, S_GQ), LSFT_T(C_GP), UP(GC, S_GC), XXXXXXX, _______,   _______, UP(GZ, S_GZ), UP(GH, S_GH),  KC_RSFT, XXXXXXX, XXXXXXX,
+         UP(GQ, S_GQ), UP(GL, S_GL), UP(GD, S_GD), UP(GF, S_GF), UP(GB, S_GB),                     UP(GK, S_GK), UP(GU, S_GU), UP(GO, S_GO), XXXXXXX, XXXXXXX,
+_______, UP(GN, S_GN), UP(GR, S_GR), UP(GT, S_GT), UP(GS, S_GS), UP(GG, S_GG),                     UP(GY, S_GY), UP(GM, S_GM), UP(GE, S_GE), UP(GI, S_GI), UP(GA, S_GA), _______,
+              UP(GX, S_GX), UP(GW, S_GW), LSFT_T(C_GP), UP(GC, S_GC), XXXXXXX, _______,   _______, UP(GZ, S_GZ), UP(GH, S_GH),  KC_RSFT, XXXXXXX, XXXXXXX,
                                                              _______, _______, _______,   _______, _______, _______
     ),
 #endif
@@ -588,7 +588,6 @@ XXXXXXX, UG_TOGG, UG_HUED, UG_SATD, UG_VALD, KC_BRID,                         KC
 uint16_t get_combo_term(uint16_t index, combo_t *combo) {
     switch (index) {
         // Tight combos
-        // case leader_l:
         case escape_l:
         case reset:
         case caps:
@@ -606,7 +605,6 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
 
 bool get_combo_must_tap(uint16_t index, combo_t *combo) {
     switch (index) {
-        // case leader_l:
         case caps:
         case escape_l:
         case reset:
@@ -817,12 +815,17 @@ void clear_keyboard_state(void) {
     auto_mouse_set_inactive();
 #endif
 
+#if defined(LEADER_ENABLE)
+    leader_start();
+    leader_end();
+#endif
+
     // Force modifiers to cancel (should not be neccessary but just to be safe)
     clear_mods_state();
     sync_mods_state();
 }
 
-void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     // update_oneshot(&switcher_shift_state, KC_LSFT, LT_SWITCH_SFT, keycode, record);
 
     // Layer off is delayed to let QMK handle the keycode before leaving the layer
@@ -1230,6 +1233,9 @@ void process_caps_word_lock(uint16_t keycode, const keyrecord_t *record) {
             // Activation keycode should be ignored
             case CW_LOCK_TOGG:
                 break;
+            // Lead key should be ignored to allow shifted version
+            case QK_LEAD:
+                break;
             // Keycodes to shift
             // Custom keycodes
             case C_E_ACUTE:
@@ -1528,7 +1534,103 @@ void auto_mouse_on_layer_inactive(auto_mouse_data_t *context) {
 
 //
 // ┌─────────────────────────────────────────────────┐
-// │ KEY OVERRIDES                                               │
+// │ LEADER                                          │
+// └─────────────────────────────────────────────────┘
+//
+
+#if defined(LEADER_ENABLE)
+// Emit a Unicode pair (lower/upper handled automatically)
+#    define TAP_UP(lower, upper) register_unicodemap(unicodemap_index(UP(lower, upper)))
+
+// Emit single unicode index (math symbols)
+#    define TAP_UM(sym) register_unicodemap(unicodemap_index(UM(sym)))
+
+// Greek letters: 2-key sequences: g + <key>
+#    define LEAD_GREEK_PAIR(kc, lower, upper)          \
+        else if (leader_sequence_two_keys(KC_G, kc)) { \
+            TAP_UP(lower, upper);                      \
+        }
+
+// 2-key sequences
+#    define LEAD_2(k1, k2, sym)                      \
+        else if (leader_sequence_two_keys(k1, k2)) { \
+            TAP_UM(sym);                             \
+        }
+
+// 2-key sequences + shift = opposite
+#    define LEAD_2_PAIR(k1, k2, lower, upper)        \
+        else if (leader_sequence_two_keys(k1, k2)) { \
+            TAP_UP(lower, upper);                    \
+        }
+
+// 3-key sequences
+#    define LEAD_3(k1, k2, k3, sym)                        \
+        else if (leader_sequence_three_keys(k1, k2, k3)) { \
+            TAP_UM(sym);                                   \
+        }
+
+// 3-key sequences + shift = opposite
+#    define LEAD_3_PAIR(k1, k2, k3, lower, upper)          \
+        else if (leader_sequence_three_keys(k1, k2, k3)) { \
+            TAP_UP(lower, upper);                          \
+        }
+
+// 4-key sequences
+#    define LEAD_4(k1, k2, k3, k4, sym)                       \
+        else if (leader_sequence_four_keys(k1, k2, k3, k4)) { \
+            TAP_UM(sym);                                      \
+        }
+
+void leader_end_user(void) {
+    // Dummy placeholder to allow "else if" macros
+    if (0) {
+        return;
+    }
+
+    // Greek alphabet (better using a layer matching the base alphabet)
+    // Math (leader mnemonic is better for rare symbol usage)
+
+    // Cannot use shift while typing a sequence but caps word works
+
+    // --- Operators ---
+    LEAD_3(KC_D, KC_E, KC_R, M_PARTIAL)        // d e r    → ∂
+    LEAD_3(KC_T, KC_E, KC_N, M_TENSOR_PRODUCT) // t e n    → ⊗
+    LEAD_3(KC_D, KC_O, KC_T, M_DOT)            // d o t    → ⋅
+    LEAD_3(KC_C, KC_O, KC_M, M_COMPOSE)        // c o m    → ∘
+    LEAD_3(KC_S, KC_U, KC_M, M_SUM)            // s u m    → ∑
+    LEAD_3(KC_P, KC_R, KC_O, M_PRODUCT)        // p r o    → ∏
+
+    // --- Wording ---
+    LEAD_3(KC_I, KC_N, KC_F, M_INF)                 // i n f    → ∞
+    LEAD_3(KC_A, KC_L, KC_L, M_FORALL)              // a l l    → ∀
+    LEAD_3(KC_E, KC_X, KC_I, M_EXISTS)              // e x i    → ∃
+    LEAD_2(KC_I, KC_N, M_IN)                        // i n      → ∈
+    LEAD_3(KC_T, KC_H, KC_A, M_SUCH_THAT)           // t h a    → ∋
+    LEAD_4(KC_N, KC_E, KC_X, KC_I, M_NOT_EXISTS)    // n e x i  → ∄
+    LEAD_3(KC_N, KC_I, KC_N, M_NOT_IN)              // n i n    → ∉
+    LEAD_4(KC_N, KC_T, KC_H, KC_A, M_NOT_SUCH_THAT) // n t h a  → ∌
+    LEAD_3(KC_Z, KC_E, KC_R, M_EMPTY)               // e m p    → ∅
+
+    // --- Logic ---
+    LEAD_3(KC_L, KC_E, KC_Q, M_LOWER_EQ)      // l e q    → ≤
+    LEAD_3(KC_G, KC_E, KC_Q, M_LARGER_EQ)     // g e q    → ≥
+    LEAD_3(KC_N, KC_E, KC_Q, M_DIFF)          // n e q    → ≠
+    LEAD_3(KC_S, KC_I, KC_M, M_SIM)           // s i m    → ≈
+    LEAD_3(KC_P, KC_R, KC_O, M_PROP)          // p r o    → ∝
+    LEAD_3(KC_P, KC_A, KC_R, M_PARALLEL)      // p a r    → ∥
+    LEAD_3(KC_E, KC_Q, KC_U, M_EQUIVALENT_TO) // e q u    → ⇔
+    LEAD_3(KC_I, KC_M, KC_P, M_IMPLIES)       // i m p    → ⇒
+    LEAD_3(KC_U, KC_N, KC_I, M_UNION)         // u n i    → ∪
+    LEAD_3(KC_I, KC_N, KC_T, M_INTERSECTION)  // i n t    → ∩
+    LEAD_3(KC_R, KC_A, KC_R, M_RARROW)        // r a r    → →
+    LEAD_3(KC_A, KC_N, KC_D, M_LOGIC_AND)     // a n d    → ∧
+    LEAD_2(KC_O, KC_R, M_LOGIC_OR)            // o r      → ∨
+}
+#endif
+
+//
+// ┌─────────────────────────────────────────────────┐
+// │ KEY OVERRIDES                                   │
 // └─────────────────────────────────────────────────┘
 //
 #if defined(KEY_OVERRIDE_ENABLE)
