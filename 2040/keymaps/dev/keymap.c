@@ -546,23 +546,23 @@ _______, UP(GN, S_GN), UP(GR, S_GR), UP(GT, S_GT), UP(GS, S_GS), UP(GG, S_GG),  
 #endif
     /* ADJUST
      *         ,-----------------------------------.                    ,-------------------------------------.
-     *         |      |hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP  | MFFD |      |
+     *         |RGB_MO|hue ^ |sat ^ | bri ^|  BRIU |                    | VOLU  | MRWD  | STOP  | MFFD |      |
      * ,-------|------+------+------+------+-------+                    |-------+-------+-------+------+------------.
      * |       |RGB_TO|hue_dn|sat_dn|bri_dn|  BRID |                    | VOLD  | PREV  | PLAY  | NEXT |VOLMUT|     |
      * |       |      |      |      |      |       |-------.    ,-------|       |       |       |      |      |     |
      * `-------+------+------+------+------+-------|       |    |       |-------+-------+-------+------+------------'
-     *         |RGB_MO| U_M  |  U_W | U_WC |  U_L  |-------|    |-------| BASE  |QWERTY | DEBUG |RESET |EEPRST|
+     *         | DEBUG|      | BOOT |      | EEPRST|-------|    |-------|  U_W  | U_BSD |       |      |      |
      *         |      |      |      |      |       |       |    |       |       |       |       |      |      |
      *         `-----------------------------------/      /      \      \-------------------------------------'
-     *                       |         |        | /      /        \      \ |        |   DEF     |
+     *                       |    ALT  |  BASE  | /QWERTY/        \  U_M \ |   U_L  |   U_WC    |
      *                       |         |        |/      /          \      \|        |           |
      *                       `---------'--------'------'            '------'--------'-----------'
      */
       [L_ADJUST] = LAYOUT(
-         XXXXXXX, UG_HUEU, UG_SATU, UG_VALU, KC_BRIU,                         KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
-XXXXXXX, UG_TOGG, UG_HUED, UG_SATD, UG_VALD, KC_BRID,                         KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, XXXXXXX,
-           UG_NEXT, UC_MAC, UC_WIN, UC_WINC, UC_LINX, XXXXXXX,       XXXXXXX, DF(L_BASE), DF(L_QWERTY), QK_DEBUG_TOGGLE, QK_BOOT, EE_CLR,
-                                    XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, ML_BASE
+          UG_NEXT, UG_HUEU, UG_SATU, UG_VALU, KC_BRIU,                         KC_VOLU, KC_MRWD, KC_MEDIA_STOP, KC_MFFD, XXXXXXX,
+ XXXXXXX, UG_TOGG, UG_HUED, UG_SATD, UG_VALD, KC_BRID,                         KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, XXXXXXX,
+   QK_DEBUG_TOGGLE, XXXXXXX, QK_BOOT, XXXXXXX, EE_CLR, XXXXXXX,       XXXXXXX, UC_WIN, UC_BSD, XXXXXXX, XXXXXXX, XXXXXXX,
+                           DF(L_ALT), DF(L_BASE), DF(L_QWERTY),       UC_MAC, UC_LINX, UC_WINC
     )
     };
 // clang-format on
